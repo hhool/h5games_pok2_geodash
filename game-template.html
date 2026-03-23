@@ -124,7 +124,7 @@
     (async function renderOtherGames(){
       const grid = document.getElementById('gamesGrid');
       try{
-        const res = await fetch('data/games.json');
+        const res = await fetch('/data/games.json');
         const list = await res.json();
         grid.innerHTML = '';
         // expose games list for loadGame
@@ -149,8 +149,12 @@
           iframe.src = initialGame.embedUrl;
           document.querySelector('h1').textContent = initialGame.title;
           document.title = initialGame.title + ' — Play Online';
-          // reflect pretty path without reloading; use trailing slash
-          history.replaceState(null,'','/' + initialGame.id + '/');
+          // Only update the address bar if the current location already contained an id
+          // (idFromLocation returned a non-null value). If user opened the root `/`,
+          // keep the address as `/` to avoid automatic navigation appearance.
+          if (idFromLocation()) {
+            history.replaceState(null,'','/' + initialGame.id + '/');
+          }
         }
 
         list.forEach(g=>{

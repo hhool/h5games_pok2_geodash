@@ -16,10 +16,23 @@ function ensureDir(dir){ if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive:
 
 ensureDir(DIST);
 
+// Use the SPA template so per-game paths render the same inline player view on refresh.
+const TEMPLATE_PATH = path.join(ROOT, 'game-template.html');
+let templateHtml = null;
+if (fs.existsSync(TEMPLATE_PATH)) {
+  templateHtml = fs.readFileSync(TEMPLATE_PATH, 'utf8');
+} else {
+  console.warn('game-template.html not found — falling back to simple per-game pages');
+}
+
 games.forEach(g=>{
   const dir = path.join(DIST, g.id);
   ensureDir(dir);
-  const html = `<!doctype html>
+  if (templateHtml) {
+    // copy the SPA template so the SPA logic loads the correct game from the path
+    fs.writeFileSync(path.join(dir, 'index.html'), templateHtml, 'utf8');
+  } else {
+    const html = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -27,18 +40,6 @@ games.forEach(g=>{
   <title>${g.title} — Play Online</title>
   <meta name="description" content="${g.desc}" />
   <link rel="stylesheet" href="/index.html">
-  <script type="application/ld+json">${JSON.stringify({
-    '@context':'https://schema.org',
-    '@type':['VideoGame','SoftwareApplication'],
-    name: g.title,
-    url: `https://geometrydash.poki2.online/${g.id}/`,
-    description: g.desc,
-    image: `https://geometrydash.poki2.online/${g.img && g.img[0] ? g.img[0] : ''}`,
-    applicationCategory: 'Game',
-    operatingSystem: 'Web',
-    author: g.publisher || { '@type':'Organization','name':'Poki2' },
-    aggregateRating: g.rating || undefined
-  })}</script>
 </head>
 <body>
   <div style="padding:18px;max-width:980px;margin:0 auto;font-family:Inter,system-ui"> 
@@ -51,7 +52,8 @@ games.forEach(g=>{
   </div>
 </body>
 </html>`;
-  fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+    fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+  }
   console.log('Generated', g.id);
 });
 
