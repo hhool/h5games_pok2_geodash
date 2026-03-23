@@ -1,0 +1,177 @@
+/* Design tokens (tuned to geometrylite feel) */
+:root{
+  --bg:#f7fbfc; /* near white with cool tone */
+  --surface:#ffffff;
+  --muted:#64748b;
+  --brand:#5dd0d4; /* teal-cyan accent */
+  --brand-2:#7b61ff; /* purple accent for contrast */
+  --text:#071024;
+  --card-radius:16px;
+  --ease:cubic-bezier(.2,.9,.3,1);
+  --shadow-1: 0 6px 20px rgba(3,10,25,0.06);
+}
+*{box-sizing:border-box}
+.hero-inner{display:flex;align-items:center;gap:20px}
+/* hero canvas (particles) */
+.hero-inner{position:relative}
+.hero-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:1;transition:opacity .4s var(--ease)}
+.hero-inner .geo-anim{position:relative;z-index:1}
+
+/* subtle hero background and feel similar to GeometryLite */
+.hero{background:linear-gradient(180deg, rgba(123,97,255,0.04) 0%, rgba(93,208,212,0.02) 50%, transparent 100%);border-bottom:1px solid rgba(14,20,40,0.02)}
+.hero .hero-copy h1{letter-spacing:0.2px}
+.hero-copy .lead{max-width:560px}
+
+/* glow for particles via canvas layering fallback */
+.hero-canvas{filter:drop-shadow(0 6px 20px rgba(123,97,255,0.06));}
+
+/* responsive embed for games */
+.game-embed{width:100%;max-width:920px;margin-right:12px}
+.game-embed iframe{display:block;width:100%;height:420px;border-radius:12px;border:1px solid rgba(2,6,23,0.04)}
+
+/* paused state: reduce animation and dim svg */
+.geo-svg.paused { animation-play-state: paused; opacity:0.18; transition:opacity .35s ease; }
+.geo-svg.slow { animation-duration: 18s !important; opacity:0.6; }
+body{font-family:Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;line-height:1.4;color:var(--text);background:var(--bg);margin:0;font-size:16px}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+.site-header{background:transparent;backdrop-filter: blur(6px);position:sticky;top:0;z-index:60}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
+.site-header .header-left{display:flex;align-items:center;gap:14px}
+.site-header .header-center{flex:1;display:flex;justify-content:center}
+.site-header .header-right{display:flex;align-items:center}
+.site-search{width:60%;max-width:540px;padding:10px 14px;border-radius:28px;border:1px solid rgba(2,6,23,0.06);box-shadow:none}
+.theme-toggle{background:transparent;border:none;font-size:18px;padding:6px 10px;border-radius:8px}
+.brand{font-weight:800;color:var(--brand-2);text-decoration:none;font-size:1.2rem;letter-spacing:0.2px}
+.nav a{margin-left:14px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem}
+
+.hero{padding:48px 0 32px}
+.hero h1{font-size:2rem;margin:0 0 10px;font-weight:700;line-height:1.08}
+.lead{color:var(--muted);margin:0;max-width:680px;font-size:1rem}
+
+/* Geometry animation */
+.geo-anim{width:220px;height:80px;flex:0 0 220px}
+.geo-svg{width:100%;height:100%;overflow:visible}
+.geo-svg .g1, .geo-svg .g3{animation:rotate-slow 9s linear infinite;transform-origin:center}
+.geo-svg .g2{animation:float 6s ease-in-out infinite;transform-origin:center}
+
+@keyframes rotate-slow{0%{transform:rotate(0deg)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+@keyframes float{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(45deg)}100%{transform:translateY(0) rotate(0deg)}}
+
+.games{padding:18px 0 60px}
+.games h2{font-size:1.05rem;margin:0 0 12px;color:var(--brand-2)}
+
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+.game-card{background:linear-gradient(180deg, rgba(255,255,255,0.75), var(--surface));border-radius:14px;overflow:hidden;box-shadow:var(--shadow-1);cursor:pointer;display:flex;flex-direction:column;transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.game-card:hover{transform:translateY(-8px);box-shadow:0 28px 70px rgba(3,10,25,0.14)}
+.game-card img{width:100%;height:160px;object-fit:cover;background:linear-gradient(180deg,#e9f7f6,#eef6ff)}
+.game-card .info{padding:14px}
+.game-card .title{font-weight:800;font-size:1.03rem;margin-bottom:6px}
+.game-card .meta{font-size:.82rem;color:var(--muted);opacity:0.9}
+
+/* Mini card layout: icon on top, name and publisher beneath */
+.game-card-mini{display:flex;flex-direction:column;align-items:center;text-align:left;padding-bottom:8px}
+.game-card-mini picture{width:72%;padding-top:72%;margin:12px auto 8px;border-radius:12px;overflow:hidden}
+.game-card-mini .card-thumb{border-radius:10px}
+/* info row: title left, publisher right */
+.game-card-mini .info{padding:6px 12px 12px;width:100%;display:flex;align-items:center;gap:8px}
+.game-card-mini .title{font-size:0.98rem;margin:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.game-card-mini .publisher{font-size:0.78rem;color:var(--muted);opacity:0.95;margin-left:8px;flex:0 0 auto;white-space:nowrap}
+
+/* left vertical nav */
+.left-nav{position:fixed;left:12px;top:60px;bottom:12px;width:56px;background:transparent;z-index:70}
+.left-nav nav ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:18px;align-items:center}
+.left-nav nav li{width:40px;height:40px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:var(--shadow-1)}
+.left-nav nav li.ln-hot{background:linear-gradient(180deg,#fffbf2,#fff3f0)}
+
+/* card badge */
+.card-badge{position:absolute;left:10px;top:10px;background:var(--brand-2);color:#fff;padding:6px 8px;border-radius:10px;font-weight:700;font-size:.75rem;box-shadow:0 6px 18px rgba(123,97,255,0.09)}
+.game-card{position:relative}
+
+/* detail page styles */
+.detail-article{background:#fff;border-radius:12px;padding:22px;box-shadow:0 24px 60px rgba(3,10,25,0.06);margin-top:18px}
+.detail-article .meta-row{display:flex;justify-content:flex-end;gap:14px;align-items:center}
+.rating-stars{color:#ffb020;font-size:1.05rem}
+
+/* responsive thumbnail container for cards */
+.game-card picture{display:block;width:100%;height:0;padding-top:56.25%;position:relative;overflow:hidden}
+.game-card .card-thumb{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:8px}
+.game-card picture source{display:none}
+.game-card .card-thumb{transition:transform .28s var(--ease),filter .28s var(--ease)}
+.game-card:hover .card-thumb{transform:scale(1.04)}
+
+/* larger card image ratio for wide screens */
+@media(min-width:900px){
+  .game-card picture{padding-top:53%}
+}
+
+@media(max-width:520px){
+  .game-card picture{padding-top:56.25%}
+  .game-card .card-thumb{border-radius:10px}
+}
+
+.site-footer{padding:18px 0;background:transparent;color:var(--muted);text-align:center}
+
+/* Detail modal */
+.game-detail{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .2s var(--ease)}
+.game-detail.open{opacity:1;pointer-events:auto}
+.detail-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.detail-card{position:relative;width:920px;max-width:96vw;background:linear-gradient(180deg, #ffffff, #fbfdff);border-radius:20px;overflow:hidden;display:flex;flex-direction:row;box-shadow:0 30px 80px rgba(3,10,25,0.18)}
+.detail-img{width:48%;height:100%;object-fit:cover;background:#f3f4f6}
+.detail-body{padding:26px 28px;flex:1 1 52%;display:flex;flex-direction:column}
+.detail-title{font-size:1.1rem;margin:0 0 10px}
+.detail-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.detail-tag{background:rgba(91,67,255,0.08);color:var(--brand-2);padding:6px 10px;border-radius:999px;font-weight:700;font-size:.78rem}
+.detail-desc{color:var(--muted);margin:6px 0 16px}
+.detail-btn-row{display:flex;gap:12px;align-items:center}
+.detail-fav-btn{background:transparent;border:1px solid rgba(2,6,23,.06);padding:8px 14px;border-radius:999px}
+.detail-play-btn{background:var(--brand);color:#fff;border:none;padding:10px 18px;border-radius:999px;box-shadow:0 8px 30px rgba(14,165,164,.12)}
+.detail-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.06);border-radius:999px;width:36px;height:36px;border:none}
+
+/* Responsive */
+@media(max-width:900px){
+  .detail-card{flex-direction:column;width:calc(100% - 32px);max-height:92vh}
+  .detail-img{width:100%;height:36vw}
+  .detail-body{height:calc(92vh - 36vw);overflow:auto}
+}
+
+/* Mobile orientation tweaks */
+@media (max-width: 720px) and (orientation: portrait) {
+  .hero{padding:28px 0 18px}
+  .hero-inner{flex-direction:column;align-items:flex-start}
+  .geo-anim{width:160px;height:64px;flex:0 0 160px;margin-bottom:10px}
+  .hero-copy{width:100%}
+  .hero h1{font-size:1.25rem}
+  .lead{font-size:0.95rem}
+  .hero-inner{min-height:calc(var(--vh,1vh) * 36)}
+  .hero-canvas{opacity:1}
+  .game-card img{height:110px}
+  /* mobile embed sizing using --vh set by JS */
+  .game-embed{flex:0 0 100%;max-width:100%;}
+  .game-embed iframe{height:calc(var(--vh,1vh) * 50) !important}
+  .detail-body{height:calc(var(--vh,1vh) * 62);overflow:auto}
+}
+
+@media (max-width: 920px) and (orientation: landscape) {
+  /* In landscape on phones, limit hero height and make content more compact */
+  .hero{padding:18px 0}
+  .hero-inner{flex-direction:row;align-items:center}
+  .geo-anim{width:140px;height:56px;flex:0 0 140px}
+  .hero-inner{min-height:calc(var(--vh,1vh) * 28)}
+  .hero h1{font-size:1.2rem}
+  .lead{font-size:0.9rem}
+  .game-grid{gap:10px}
+  .game-card img{height:110px}
+  .detail-card{width:calc(100% - 20px);max-height:calc(var(--vh,1vh) * 94)}
+  .detail-body{height:calc(var(--vh,1vh) * 70);overflow:auto}
+  .game-embed iframe{height:calc(var(--vh,1vh) * 62) !important}
+}
+
+/* Ensure detail pages stack on small screens */
+@media (max-width:520px){
+  .detail-article img{width:100%;height:auto;max-width:100%;border-radius:12px}
+  .detail-article {padding:18px 12px}
+}
+
+/* small helpers */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

@@ -1,0 +1,85 @@
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Build artifacts
+# dist/ removed so production HTML can be versioned when needed
+build/
+*.o
+*.so
+*.dll
+
+# Python virtualenv and caches
+.venv/
+pip-wheel-metadata/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Coverage and reports
+coverage/
+
+# Temporary and editor files
+*.tmp
+*.temp
+*.bak
+*.swp
+.history/
+*.swo
+.history/
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Wrangler local state
+.wrangler/
+
+# Logs
+*.log
+
+# Docker
+docker-compose.override.yml
+Dockerfile.dev
+
+# Sensitive files (keep out of repo)
+credentials.json
+secret.key
+
+# Cloudflare configuration
+cloudflare/
+
+# dist
+dist/
+
+# Lighthouse reports file
+localhost*.report.html
+
+# assets
+assets
+
+# generated audit reports
+tools/*.csv
+tools/audit/*.csv
+README.roadmap.seo.zh.md
+
+# Local verification screenshots and generated binaries — do not commit
+tools/screenshots/
+tools/*.png
+tools/*.jpg
+tools/*.jpeg
+tools/*.gif
+
+# Generated OG images (don't commit)
+public/og/
+
+# ignore orig
+orig/

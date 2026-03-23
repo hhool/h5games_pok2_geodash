@@ -1,0 +1,93 @@
+[
+  {
+    "id": "g1",
+    "title": "Geometry Dash Lite",
+    "img": [
+      "img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg",
+      "img/m394x236/g1-geometry-dash-lite-game-m394x236.jpg"
+    ],
+    "tags": ["arcade", "rhythm", "ozgames"],
+    "embedUrl": "https://ozgames.io/geometry-dash.embed",
+    "desc": "The most stable web version of Geometry Dash Lite from OzGames. Features classic rhythm-based platforming with optimized performance for browsers.",
+    "rating": { "ratingValue": 4.8, "ratingCount": 15600 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g2",
+    "title": "Geometry Dash Meltdown",
+    "img": [
+      "img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg",
+      "img/m394x236/g2-geometry-dash-meltdown-m394x236.jpg"
+    ],
+    "tags": ["action", "neon", "hardcore"],
+    "embedUrl": "https://geometrylitepc.io/geo-dash-meltdown.embed",
+    "desc": "A visually intense expansion from OzGames. Tackle lava-filled levels and new monster obstacles in this high-octane geometric challenge.",
+    "rating": { "ratingValue": 4.7, "ratingCount": 4200 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g3",
+    "title": "Geometry Dash Subzero",
+    "img": [
+      "img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg",
+      "img/m394x236/g3-geometry-dash-subzero1-m394x236.jpg"
+    ],
+    "tags": ["skills", "adventure", "unblocked"],
+    "embedUrl": "https://geometrylitepc.io/geo-dash-subzero.embed",
+    "desc": "Explore brand new worlds and fast-paced levels. OzGames brings the full 'World' experience to your browser with zero download required.",
+    "rating": { "ratingValue": 4.6, "ratingCount": 3100 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g4",
+    "title": "Geometry Dash World",
+    "img": [
+      "img/m182x112/g4-geometry-dash-world-m182x112.jpg",
+      "img/m394x236/g4-geometry-dash-world-m394x236.jpg"
+    ],
+    "tags": ["arcade", "classic"],
+    "embedUrl": "https://geometrylitepc.io/geo-dash-world.embed",
+    "desc": "A streamlined version of the classic dash mechanic. Jump over spikes and time your moves perfectly to survive the neon arena.",
+    "rating": { "ratingValue": 4.3, "ratingCount": 920 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g5",
+    "title": "Geometry Dash Hooda Math",
+    "img": [
+      "img/m182x112/g5-geometry-dash-hooda-math-m182x112.jpg",
+      "img/m394x236/g5-geometry-dash-hooda-math-m394x236.jpg"
+    ],
+    "tags": ["skills", "sequel"],
+    "embedUrl": "https://geometrylitepc.io/geo-dash-hooda-math.embed",
+    "desc": "The sequel to the hit runner. More levels, harder obstacles, and improved physics. Test your limits with this OzGames exclusive port.",
+    "rating": { "ratingValue": 4.5, "ratingCount": 1100 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g6",
+    "title": "Geometry Dash Scratch",
+    "img": [
+      "img/m182x112/g6-geometry-dash-scratch-m182x112.jpg",
+      "img/m394x236/g6-geometry-dash-scratch-m394x236.jpg"
+    ],
+    "tags": ["neon", "speed"],
+    "embedUrl": "https://geometrylitepc.io/geo-dash-scratch.embed",
+    "desc": "High-speed neon action. Collect stars and unlock new characters in this vibrant take on the geometry platforming genre.",
+    "rating": { "ratingValue": 4.4, "ratingCount": 1470 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  },
+  {
+    "id": "g7",
+    "title": "Geometry Dash Breeze - Unblocked",
+    "img": [
+      "img/m182x112/g7-geometry-dash-breeze-m182x112.jpg",
+      "img/m394x236/g7-geometry-dash-breeze-m394x236.jpg"
+    ],
+    "tags": ["unblocked", "skills"],
+    "embedUrl": "https://ozgames.io/geometry-dash-breeze.embed",
+    "desc": "Play the full Geometry Dash experience without restrictions. Perfect for schools and workplaces, this unblocked version delivers all the fun without the barriers.",
+    "rating": { "ratingValue": 4.2, "ratingCount": 800 },
+    "publisher": { "@type": "Organization", "name": "OzGames" }
+  }
+]

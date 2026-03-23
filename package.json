@@ -1,0 +1,15 @@
+{
+  "name": "geometrydash-poki2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static template for Geometry Dash unblocked — build scripts and sitemap generation",
+  "scripts": {
+    "build": "mkdir -p dist && npx html-minifier-terser --collapse-whitespace --remove-comments --minify-js true --minify-css true game-template.html -o dist/index.html && cp -R data dist/data || true && cp -R assets dist/assets || true && node scripts/generate-pages.js && node scripts/gen-sitemap.js",
+    "serve": "npx http-server dist -p 8000",
+    "preview": "python3 -m http.server --directory dist 8000"
+  },
+  "devDependencies": {
+    "html-minifier-terser": "^7.0.0",
+    "http-server": "^14.1.1"
+  }
+}

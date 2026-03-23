@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geometry Dash — Play Online Unblocked | Poki2</title>
+  <meta name="description" content="Play Geometry Dash unblocked in your browser — optimized mobile experience, controls, vault codes and quick tips. No download required." />
+  <meta name="keywords" content="geometry dash, geometry dash unblocked, play geometry dash online, vault codes, geometry guide" />
+  <style>
+    :root{--bg:#0f1720;--card:#0b1220;--muted:#9aa4b2;--accent:#ffcb05}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071124 0%,#071b2a 100%)}
+    .wrap{max-width:980px;margin:18px auto;padding:16px}
+    header.site-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .brand{color:var(--accent);font-weight:700;text-decoration:none;font-size:1.1rem}
+    .game-card{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .embed-wrap{position:relative;padding-top:56.25%;border-radius:10px;overflow:hidden;background:#000}
+    iframe#gameFrame{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .controls button{background:#0b1220;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
+    .meta{margin-top:14px;color:var(--muted);line-height:1.6}
+    h1{margin:0 0 8px 0;font-size:1.25rem}
+    @media (max-width:640px){.wrap{padding:12px}h1{font-size:1.05rem}.controls button{padding:8px}}
+    .other-games{margin-top:18px}
+    .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:10px}
+    .game-card-mini{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .game-card-mini img{width:100%;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    .game-card-mini .gmeta{font-size:.92rem;color:var(--muted);width:100%}
+    .game-card-mini .gmeta .meta-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .game-card-mini .gmeta .meta-row .title{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .game-card-mini .gmeta .meta-row .publisher{color:var(--muted);font-size:.92rem;flex-shrink:0;margin-left:8px}
+    /* detail modal */
+    .detail-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none}
+    .detail-card{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#071422;color:#e6eef6;border-radius:12px;max-width:920px;width:94%;display:none;z-index:10000;box-shadow:0 10px 40px rgba(2,6,23,0.8);overflow:hidden}
+    .detail-body{padding:16px}
+    .detail-img{width:100%;height:220px;object-fit:cover}
+    .detail-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["VideoGame","SoftwareApplication"],
+    "name": "Geometry Dash",
+    "url": "https://geometrydash.poki2.online/",
+    "description": "Play Geometry Dash unblocked online — rhythm platformer with levels, vault codes and guides.",
+    "image": "https://geometrydash.poki2.online/assets/cover.jpg",
+    "applicationCategory": "Game",
+    "operatingSystem": "Windows, macOS, iOS, Android, Web",
+    "author": {"@type":"Organization","name":"Poki2"},
+    "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"15000"}
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-head">
+      <a class="brand" href="/">GeometryLite</a>
+      <div style="color:var(--muted);font-size:.95rem">Play Geometry Dash — Unblocked & Mobile Friendly</div>
+    </header>
+
+    <main class="game-card">
+      <h1>Geometry Dash — Play Online (No Download)</h1>
+      <div class="embed-wrap" aria-label="Game embed">
+        <iframe id="gameFrame" src="https://ozgames.io/geometry-dash.embed" title="Geometry Dash game" sandbox="allow-scripts allow-same-origin allow-popups" allow="autoplay; fullscreen"></iframe>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Game controls">
+        <button id="btnFull">Fullscreen</button>
+        <button id="btnReset">Reset</button>
+      </div>
+
+      <section class="other-games" aria-label="Geometry Games">
+        <h2>Geometry Games</h2>
+        <div id="gamesGrid" class="games-grid">Loading...</div>
+      </section>
+
+      <div class="meta">
+        <strong>About</strong>
+        <p style="margin:.5rem 0;color:var(--muted)">Geometry Dash is a rhythm-based platformer. Play directly in your browser—no download required. Tap or press the Spacebar to jump in time with the music, navigate hazards, and collect secret coins. Below this window you'll find gameplay tips, Vault Codes, and FAQs to help you progress and tackle user-made challenge levels.</p>
+
+        <h2 style="margin-top:8px">Quick Start Tips</h2>
+        <ul style="color:var(--muted);margin:6px 0 0 20px">
+          <li>Controls: Spacebar / Tap / Left click.</li>
+          <li>Goal: Keep rhythm and time your jumps to avoid spikes and obstacles.</li>
+          <li>Practice Mode: Use checkpoints in practice mode to train difficult segments.</li>
+        </ul>
+
+        <h2 style="margin-top:8px">Vault Codes (example)</h2>
+        <p style="color:var(--muted);margin:6px 0">Common Vault Codes include: Lenny, Robotop, Blockbite, Neverending. Check back regularly for updates.</p>
+
+        <h2 style="margin-top:8px">FAQ</h2>
+        <div style="color:var(--muted)">
+          <strong>Do I need to download?</strong> No—click the game window above to play in your browser.<br/>
+          <strong>Will this work at school?</strong> If network restrictions block third-party embeds, self-hosting the game bundle or serving assets from your own CDN can improve availability.
+        </div>
+
+        <h2 style="margin-top:12px">Detailed Tips (example)</h2>
+        <p style="color:var(--muted);text-align:justify">Stereo Madness is the introductory level—focus on learning the beat and short, timed jumps. Back on Track introduces tempo shifts; practice the transitions between closely spaced jumps. Polargeist adds speed changes and portals; when a rapid section appears, remain calm and pre-press where necessary to build muscle memory. Use practice checkpoints to break the level into manageable segments and master each difficult passage before attempting a full run.</p>
+
+      </div>
+
+      
+    </main>
+
+  <!-- Detail modal (index.html style) -->
+  <div id="game-detail" class="game-detail" aria-hidden="true">
+    <div id="detail-backdrop" class="detail-backdrop"></div>
+    <div id="detail-card" class="detail-card" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <img id="detail-img" class="detail-img" src="" alt="">
+      <div class="detail-body">
+        <h2 id="detail-title"></h2>
+        <div id="detail-tags" style="color:var(--muted);margin:8px 0"></div>
+        <p id="detail-desc" style="color:var(--muted)"></p>
+      
+      </div>
+    </div>
+  </div>
+
+    <footer style="margin-top:18px;color:var(--muted);font-size:.9rem">© GeometryLite — Prototype · Template for geometrydash.poki2.online</footer>
+  </div>
+
+  <script>
+    <!-- detail modal removed: cards directly load games inline -->
+    const iframe = document.getElementById('gameFrame');
+    (async function renderOtherGames(){
+      const grid = document.getElementById('gamesGrid');
+      try{
+        const res = await fetch('data/games.json');
+        const list = await res.json();
+        grid.innerHTML = '';
+        // expose games list for loadGame
+        window._gamesList = list;
+
+        // derive initial selection from pathname (/g1/) or hash or fallback to first item
+        function idFromLocation(){
+          // try pathname first: e.g. /g1/ or /g1
+          const p = location.pathname.split('/').filter(Boolean);
+          if (p.length > 0){
+            const cand = p[0];
+            if (list.find(x=>x.id===cand)) return cand;
+          }
+          // fallback to hash
+          if (location.hash) return location.hash.replace('#','');
+          return null;
+        }
+
+        const initialId = idFromLocation() || (list[0] && list[0].id);
+        const initialGame = list.find(x=>x.id===initialId) || list[0];
+        if (initialGame){
+          iframe.src = initialGame.embedUrl;
+          document.querySelector('h1').textContent = initialGame.title;
+          document.title = initialGame.title + ' — Play Online';
+          // reflect pretty path without reloading; use trailing slash
+          history.replaceState(null,'','/' + initialGame.id + '/');
+        }
+
+        list.forEach(g=>{
+          const card = document.createElement('div');
+          card.className = 'game-card-mini';
+          card.setAttribute('data-id', g.id);
+          const img = document.createElement('img');
+          const srcCandidates = [
+            '/assets/games/' + (g.img && g.img[0] ? g.img[0] : ''),
+            '/data/' + (g.img && g.img[0] ? g.img[0] : ''),
+            g.img && g.img[0] ? g.img[0] : ''
+          ];
+          const realSrc = srcCandidates.find(s=>s && s.length>0) || '';
+          // set up lazy loading: use data-src and a tiny placeholder
+          img.setAttribute('data-src', realSrc);
+          img.alt = g.title;
+          img.className = 'lazy';
+          img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="72" height="44"><rect width="100%" height="100%" fill="%23071b2a"/></svg>';
+          // img.alt already set above
+          const meta = document.createElement('div');
+          meta.className = 'gmeta';
+          const metaRow = document.createElement('div');
+          metaRow.className = 'meta-row';
+          const titleEl = document.createElement('div');
+          titleEl.className = 'title';
+          titleEl.textContent = g.title;
+          const pubEl = document.createElement('div');
+          pubEl.className = 'publisher';
+          // publisher may be an object with a name property
+          const pubName = (typeof g.publisher === 'string') ? g.publisher : (g.publisher && (g.publisher.name || g.publisher)) || '';
+          pubEl.textContent = pubName;
+          metaRow.appendChild(titleEl);
+          metaRow.appendChild(pubEl);
+          // Only keep a compact subtitle slot for accessibility (hidden visually)
+          const sr = document.createElement('div');
+          sr.style.display = 'none';
+          sr.textContent = g.tags && g.tags.length ? g.tags.join(' • ') : '';
+          meta.appendChild(metaRow);
+          meta.appendChild(sr);
+          card.appendChild(img);
+          card.appendChild(meta);
+          grid.appendChild(card);
+
+          if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
+        });
+
+        // card click now loads the game inline
+        grid.querySelectorAll('.game-card-mini').forEach((card)=>{
+          card.addEventListener('click', (e)=>{ const id = card.getAttribute('data-id'); loadGame(id); });
+        });
+
+      }catch(e){
+        grid.textContent = 'Failed to load games.';
+        console.error(e);
+      }
+    })();
+
+    function loadGame(id, push=true){
+      const list = window._gamesList || [];
+      const g = list.find(x=>x.id===id);
+      if (!g) return;
+      iframe.src = g.embedUrl;
+      document.querySelector('h1').textContent = g.title;
+      document.title = g.title + ' — Play Online';
+      if (push) history.pushState(null, '', '/' + id + '/');
+      document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
+      const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
+      if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
+    }
+
+    // respond to back/forward navigation and load matching game without pushing history
+    window.addEventListener('popstate', ()=>{
+      const id = (function(){
+        const p = location.pathname.split('/').filter(Boolean);
+        if (p.length>0) return p[0];
+        if (location.hash) return location.hash.replace('#','');
+        return null;
+      })();
+      if (id){ loadGame(id, false); }
+    });
+
+    // Lazy-load images
+    (function lazyLoadInit(){
+      const lazyClass = 'lazy';
+      const imgs = ()=>Array.from(document.querySelectorAll('img.'+lazyClass));
+      if ('IntersectionObserver' in window){
+        const io = new IntersectionObserver((entries, obs) =>{
+          entries.forEach(e=>{
+            if (e.isIntersecting){
+              const img = e.target;
+              const src = img.getAttribute('data-src');
+              if (src){ img.src = src; img.removeAttribute('data-src'); }
+              img.classList.remove(lazyClass);
+              obs.unobserve(img);
+            }
+          });
+        },{rootMargin:'200px'});
+        imgs().forEach(i=> io.observe(i));
+        // re-observe when grid updated
+        const grid = document.getElementById('gamesGrid');
+        const mo = new MutationObserver(()=> imgs().forEach(i=>{ if (!i.__observed){ io.observe(i); i.__observed = true; } }));
+        mo.observe(grid, {childList:true, subtree:true});
+      } else {
+        // fallback: load all
+        imgs().forEach(i=>{ const s=i.getAttribute('data-src'); if (s) i.src = s; i.classList.remove(lazyClass); i.removeAttribute('data-src'); });
+      }
+    })();
+
+    // detail modal removed — no-op placeholders kept for backward compatibility
+    function openDetail(){ /* removed */ }
+    function closeDetail(){ /* removed */ }
+  </script>
+</body>
+</html>
