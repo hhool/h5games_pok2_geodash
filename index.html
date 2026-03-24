@@ -61,7 +61,17 @@
       try{
         var base = '';
         try{
-          base = (new URL("https://geometrydash.poki2.online")).pathname.replace(//+$/,'');
+          var __BUILD_TIME_SITE = "https://geometrydash.poki2.online";
+          if(__BUILD_TIME_SITE){
+            try{
+              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/\/+$/,'') + '/';
+              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){
+                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/\/+$/,'');
+              } else {
+                base = '';
+              }
+            }catch(e){ base = ''; }
+          }
         }catch(e){}
         if(!base){ try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; } }
         if(base === '/') base = '';

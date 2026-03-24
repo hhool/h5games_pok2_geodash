@@ -8,12 +8,12 @@
   <meta name="keywords" content="geometry dash lite, geometry dash lite unblocked, play geometry dash lite online, geometry dash lite free, geometry dash guide">
   <meta property="og:title" content="Geometry Dash Lite — Play Online">
   <meta property="og:description" content="Geometry Dash Lite is a tight, rhythm-driven platformer built for quick sessions and steady progression. In this web-first version, gameplay focuses on short, deliberate taps timed to a steady beat — not frantic mashing. Start each level slowly in practice mode to lock the musical accents and key visual cues that signal upcoming obstacles. Break longer tracks into short segments and add checkpoints where possible; mastering each micro-section turns frustrating retries into reliable progress. For double-jump sequences favor two crisp, short taps rather than long presses to control vertical drift. On mobile, close background apps and use headphones for clearer audio cues — they improve timing dramatically. If you experience inconsistent performance, lower visual effects or enable fullscreen to stabilize frame rates. This build prioritizes stability and accessibility: work on accuracy first, then gradually increase speed runs once your segments are consistently clean. Vault codes and level hints are included below to help you advance without guesswork.">
-  <meta property="og:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
-  <meta property="og:url" content="https://geometrydash.poki2.online/g1/">
+  <meta property="og:image" content="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
+  <meta property="og:url" content="https://hhool.github.io/h5games_pok2_geodash//g1/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Geometry Dash Lite — Play Online">
   <meta name="twitter:description" content="Geometry Dash Lite is a tight, rhythm-driven platformer built for quick sessions and steady progression. In this web-first version, gameplay focuses on short, deliberate taps timed to a steady beat — not frantic mashing. Start each level slowly in practice mode to lock the musical accents and key visual cues that signal upcoming obstacles. Break longer tracks into short segments and add checkpoints where possible; mastering each micro-section turns frustrating retries into reliable progress. For double-jump sequences favor two crisp, short taps rather than long presses to control vertical drift. On mobile, close background apps and use headphones for clearer audio cues — they improve timing dramatically. If you experience inconsistent performance, lower visual effects or enable fullscreen to stabilize frame rates. This build prioritizes stability and accessibility: work on accuracy first, then gradually increase speed runs once your segments are consistently clean. Vault codes and level hints are included below to help you advance without guesswork.">
-  <meta name="twitter:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
+  <meta name="twitter:image" content="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
   <meta name="keywords" content="geometry dash, geometry dash unblocked, play geometry dash online, vault codes, geometry guide" />
   <style>
     :root{--bg:#0f1720;--card:#0b1220;--muted:#9aa4b2;--accent:#ffcb05}
@@ -50,7 +50,7 @@
     .detail-img{width:100%;height:220px;object-fit:cover}
     .detail-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash Lite","url":"https://geometrydash.poki2.online/g1/","description":"Geometry Dash Lite is a tight, rhythm-driven platformer built for quick sessions and steady progression. In this web-first version, gameplay focuses on short, deliberate taps timed to a steady beat — not frantic mashing. Start each level slowly in practice mode to lock the musical accents and key visual cues that signal upcoming obstacles. Break longer tracks into short segments and add checkpoints where possible; mastering each micro-section turns frustrating retries into reliable progress. For double-jump sequences favor two crisp, short taps rather than long presses to control vertical drift. On mobile, close background apps and use headphones for clearer audio cues — they improve timing dramatically. If you experience inconsistent performance, lower visual effects or enable fullscreen to stabilize frame rates. This build prioritizes stability and accessibility: work on accuracy first, then gradually increase speed runs once your segments are consistently clean. Vault codes and level hints are included below to help you advance without guesswork.","image":"https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.8,"ratingCount":15600}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash Lite","url":"https://hhool.github.io/h5games_pok2_geodash//g1/","description":"Geometry Dash Lite is a tight, rhythm-driven platformer built for quick sessions and steady progression. In this web-first version, gameplay focuses on short, deliberate taps timed to a steady beat — not frantic mashing. Start each level slowly in practice mode to lock the musical accents and key visual cues that signal upcoming obstacles. Break longer tracks into short segments and add checkpoints where possible; mastering each micro-section turns frustrating retries into reliable progress. For double-jump sequences favor two crisp, short taps rather than long presses to control vertical drift. On mobile, close background apps and use headphones for clearer audio cues — they improve timing dramatically. If you experience inconsistent performance, lower visual effects or enable fullscreen to stabilize frame rates. This build prioritizes stability and accessibility: work on accuracy first, then gradually increase speed runs once your segments are consistently clean. Vault codes and level hints are included below to help you advance without guesswork.","image":"https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.8,"ratingCount":15600}}</script>
 
   <script>
     (function(){
@@ -58,7 +58,19 @@
         var base = '';
         // try to derive base from configured page site URL injected at build time
         try{
-          base = (new URL("https://geometrydash.poki2.online")).pathname.replace(/\/\/+$/,'');
+          var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash/";
+          if(__BUILD_TIME_SITE){
+            try{
+              // only use the build-time site root if the current location matches it;
+              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.
+              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/\/+$/,'') + '/';
+              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){
+                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/\/+$/,'');
+              } else {
+                base = '';
+              }
+            }catch(e){ base = ''; }
+          }
         }catch(e){}
         if(!base){
           try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }
