@@ -373,26 +373,35 @@
       const grid = document.getElementById('gamesGrid');
       if (!grid) return;
       grid.addEventListener('click', (e)=>{
-        // prevent default navigation if the clicked element or its ancestor is an anchor
+        // allow modified clicks (ctrl/meta/shift/alt) and middle clicks to perform
+        // browser default (open in new tab/window). For plain left-clicks,
+        // intercept and either navigate (from homepage) or use SPA `loadGame`.
         const anchor = e.target.closest && e.target.closest('a');
         if (anchor && anchor.getAttribute('href')){
-          // only intercept internal links that look like /gX/
           const href = anchor.getAttribute('href');
-          if (href.startsWith('/') || href.startsWith(window.location.origin)){
-            e.preventDefault();
+          // if it's an internal anchor and user used a modifier, let browser handle it
+          if ((href.startsWith('/') || href.startsWith(window.location.origin)) && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)){
+            return;
           }
         }
         const card = e.target.closest && e.target.closest('.game-card-mini');
         if (!card) return;
-        // only respond to left-click
+        const isModified = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button === 1);
+        // if user used a modifier or non-left click, do not hijack
+        if (isModified) return;
         if (e.button && e.button !== 0) return;
         e.preventDefault();
         e.stopPropagation();
         const id = card.getAttribute('data-id');
-        if (id) {
-          // perform full navigation to the game's path so the browser reloads the page
-          try{ window.location.assign('/' + id + '/'); }catch(e){ window.location.href = '/' + id + '/'; }
+        if (!id) return;
+        const pathParts = location.pathname.split('/').filter(Boolean);
+        const isHome = pathParts.length === 0;
+        if (isHome){
+          try{ window.location.assign('/' + id + '/'); }catch(err){ window.location.href = '/' + id + '/'; }
+          return;
         }
+        // otherwise perform SPA navigation
+        loadGame(id);
       });
     })();
 
