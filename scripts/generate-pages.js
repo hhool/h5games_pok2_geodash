@@ -175,6 +175,15 @@ games.forEach(g=>{
       page = page.replace('<!--ROOT_DESC-->', `<div id="site-desc" style="display:none">${siteDescHtml}</div><div id="root-desc">${siteDescHtml + perGameHtml}</div>`);
       page = page.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
 
+      // ensure a global repo-base var is defined for runtime navigation (used by SPA)
+      // inject before </head> so it's available to scripts that run after DOM load
+      const repoBaseScript = `\n  <script>\n    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();\n  </script>\n`;
+      if (/<\/head>/i.test(page)){
+        page = page.replace(/<\/head>/i, repoBaseScript + '</head>');
+      } else {
+        page = repoBaseScript + page;
+      }
+
       fs.writeFileSync(outPath, page, 'utf8');
     }catch(e){ console.warn('failed to inject SEO into', outPath, e); }
 
@@ -227,6 +236,14 @@ if (templateHtml) {
     });
   }
   indexHtml = indexHtml.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
+
+  // inject global repo base into homepage as well so SPA code can reference it
+  const repoBaseScriptHome = `\n  <script>\n    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();\n  </script>\n`;
+  if (/<\/head>/i.test(indexHtml)){
+    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + '</head>');
+  } else {
+    indexHtml = repoBaseScriptHome + indexHtml;
+  }
 
   fs.writeFileSync(path.join(DIST, 'index.html'), indexHtml, 'utf8');
   console.log('Generated index.html');
