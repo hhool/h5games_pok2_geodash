@@ -1,0 +1,22 @@
+{
+  "g1_g3": {
+    "g1": "Play Geometry Dash Lite for short, rhythm-led runs that reward steady timing and careful practice. Focus on isolating micro-sections of each level and using checkpoints to rehearse transitions; calming your breathing and listening for subtle audio accents will help you lock timing. Prefer two crisp taps for double-jump sequences instead of long holds to control drift; when on mobile, enable fullscreen and close background apps to stabilise frame rates. Quick tip: mark recurring visual landmarks in the level and practice only those segments until they become reflexive.",
+    "g3": "Geometry Dash Subzero centers on momentum and portal management—small, precise taps keep you on-course through icy corridors and gravity shifts. When entering a portal, give yourself a beat to feel the new physics before resuming full rhythm; use practice checkpoints to isolate mid-air combos and portal transitions. Reduce visual effects on mobile to maintain a steady FPS; stable rendering is essential for consistent input timing. Quick tip: learn the portal sequence patterns as micro-routines and train them individually before chaining them into full runs."
+  },
+  "g1_g4": {
+    "g1": "Geometry Dash Lite is built for short, approachable runs with an emphasis on rhythm clarity. Use the practice mode to split longer tracks into short drills and add checkpoints at segment ends; reinforcing each micro-section leads to smooth full clears. On mobile, use headphones to catch the beat and create a reliable tap cadence; reduce graphical effects if your device shows frame jitter. Unique tip: practice double-jump timing by counting the beat subdivisions aloud until you internalize the rhythm.",
+    "g4": "Geometry Dash World delivers classic, balanced levels that reward players who learn rhythm landmarks. Anchor your inputs to repeating audio or visual cues and increment tempo only after segments feel automatic. For portal or gravity flips, pause briefly to sense the new motion before resuming—this small habit prevents cascading misses. Unique tip: spot cluster patterns (like blue spike groups) and treat them as single rhythm anchors to simplify timing decisions."
+  },
+  "g1_g6": {
+    "g1": "Geometry Dash Lite emphasizes accessibility and accuracy—refine short sections rather than forcing full-speed runs. Break levels into two- to four-second chunks, master each with checkpoints, then chain them together; this reduces random retries and builds confidence. Tip: headphones + fullscreen equal smoother timing on most phones.",
+    "g6": "Geometry Dash Scratch is a high-speed variant focused on reaction drills and collectible routes. Start with brief reaction exercises to sharpen tap control, then isolate star paths so you can safely collect without breaking the base pattern. During speed ramps, slightly advance your taps to match the velocity and practise those ramps separately until consistent. Tip: map safe star routes visually on a paused replay before attempting collection runs."
+  },
+  "g3_g4": {
+    "g3": "In Subzero, momentum and portal timing are king—train micro-transitions to make each portal feel predictable. Use practice checkpoints to rehearse mid-air combos and reduce drift with tiny taps. Tip: learn common portal pairings as short drills (2–4 taps) you can loop until muscle memory forms.",
+    "g4": "World focuses on steady pacing and recognising repeating landmarks; slow practice builds reliable runs faster than frantic retries. Use the first section as a calibration run to set tap cadence, then tackle tougher passages as isolated drills. Tip: when gravity flips occur, breathe and take one measured tap to reestablish rhythm."
+  },
+  "g1_g5": {
+    "g1": "Geometry Dash Lite rewards rhythm-focused practice—count beats during practice runs to lock in jump windows and reduce panicked inputs. Use checkpoints strategically to rehearse bridging sequences and refine double-jump control.",
+    "g5": "Hooda Math pairs puzzle-like connectors with sequencing; treat each connector jump as a small puzzle to rehearse separately before chaining. Practice the connector transitions slowly until they become reflexive, then add tempo. Tip: when a collectible path looks risky, prioritise the safe line to keep runs intact."
+  }
+}

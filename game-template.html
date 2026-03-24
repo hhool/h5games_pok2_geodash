@@ -84,7 +84,7 @@
           <li>Practice Mode: Use checkpoints in practice mode to train difficult segments.</li>
         </ul>
 
-        <h2 style="margin-top:8px">Vault Codes (example)</h2>
+        <h2 style="margin-top:8px">Vault Codes</h2>
         <p style="color:var(--muted);margin:6px 0">Common Vault Codes include: Lenny, Robotop, Blockbite, Neverending. Check back regularly for updates.</p>
 
         <h2 style="margin-top:8px">FAQ</h2>
@@ -93,7 +93,7 @@
           <strong>Will this work at school?</strong> If network restrictions block third-party embeds, self-hosting the game bundle or serving assets from your own CDN can improve availability.
         </div>
 
-        <h2 style="margin-top:12px">Detailed Tips (example)</h2>
+        <h2 style="margin-top:12px">Detailed Tips</h2>
         <p style="color:var(--muted);text-align:justify">Stereo Madness is the introductory level—focus on learning the beat and short, timed jumps. Back on Track introduces tempo shifts; practice the transitions between closely spaced jumps. Polargeist adds speed changes and portals; when a rapid section appears, remain calm and pre-press where necessary to build muscle memory. Use practice checkpoints to break the level into manageable segments and master each difficult passage before attempting a full run.</p>
 
       </div>
@@ -233,9 +233,9 @@
         if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
         window._currentGameId = id;
           // update page description area to reflect the newly loaded game
-          try{ if (typeof updateRootDesc === 'function') updateRootDesc(g); }catch(e){console.error('updateRootDesc failed', e);} 
-          // update meta tags and JSON-LD so head reflects the selected game
-          try{ if (typeof updateMeta === 'function') updateMeta(g); }catch(e){console.error('updateMeta failed', e);} 
+            try{ if (typeof updateRootDesc === 'function') updateRootDesc(g); }catch(e){console.error('updateRootDesc failed', e);} 
+            // update meta tags and JSON-LD shortly after DOM updates so DevTools reflects changes
+            try{ if (typeof updateMeta === 'function') setTimeout(()=>{ try{ updateMeta(g); }catch(e){console.error('updateMeta failed', e);} }, 80); }catch(e){console.error('scheduling updateMeta failed', e);} 
       }
 
       // update the root description area (site + per-game) so desc/vault/levels change on client navigation
@@ -264,23 +264,57 @@
         try{ rootEl.setAttribute('data-current-game', g && g.id ? g.id : ''); console.log('root-desc data-current-game set to', rootEl.getAttribute('data-current-game')); }catch(e){console.error('failed to set data-current-game', e);} 
       }
 
-      // update meta tags (description, keywords, canonical) and JSON-LD in head
+      // update meta tags (description, keywords, canonical), OG/Twitter and JSON-LD in head
       function updateMeta(g){
         try{
           const head = document.getElementsByTagName('head')[0];
-          const descMeta = head.querySelector('meta[name="description"]');
-          const kwMeta = head.querySelector('meta[name="keywords"]');
-          const canonical = head.querySelector('link[rel="canonical"]');
           const siteOrigin = window.location.origin.replace(/\/+$/,'');
           const canonicalHref = siteOrigin + '/' + (g.id || '') + '/';
-          if (descMeta){ descMeta.setAttribute('content', g.desc || (g.title+' — Play Online')); }
-          if (kwMeta){ kwMeta.setAttribute('content', (g.keywords && g.keywords.length) ? g.keywords.join(', ') : ''); }
-          if (canonical){ canonical.setAttribute('href', canonicalHref); }
-          else { const link = document.createElement('link'); link.rel = 'canonical'; link.href = canonicalHref; head.appendChild(link); }
 
-          // JSON-LD: update or insert
-          const existingLd = head.querySelector('script[type="application/ld+json"]');
-          const imageUrl = (g.img && g.img[0]) ? (siteOrigin + '/' + String(g.img[0]).replace(/^\/+/, '')) : (siteOrigin + '/assets/cover.jpg');
+          // Remove stale tags first to avoid duplicates in DevTools
+          const staleSelectors = [
+            'meta[property^="og:"]',
+            'meta[name^="twitter:"]',
+            'meta[name="keywords"]',
+            'script[type="application/ld+json"]'
+          ];
+          staleSelectors.forEach(sel=>{
+            Array.from(head.querySelectorAll(sel)).forEach(n=> n.parentNode && n.parentNode.removeChild(n));
+          });
+
+          // Description meta (create or set)
+          let descMeta = head.querySelector('meta[name="description"]');
+          if (!descMeta){ descMeta = document.createElement('meta'); descMeta.name = 'description'; head.appendChild(descMeta); }
+          descMeta.setAttribute('content', g.desc || (g.title + ' — Play Online'));
+
+          // Canonical link (create or set)
+          let canonical = head.querySelector('link[rel="canonical"]');
+          if (!canonical){ canonical = document.createElement('link'); canonical.rel = 'canonical'; head.appendChild(canonical); }
+          canonical.href = canonicalHref;
+
+          // Keywords meta
+          const kw = (g.keywords && g.keywords.length) ? g.keywords.join(', ') : '';
+          const kwMeta = document.createElement('meta'); kwMeta.name = 'keywords'; kwMeta.content = kw; head.appendChild(kwMeta);
+
+          // OpenGraph / Twitter: create fresh tags
+          // normalize client-side image path to point at dist assets directory
+          let __imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+          if (__imgPath && !__imgPath.startsWith('assets/')){
+            __imgPath = __imgPath.replace(/^games\//, '');
+            __imgPath = 'assets/games/' + __imgPath;
+          }
+          const imageUrl = __imgPath ? (siteOrigin + '/' + __imgPath) : (siteOrigin + '/assets/cover.jpg');
+          function c(name, attr, value){ const m = document.createElement('meta'); m.setAttribute(attr, name); m.setAttribute('content', value); head.appendChild(m); }
+          c('og:title','property', g.title);
+          c('og:description','property', g.desc || '');
+          c('og:image','property', imageUrl);
+          c('og:url','property', canonicalHref);
+          c('twitter:card','name', 'summary_large_image');
+          c('twitter:title','name', g.title);
+          c('twitter:description','name', g.desc || '');
+          c('twitter:image','name', imageUrl);
+
+          // JSON-LD: create fresh script
           const ld = {
             '@context': 'https://schema.org',
             '@type': ['VideoGame','SoftwareApplication'],
@@ -293,40 +327,7 @@
             author: g.publisher || { '@type':'Organization', name: (g.publisher && g.publisher.name) || '' }
           };
           if (g.rating) ld.aggregateRating = g.rating;
-              if (existingLd){ existingLd.textContent = JSON.stringify(ld); }
-              else { const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); head.appendChild(s); }
-
-              // Remove duplicate or existing OG/Twitter/keywords tags to avoid stale entries
-              const removeSelectors = [
-                'meta[property^="og:"]',
-                'meta[name^="twitter:"]',
-                'meta[name="keywords"]'
-              ];
-              removeSelectors.forEach(sel => {
-                const nodes = Array.from(head.querySelectorAll(sel));
-                nodes.forEach(n => n.parentNode && n.parentNode.removeChild(n));
-              });
-
-              // Helper to create meta tags
-              function createMeta(attrName, attrValue, props){
-                const m = document.createElement('meta');
-                m.setAttribute(attrName, attrValue);
-                if (props && typeof props === 'object'){
-                  Object.keys(props).forEach(k=> m.setAttribute(k, props[k]));
-                }
-                head.appendChild(m);
-                return m;
-              }
-
-              createMeta('name','keywords',{content: (g.keywords && g.keywords.length) ? g.keywords.join(', ') : ''});
-              createMeta('property','og:title',{content: g.title});
-              createMeta('property','og:description',{content: g.desc || ''});
-              createMeta('property','og:image',{content: imageUrl});
-              createMeta('property','og:url',{content: canonicalHref});
-              createMeta('name','twitter:card',{content: 'summary_large_image'});
-              createMeta('name','twitter:title',{content: g.title});
-              createMeta('name','twitter:description',{content: g.desc || ''});
-              createMeta('name','twitter:image',{content: imageUrl});
+          const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); head.appendChild(s);
 
           console.log('updateMeta applied:', { title: document.title, canonical: canonicalHref, desc: (g.desc||'') });
         }catch(e){ console.error('updateMeta failed', e); }

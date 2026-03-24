@@ -8,11 +8,13 @@
 构建时注入首页正文与 JSON‑LD：把 data/site.json 和 data/games.json 在 scripts/generate-pages.js 中渲染到 dist/index.html，确保首页包含 300–500+ 字、清晰的 TDK 与 JSON‑LD。参考文件：data/seo.json、data/site.json、game-template.html、scripts/generate-pages.js、dist/。
 每个游戏页生成静态 HTML（首屏文本 + JSON‑LD）：生成 dist/gX/index.html，包含 title、meta description、canonical、JSON‑LD（VideoGame）。
 生成并部署 sitemap.xml 与 robots.txt：保证 sitemap 列出 / 与 /gX/，robots 允许抓取。
+
 阶段 2 — 增强（可在部署前完成）
 
 质量化正文：避免模板化重复内容。用数据驱动写作后进行人工校对（防止重复/拼凑导致降权）。
 OpenGraph/Twitter 卡片：在 data/seo.json 中配置 og:image、og:title 等，注入到 dist。
 Canonical 与 hreflang（如需要）：确保每页 link rel=canonical 指向站点 URL（用 siteUrl + id 生成）。
+
 阶段 3 — 自动化与发布流程
 
 CI 构建 + 自动部署：在 push 到 main 时运行 npm run build 并发布 dist/（Cloudflare Pages/GitHub Actions）。
@@ -29,6 +31,7 @@ HTTP 状态码：所有生成的页面返回 200（不是 200 带 HTML 错误页
 
 
 ## FAQ
+
 ### site的seo，关键词有哪些
 Primary: Geometry Dash, play Geometry Dash online, Geometry Dash online, Geometry Dash unblocked, Geometry Dash Lite, Geometry Dash web, Geometry Dash browser
 Site / Format: HTML5 games, play HTML5 games, mobile HTML5 games, online games no download, free online games, embed HTML5 game
