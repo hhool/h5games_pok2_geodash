@@ -179,6 +179,16 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           const segs = location.pathname.split('/').filter(Boolean);
           const repoBase = segs.length > 0 ? ('/' + segs[0]) : '';
 
+          // ensure header logo links to the repo base (so clicking logo returns
+          // to the site root under a repo subpath instead of origin root)
+          try{
+            const brandLink = document.querySelector('a.brand');
+            if (brandLink){
+              const norm = (repoBase || '').replace(/\/\/+$/,'');
+              brandLink.setAttribute('href', norm ? (norm + '/') : './');
+            }
+          }catch(e){/* ignore */}
+
           // try relative to current document
           candidates.push('data/games.json');
           // try up to two parent directories (handles /g1/ and similar paths)
