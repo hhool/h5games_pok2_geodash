@@ -16,6 +16,9 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      ENV_SITE_ROOT: "https://hhool.github.io/h5games_pok2_geodash/"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,5 +43,4 @@ jobs:
           publish_dir: ./dist
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-
+    
