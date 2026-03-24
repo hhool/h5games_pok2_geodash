@@ -194,8 +194,9 @@ games.forEach(g=>{
       page = page.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
 
       // ensure a global repo-base var is defined for runtime navigation (used by SPA)
-      // inject before </head> so it's available to scripts that run after DOM load
-      const repoBaseScript = `\n  <script>\n    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();\n  </script>\n`;
+      // prefer explicit pageSiteUrl (ENV_SITE_ROOT or seo.site.siteUrl) to compute repo base;
+      // fall back to simple first-path-segment heuristic when not available
+      const repoBaseScript = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        // try to derive base from configured page site URL injected at build time\n        try{\n          ${pageSiteUrl ? `base = (new URL(${JSON.stringify(pageSiteUrl)})).pathname.replace(/\\/\\/+$/,'');` : `/* no pageSiteUrl available at build-time */`}\n        }catch(e){}\n        if(!base){\n          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }\n        }\n        // normalise\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
       if (/<\/head>/i.test(page)){
         page = page.replace(/<\/head>/i, repoBaseScript + '</head>');
       } else {
@@ -206,26 +207,7 @@ games.forEach(g=>{
     }catch(e){ console.warn('failed to inject SEO into', outPath, e); }
 
   } else {
-    const html = `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>${g.title} — Play Online</title>
-  <meta name="description" content="${g.desc}" />
-  <link rel="stylesheet" href="/index.html">
-</head>
-<body>
-  <div style="padding:18px;max-width:980px;margin:0 auto;font-family:Inter,system-ui"> 
-    <a href="/">&larr; Back</a>
-    <h1>${g.title}</h1>
-    <div style="width:100%;max-width:960px;height:480px;background:#000;border-radius:8px;overflow:hidden">
-      <iframe src="${g.embedUrl}" title="${g.title}" sandbox="allow-scripts allow-same-origin allow-popups" allow="autoplay; fullscreen" style="width:100%;height:100%;border:0"></iframe>
-    </div>
-    <p style="color:#666;margin-top:12px">${g.desc}</p>
-  </div>
-</body>
-</html>`;
+    const html = `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8" />\n  <meta name="viewport" content="width=device-width,initial-scale=1" />\n  <title>${g.title} — Play Online</title>\n  <meta name="description" content="${g.desc}" />\n  <link rel="stylesheet" href="/index.html">\n</head>\n<body>\n  <div style="padding:18px;max-width:980px;margin:0 auto;font-family:Inter,system-ui"> \n    <a href="/">&larr; Back</a>\n    <h1>${g.title}</h1>\n    <div style="width:100%;max-width:960px;height:480px;background:#000;border-radius:8px;overflow:hidden">\n      <iframe src="${g.embedUrl}" title="${g.title}" sandbox="allow-scripts allow-same-origin allow-popups" allow="autoplay; fullscreen" style="width:100%;height:100%;border:0"></iframe>\n    </div>\n    <p style="color:#666;margin-top:12px">${g.desc}</p>\n  </div>\n</body>\n</html>`;
     fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
   }
   console.log('Generated', g.id);
@@ -256,7 +238,7 @@ if (templateHtml) {
   indexHtml = indexHtml.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
 
   // inject global repo base into homepage as well so SPA code can reference it
-  const repoBaseScriptHome = `\n  <script>\n    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();\n  </script>\n`;
+  const repoBaseScriptHome = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        try{\n          ${siteUrl ? `base = (new URL(${JSON.stringify(siteUrl)})).pathname.replace(/\/+$/,'');` : `/* no siteUrl available at build-time */`}\n        }catch(e){}\n        if(!base){ try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; } }\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
   if (/<\/head>/i.test(indexHtml)){
     indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + '</head>');
   } else {
