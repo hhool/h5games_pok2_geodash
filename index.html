@@ -446,10 +446,27 @@ Whether you’re opening the page on a phone between classes or using a desktop 
         e.stopPropagation();
         const id = card.getAttribute('data-id');
         if (!id) return;
-        const pathParts = location.pathname.split('/').filter(Boolean);
-        const isHome = pathParts.length === 0;
+        // determine if we're currently at the site's homepage relative to the repo base
+        const computeIsHome = ()=>{
+          try{
+            const base = (window._globalRepoBase && typeof window._globalRepoBase === 'string') ? window._globalRepoBase : null;
+            let relPath = location.pathname || '/';
+            if (base){
+              try{
+                const u = new URL(base, location.origin);
+                const basePath = (u.pathname || '').replace(/\/+$/,'');
+                if (basePath && relPath.indexOf(basePath) === 0) relPath = relPath.slice(basePath.length) || '/';
+              }catch(e){ /* ignore URL parse errors */ }
+            }
+            const relParts = relPath.split('/').filter(Boolean);
+            return relParts.length === 0;
+          }catch(e){ return location.pathname.split('/').filter(Boolean).length === 0; }
+        };
+        const isHome = computeIsHome();
         if (isHome){
-          try{ window.location.assign(_globalRepoBase + '/' + id + '/'); }catch(err){ window.location.href = _globalRepoBase + '/' + id + '/'; }
+          // navigate to the server-rendered per-game page so the address bar updates and the page reloads
+          const target = (window._globalRepoBase || '') + '/' + id + '/';
+          try{ window.location.assign(target); }catch(err){ window.location.href = target; }
           return;
         }
         // otherwise perform SPA navigation
