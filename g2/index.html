@@ -155,7 +155,7 @@ Whether you’re opening the page on a phone between classes or using a desktop 
     (async function renderOtherGames(){
       const grid = document.getElementById('gamesGrid');
       try{
-        const res = await fetch('/data/games.json');
+        const res = await fetch('data/games.json');
         const list = await res.json();
         grid.innerHTML = '';
         // expose games list for loadGame
