@@ -323,7 +323,7 @@ Whether you’re opening the page on a phone between classes or using a desktop 
         iframe.src = g.embedUrl;
         document.querySelector('h1').textContent = g.title;
         document.title = g.title + ' — Play Online';
-        if (push) history.pushState(null, '', (window._globalRepoBase || '') + '/' + id + '/');
+        if (push) history.pushState(null, '', ((window._globalRepoBase || '').replace(/\/\/+$/,'')) + '/' + id + '/');
         document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
         const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
         if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
@@ -490,7 +490,7 @@ Whether you’re opening the page on a phone between classes or using a desktop 
         const isHome = computeIsHome();
         if (isHome){
           // navigate to the server-rendered per-game page so the address bar updates and the page reloads
-          const target = (window._globalRepoBase || '') + '/' + id + '/';
+          const target = ((window._globalRepoBase || '').replace(/\/\/+$/,'')) + '/' + id + '/';
           try{ window.location.assign(target); }catch(err){ window.location.href = target; }
           return;
         }
