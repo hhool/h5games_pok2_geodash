@@ -53,7 +53,21 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash Hooda Math","url":"https://geometrydash.poki2.online/g5/","description":"Geometry Dash Hooda Math fuses pattern recognition with precise sequencing; think of each section as a short puzzle to be solved with timed inputs. The level design often places small connector jumps between longer leap combos, so rehearse those links separately before trying full chains. Visual anchors — repeating shapes or colors — hint at upcoming moves and are your best friends during dense spike runs. When faced with sequences of tight obstacles, prefer steady micro-taps over long holds to control your trajectory and landings. If collectible paths (like stars) tempt you into risky plays, pick safe collection routes that preserve your run. Use practice checkpoints to groove specific patterns, and gradually increase speed once your execution is consistent. For casual devices or networks with hiccups, use fullscreen and stabilize touch sensitivity to avoid missed inputs. This build rewards thoughtful practice and pattern recognition more than frantic reflexes.","image":"https://geometrydash.poki2.online/assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.5,"ratingCount":1100}}</script>
 
   <script>
-    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();
+    (function(){
+      try{
+        var base = '';
+        // try to derive base from configured page site URL injected at build time
+        try{
+          base = (new URL("https://geometrydash.poki2.online")).pathname.replace(/\/\/+$/,'');
+        }catch(e){}
+        if(!base){
+          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }
+        }
+        // normalise
+        if(base === '/') base = '';
+        window._globalRepoBase = base || '';
+      }catch(e){ window._globalRepoBase = ''; }
+    })();
   </script>
 </head>
 <body>

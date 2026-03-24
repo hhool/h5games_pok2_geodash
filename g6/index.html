@@ -53,7 +53,21 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash Scratch","url":"https://geometrydash.poki2.online/g6/","description":"Geometry Dash Scratch is built around high-speed neon loops and star-collection routes that reward both reflexes and planning. Start with reaction drills to build quick, precise tap control — then focus on safe star paths that boost scores without wrecking your run. Speed ramp sections require you to slightly advance your tap timing to match the higher velocity; practice these ramps in isolation until consistent. Maintain stable frame rates by disabling background apps or lowering visual effects; input timing is only as good as the rendering. Visual anchors inside loops help you time taps and build a steady rhythm across repeating sequences. When needed, break loops into smaller chunks and master each chunk before chaining. The finale often blends star runs with rapid sequences, so compose your play: prioritize clean passes and integrate collectibles only after you can reliably complete the base pattern.","image":"https://geometrydash.poki2.online/assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.4,"ratingCount":1470}}</script>
 
   <script>
-    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();
+    (function(){
+      try{
+        var base = '';
+        // try to derive base from configured page site URL injected at build time
+        try{
+          base = (new URL("https://geometrydash.poki2.online")).pathname.replace(/\/\/+$/,'');
+        }catch(e){}
+        if(!base){
+          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }
+        }
+        // normalise
+        if(base === '/') base = '';
+        window._globalRepoBase = base || '';
+      }catch(e){ window._globalRepoBase = ''; }
+    })();
   </script>
 </head>
 <body>
