@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geometry Dash World — Play Online</title>
+  <meta name="description" content="Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.">
+  <meta name="keywords" content="geometry dash world, geometry dash world unblocked, play geometry dash world online, geometry dash world free, geometry dash guide">
+  <meta property="og:title" content="Geometry Dash World — Play Online">
+  <meta property="og:description" content="Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.">
+  <meta property="og:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
+  <meta property="og:url" content="https://geometrydash.poki2.online/g4/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Geometry Dash World — Play Online">
+  <meta name="twitter:description" content="Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.">
+  <meta name="twitter:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
+  <meta name="keywords" content="geometry dash, geometry dash unblocked, play geometry dash online, vault codes, geometry guide" />
+  <style>
+    :root{--bg:#0f1720;--card:#0b1220;--muted:#9aa4b2;--accent:#ffcb05}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071124 0%,#071b2a 100%)}
+    .wrap{max-width:980px;margin:18px auto;padding:16px}
+    header.site-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .brand{color:var(--accent);font-weight:700;text-decoration:none;font-size:1.1rem}
+    .game-card{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .embed-wrap{position:relative;padding-top:56.25%;border-radius:10px;overflow:hidden;background:#000}
+    iframe#gameFrame{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .controls button{background:#0b1220;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
+    .meta{margin-top:14px;color:var(--muted);line-height:1.6}
+    h1{margin:0 0 8px 0;font-size:1.25rem}
+    @media (max-width:640px){.wrap{padding:12px}h1{font-size:1.05rem}.controls button{padding:8px}}
+    /* button icon labels: hidden by default, visible on small screens for clarity */
+    .controls button .btn-label{display:none;color:var(--muted);font-size:.95rem}
+    @media (max-width:640px){
+      .controls button .btn-label{display:inline-block}
+    }
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
+    .other-games{margin-top:18px}
+    .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:10px}
+    .game-card-mini{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .game-card-mini img{width:100%;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    .game-card-mini .gmeta{font-size:.92rem;color:var(--muted);width:100%}
+    .game-card-mini .gmeta .meta-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .game-card-mini .gmeta .meta-row .title{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .game-card-mini .gmeta .meta-row .publisher{color:var(--muted);font-size:.92rem;flex-shrink:0;margin-left:8px}
+    /* detail modal */
+    .detail-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none}
+    .detail-card{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#071422;color:#e6eef6;border-radius:12px;max-width:920px;width:94%;display:none;z-index:10000;box-shadow:0 10px 40px rgba(2,6,23,0.8);overflow:hidden}
+    .detail-body{padding:16px}
+    .detail-img{width:100%;height:220px;object-fit:cover}
+    .detail-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash World","url":"https://geometrydash.poki2.online/g4/","description":"Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.","image":"https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.3,"ratingCount":920}}</script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-head">
+      <a class="brand" href="/">GeometryLite</a>
+      <div style="color:var(--muted);font-size:.95rem">Play Geometry Dash — Unblocked & Mobile Friendly</div>
+    </header>
+
+    <main class="game-card">
+      <h1>Geometry Dash — Play Online (No Download)</h1>
+      <div class="embed-wrap" aria-label="Game embed">
+        <iframe id="gameFrame" src="https://ozgames.io/geometry-dash.embed" title="Geometry Dash game" sandbox="allow-scripts allow-same-origin allow-popups" allow="autoplay; fullscreen"></iframe>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Game controls">
+        <button id="btnFull" aria-label="Enter fullscreen" title="Fullscreen" style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 9V3h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 15v6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 21H3v-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="visually-hidden">Fullscreen</span>
+          <span class="btn-label">Fullscreen</span>
+        </button>
+
+        <button id="btnReset" aria-label="Reset game" title="Reset" style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.6-6.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="visually-hidden">Reset</span>
+          <span class="btn-label">Reset</span>
+        </button>
+      </div>
+
+      <section class="other-games" aria-label="Geometry Games">
+        <h2>Geometry Games</h2>
+        <div id="gamesGrid" class="games-grid"><div class="game-card-mini" data-id="g1"><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg" alt="Geometry Dash Lite"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Lite</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g2"><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg" alt="Geometry Dash Meltdown"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Meltdown</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g3"><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg" alt="Geometry Dash Subzero"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Subzero</div><div class="publisher">OzGames</div></div></div></div></div>
+      </section>
+
+      <div class="meta">
+        <strong>About</strong>
+        <div id="site-desc" style="display:none"><p style="margin:.5rem 0;color:var(--muted)">GeometryLite is a mobile-first hub for fast, browser-native Geometry Dash builds and similar rhythm platformers. Our site focuses on delivering low-latency, touch-friendly web versions that run smoothly on phones and desktops without requiring downloads or installation. Each featured game is embedded directly on the page so you can jump into gameplay instantly; we provide sensible controls (fullscreen, reset) and sandboxed embeds to keep sessions secure.
+
+Beyond pure play, we publish concise, actionable guides and tips to help players progress: quick control reminders, level-specific tactics, and troubleshooting notes for common browser issues. Content is curated to be unique and informative — not duplicated snippets — so each page adds search value for players seeking unblocked, online play, vault codes, and short walkthroughs.
+
+For developers and integrators, the site exposes structured metadata (JSON-LD) and a simple games data file so content can be updated or regenerated via scripts. This approach lets us keep the primary SEO content statically rendered at build time while allowing frequently-updated lists to load dynamically on the client.
+
+Whether you’re opening the page on a phone between classes or using a desktop for longer sessions, GeometryLite aims to make the classic Geometry Dash experience fast, accessible, and easy to find in search results.</p></div><div id="root-desc"><p style="margin:.5rem 0;color:var(--muted)">GeometryLite is a mobile-first hub for fast, browser-native Geometry Dash builds and similar rhythm platformers. Our site focuses on delivering low-latency, touch-friendly web versions that run smoothly on phones and desktops without requiring downloads or installation. Each featured game is embedded directly on the page so you can jump into gameplay instantly; we provide sensible controls (fullscreen, reset) and sandboxed embeds to keep sessions secure.
+
+Beyond pure play, we publish concise, actionable guides and tips to help players progress: quick control reminders, level-specific tactics, and troubleshooting notes for common browser issues. Content is curated to be unique and informative — not duplicated snippets — so each page adds search value for players seeking unblocked, online play, vault codes, and short walkthroughs.
+
+For developers and integrators, the site exposes structured metadata (JSON-LD) and a simple games data file so content can be updated or regenerated via scripts. This approach lets us keep the primary SEO content statically rendered at build time while allowing frequently-updated lists to load dynamically on the client.
+
+Whether you’re opening the page on a phone between classes or using a desktop for longer sessions, GeometryLite aims to make the classic Geometry Dash experience fast, accessible, and easy to find in search results.</p><p style="color:var(--muted);margin:6px 0">Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.</p><h2 style="margin-top:8px">Vault Codes</h2><p style="color:var(--muted);margin:6px 0">WorldPass, ClassicVault</p><h2 style="margin-top:8px">Levels</h2><ol style="color:var(--muted);margin:6px 0 0 18px"><li><strong>Classic Start - Learn the Landmarks</strong>: The Classic Start levels teach core rhythm landmarks — visual or audio cues that consistently indicate when to jump. Anchor your taps to these landmarks to build a foundation for more complex sections. Practice slowly until the basic patterns become reflexive, then gradually increase tempo.</li><li><strong>Neon Run - Tempo Awareness</strong>: Neon Run features faster segments that require tempo awareness. Train by isolating the faster stretches in practice mode and repeating them until you can maintain rhythm without hesitation. Spotting repeating patterns ahead of time helps you pre-adjust input timing for smooth transitions.</li><li><strong>Gravity Shift - Adapt Quickly</strong>: Gravity shifts force you to re-adapt your input window. When you see a flip or a portal, pause for a fraction of a beat to register the new physics, then resume with the adjusted cadence. Immediate overcorrections usually cause cascading mistakes.</li><li><strong>Portal Dash - Anticipate Effects</strong>: Portals can alter speed and direction; learn common portal behaviors and anticipate their effects. Practice entering portals and immediately adjusting your tap rhythm to match the new pace — this prevents early failures after transitions.</li><li><strong>Final World - Integrate Skills</strong>: The final sequences combine tempo, portals, and narrow timing windows. Instead of risking aggressive plays, aim for stable, clean passes of each segment. Combining well-rehearsed micro-skills is the most reliable route to a full clear.</li></ol></div>
+
+        <h2 style="margin-top:8px">Quick Start Tips</h2>
+        <ul style="color:var(--muted);margin:6px 0 0 20px">
+          <li>Controls: Spacebar / Tap / Left click.</li>
+          <li>Goal: Keep rhythm and time your jumps to avoid spikes and obstacles.</li>
+          <li>Practice Mode: Use checkpoints in practice mode to train difficult segments.</li>
+        </ul>
+
+        <h2 style="margin-top:8px">Vault Codes</h2>
+        <p style="color:var(--muted);margin:6px 0">Common Vault Codes include: Lenny, Robotop, Blockbite, Neverending. Check back regularly for updates.</p>
+
+        <h2 style="margin-top:8px">FAQ</h2>
+        <div style="color:var(--muted)">
+          <strong>Do I need to download?</strong> No—click the game window above to play in your browser.<br/>
+          <strong>Will this work at school?</strong> If network restrictions block third-party embeds, self-hosting the game bundle or serving assets from your own CDN can improve availability.
+        </div>
+
+        <h2 style="margin-top:12px">Detailed Tips</h2>
+        <p style="color:var(--muted);text-align:justify">Stereo Madness is the introductory level—focus on learning the beat and short, timed jumps. Back on Track introduces tempo shifts; practice the transitions between closely spaced jumps. Polargeist adds speed changes and portals; when a rapid section appears, remain calm and pre-press where necessary to build muscle memory. Use practice checkpoints to break the level into manageable segments and master each difficult passage before attempting a full run.</p>
+
+      </div>
+
+      
+    </main>
+
+  <!-- Detail modal (index.html style) -->
+  <div id="game-detail" class="game-detail" aria-hidden="true">
+    <div id="detail-backdrop" class="detail-backdrop"></div>
+    <div id="detail-card" class="detail-card" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <img id="detail-img" class="detail-img" src="" alt="">
+      <div class="detail-body">
+        <h2 id="detail-title"></h2>
+        <div id="detail-tags" style="color:var(--muted);margin:8px 0"></div>
+        <p id="detail-desc" style="color:var(--muted)"></p>
+      
+      </div>
+    </div>
+  </div>
+
+    <footer style="margin-top:18px;color:var(--muted);font-size:.9rem">© GeometryLite — Prototype · Template for geometrydash.poki2.online</footer>
+  </div>
+
+  <script>
+    <!-- detail modal removed: cards directly load games inline -->
+    const iframe = document.getElementById('gameFrame');
+    (async function renderOtherGames(){
+      const grid = document.getElementById('gamesGrid');
+      try{
+        const res = await fetch('/data/games.json');
+        const list = await res.json();
+        grid.innerHTML = '';
+        // expose games list for loadGame
+        window._gamesList = list;
+
+        // derive initial selection from pathname (/g1/) or hash or fallback to first item
+        function idFromLocation(){
+          // try pathname first: e.g. /g1/ or /g1
+          const p = location.pathname.split('/').filter(Boolean);
+          if (p.length > 0){
+            const cand = p[0];
+            if (list.find(x=>x.id===cand)) return cand;
+          }
+          // fallback to hash
+          if (location.hash) return location.hash.replace('#','');
+          return null;
+        }
+
+        const initialId = idFromLocation() || (list[0] && list[0].id);
+        const initialGame = list.find(x=>x.id===initialId) || list[0];
+        if (initialGame){
+          iframe.src = initialGame.embedUrl;
+          document.querySelector('h1').textContent = initialGame.title;
+          document.title = initialGame.title + ' — Play Online';
+          // Only update the address bar if the current location already contained an id
+          // (idFromLocation returned a non-null value). If user opened the root `/`,
+          // keep the address as `/` to avoid automatic navigation appearance.
+          if (idFromLocation()) {
+            history.replaceState(null,'','/' + initialGame.id + '/');
+          }
+          // ensure the initial page description and meta reflect the selected game
+          try{ if (typeof updateRootDesc === 'function') updateRootDesc(initialGame); }catch(e){ console.error('init updateRootDesc failed', e); }
+          try{ if (typeof updateMeta === 'function') updateMeta(initialGame); }catch(e){ console.error('init updateMeta failed', e); }
+        }
+
+        list.forEach(g=>{
+          const card = document.createElement('div');
+          card.className = 'game-card-mini';
+          card.setAttribute('data-id', g.id);
+          const img = document.createElement('img');
+          const srcCandidates = [
+            '/assets/games/' + (g.img && g.img[0] ? g.img[0] : ''),
+            '/data/' + (g.img && g.img[0] ? g.img[0] : ''),
+            g.img && g.img[0] ? g.img[0] : ''
+          ];
+          const realSrc = srcCandidates.find(s=>s && s.length>0) || '';
+          // set up lazy loading: use data-src and a tiny placeholder
+          img.setAttribute('data-src', realSrc);
+          img.alt = g.title;
+          img.className = 'lazy';
+          img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="72" height="44"><rect width="100%" height="100%" fill="%23071b2a"/></svg>';
+          // img.alt already set above
+          const meta = document.createElement('div');
+          meta.className = 'gmeta';
+          const metaRow = document.createElement('div');
+          metaRow.className = 'meta-row';
+          const titleEl = document.createElement('div');
+          titleEl.className = 'title';
+          titleEl.textContent = g.title;
+          const pubEl = document.createElement('div');
+          pubEl.className = 'publisher';
+          // publisher may be an object with a name property
+          const pubName = (typeof g.publisher === 'string') ? g.publisher : (g.publisher && (g.publisher.name || g.publisher)) || '';
+          pubEl.textContent = pubName;
+          metaRow.appendChild(titleEl);
+          metaRow.appendChild(pubEl);
+          // Only keep a compact subtitle slot for accessibility (hidden visually)
+          const sr = document.createElement('div');
+          sr.style.display = 'none';
+          sr.textContent = g.tags && g.tags.length ? g.tags.join(' • ') : '';
+          meta.appendChild(metaRow);
+          meta.appendChild(sr);
+          card.appendChild(img);
+          card.appendChild(meta);
+          grid.appendChild(card);
+
+          if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
+        });
+
+        // per-card listeners removed — delegation below handles clicks reliably
+
+      }catch(e){
+        grid.textContent = 'Failed to load games.';
+        console.error(e);
+      }
+    })();
+
+    // Debounced loader: collapse rapid calls and only load the last requested id
+    (function(){
+      let _loadTimeout = null;
+      let _pendingId = null;
+      let _pendingPush = true;
+      window._currentGameId = window._currentGameId || null;
+
+      function performLoad(id, push){
+        const list = window._gamesList || [];
+        const g = list.find(x=>x.id===id);
+        if (!g) return;
+        console.log('performLoad()', id, g && g.embedUrl);
+        iframe.src = g.embedUrl;
+        document.querySelector('h1').textContent = g.title;
+        document.title = g.title + ' — Play Online';
+        if (push) history.pushState(null, '', '/' + id + '/');
+        document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
+        const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
+        if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
+        window._currentGameId = id;
+          // update page description area to reflect the newly loaded game
+            try{ if (typeof updateRootDesc === 'function') updateRootDesc(g); }catch(e){console.error('updateRootDesc failed', e);} 
+            // update meta tags and JSON-LD shortly after DOM updates so DevTools reflects changes
+            try{ if (typeof updateMeta === 'function') setTimeout(()=>{ try{ updateMeta(g); }catch(e){console.error('updateMeta failed', e);} }, 80); }catch(e){console.error('scheduling updateMeta failed', e);} 
+      }
+
+      // update the root description area (site + per-game) so desc/vault/levels change on client navigation
+      function updateRootDesc(g){
+        const siteEl = document.getElementById('site-desc');
+        const rootEl = document.getElementById('root-desc');
+        if (!rootEl) return;
+        const siteHtml = siteEl ? siteEl.innerHTML : '';
+        let perGameHtml = '';
+        console.log('updateRootDesc called for', g && g.id);
+        if (g.guide) perGameHtml += `<p style="color:var(--muted);margin:6px 0">${g.guide}</p>`;
+        if (g.vaultCodes && Array.isArray(g.vaultCodes) && g.vaultCodes.length){
+          perGameHtml += `<h2 style="margin-top:8px">Vault Codes</h2><p style="color:var(--muted);margin:6px 0">${g.vaultCodes.join(', ')}</p>`;
+        }
+        if (g.levels && Array.isArray(g.levels) && g.levels.length){
+          perGameHtml += `<h2 style="margin-top:8px">Levels</h2><ol style="color:var(--muted);margin:6px 0 0 18px">`;
+          g.levels.forEach(l=>{
+            const title = l.name || '';
+            const guide = l.guide || '';
+            perGameHtml += `<li><strong>${title}</strong>${guide ? ': ' + guide : ''}</li>`;
+          });
+          perGameHtml += `</ol>`;
+        }
+        console.log('updateRootDesc: siteHtml length', siteHtml.length, 'perGameHtml length', perGameHtml.length);
+        rootEl.innerHTML = siteHtml + perGameHtml;
+        try{ rootEl.setAttribute('data-current-game', g && g.id ? g.id : ''); console.log('root-desc data-current-game set to', rootEl.getAttribute('data-current-game')); }catch(e){console.error('failed to set data-current-game', e);} 
+      }
+
+      // update meta tags (description, keywords, canonical), OG/Twitter and JSON-LD in head
+      function updateMeta(g){
+        try{
+          const head = document.getElementsByTagName('head')[0];
+          const siteOrigin = window.location.origin.replace(/\/+$/,'');
+          const canonicalHref = siteOrigin + '/' + (g.id || '') + '/';
+
+          // Remove stale tags first to avoid duplicates in DevTools
+          const staleSelectors = [
+            'meta[property^="og:"]',
+            'meta[name^="twitter:"]',
+            'meta[name="keywords"]',
+            'script[type="application/ld+json"]'
+          ];
+          staleSelectors.forEach(sel=>{
+            Array.from(head.querySelectorAll(sel)).forEach(n=> n.parentNode && n.parentNode.removeChild(n));
+          });
+
+          // Description meta (create or set)
+          let descMeta = head.querySelector('meta[name="description"]');
+          if (!descMeta){ descMeta = document.createElement('meta'); descMeta.name = 'description'; head.appendChild(descMeta); }
+          descMeta.setAttribute('content', g.desc || (g.title + ' — Play Online'));
+
+          // Canonical link (create or set)
+          let canonical = head.querySelector('link[rel="canonical"]');
+          if (!canonical){ canonical = document.createElement('link'); canonical.rel = 'canonical'; head.appendChild(canonical); }
+          canonical.href = canonicalHref;
+
+          // Keywords meta
+          const kw = (g.keywords && g.keywords.length) ? g.keywords.join(', ') : '';
+          const kwMeta = document.createElement('meta'); kwMeta.name = 'keywords'; kwMeta.content = kw; head.appendChild(kwMeta);
+
+          // OpenGraph / Twitter: create fresh tags
+          // normalize client-side image path to point at dist assets directory
+          let __imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+          if (__imgPath && !__imgPath.startsWith('assets/')){
+            __imgPath = __imgPath.replace(/^games\//, '');
+            __imgPath = 'assets/games/' + __imgPath;
+          }
+          const imageUrl = __imgPath ? (siteOrigin + '/' + __imgPath) : (siteOrigin + '/assets/cover.jpg');
+          function c(name, attr, value){ const m = document.createElement('meta'); m.setAttribute(attr, name); m.setAttribute('content', value); head.appendChild(m); }
+          c('og:title','property', g.title);
+          c('og:description','property', g.desc || '');
+          c('og:image','property', imageUrl);
+          c('og:url','property', canonicalHref);
+          c('twitter:card','name', 'summary_large_image');
+          c('twitter:title','name', g.title);
+          c('twitter:description','name', g.desc || '');
+          c('twitter:image','name', imageUrl);
+
+          // JSON-LD: create fresh script
+          const ld = {
+            '@context': 'https://schema.org',
+            '@type': ['VideoGame','SoftwareApplication'],
+            name: g.title,
+            url: canonicalHref,
+            description: g.desc || '',
+            image: imageUrl,
+            applicationCategory: 'Game',
+            operatingSystem: 'Web',
+            author: g.publisher || { '@type':'Organization', name: (g.publisher && g.publisher.name) || '' }
+          };
+          if (g.rating) ld.aggregateRating = g.rating;
+          const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); head.appendChild(s);
+
+          console.log('updateMeta applied:', { title: document.title, canonical: canonicalHref, desc: (g.desc||'') });
+        }catch(e){ console.error('updateMeta failed', e); }
+      }
+
+      window.loadGame = function(id, push=true){
+        _pendingId = id;
+        _pendingPush = push;
+        if (_loadTimeout) clearTimeout(_loadTimeout);
+        _loadTimeout = setTimeout(()=>{
+          performLoad(_pendingId, _pendingPush);
+          _loadTimeout = null;
+          _pendingId = null;
+        }, 120);
+      };
+    })();
+
+    // Delegated click handler on the grid — more robust when nodes are replaced
+    (function delegatedGridClicks(){
+      const grid = document.getElementById('gamesGrid');
+      if (!grid) return;
+      grid.addEventListener('click', (e)=>{
+        // allow modified clicks (ctrl/meta/shift/alt) and middle clicks to perform
+        // browser default (open in new tab/window). For plain left-clicks,
+        // intercept and either navigate (from homepage) or use SPA `loadGame`.
+        const anchor = e.target.closest && e.target.closest('a');
+        if (anchor && anchor.getAttribute('href')){
+          const href = anchor.getAttribute('href');
+          // if it's an internal anchor and user used a modifier, let browser handle it
+          if ((href.startsWith('/') || href.startsWith(window.location.origin)) && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)){
+            return;
+          }
+        }
+        const card = e.target.closest && e.target.closest('.game-card-mini');
+        if (!card) return;
+        const isModified = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button === 1);
+        // if user used a modifier or non-left click, do not hijack
+        if (isModified) return;
+        if (e.button && e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const id = card.getAttribute('data-id');
+        if (!id) return;
+        const pathParts = location.pathname.split('/').filter(Boolean);
+        const isHome = pathParts.length === 0;
+        if (isHome){
+          try{ window.location.assign('/' + id + '/'); }catch(err){ window.location.href = '/' + id + '/'; }
+          return;
+        }
+        // otherwise perform SPA navigation
+        loadGame(id);
+      });
+    })();
+
+    // Fullscreen and Reset button handlers
+    (function attachControlHandlers(){
+      const btnFull = document.getElementById('btnFull');
+      const btnReset = document.getElementById('btnReset');
+      if (btnFull){
+        btnFull.addEventListener('click', async (e)=>{
+          try{
+            // prefer making the iframe fullscreen; fall back to its parent container
+            if (document.fullscreenElement){
+              await document.exitFullscreen();
+              return;
+            }
+            if (iframe.requestFullscreen) await iframe.requestFullscreen();
+            else if (iframe.parentElement && iframe.parentElement.requestFullscreen) await iframe.parentElement.requestFullscreen();
+            else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+          }catch(err){ console.warn('Fullscreen request failed', err); }
+        });
+      }
+      if (btnReset){
+        btnReset.addEventListener('click', (e)=>{
+          try{
+            // if we know current game and its embedUrl, reload that URL to reset state
+            const list = window._gamesList || [];
+            const id = window._currentGameId;
+            const g = list.find(x=>x.id===id);
+            if (g && g.embedUrl){
+              // force reload by toggling src
+              const cur = iframe.src;
+              iframe.src = '';
+              // small delay to ensure iframe unloads then reassign
+              setTimeout(()=>{ iframe.src = g.embedUrl; }, 50);
+            } else {
+              // try reloading iframe contentWindow as fallback
+              try{ iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.reload(); }catch(e){ iframe.src = iframe.src; }
+            }
+          }catch(err){ console.warn('Reset failed', err); }
+        });
+      }
+    })();
+
+    // respond to back/forward navigation and load matching game without pushing history
+    window.addEventListener('popstate', ()=>{
+      const id = (function(){
+        const p = location.pathname.split('/').filter(Boolean);
+        if (p.length>0) return p[0];
+        if (location.hash) return location.hash.replace('#','');
+        return null;
+      })();
+      if (id){ loadGame(id, false); }
+    });
+
+    // Lazy-load images
+    (function lazyLoadInit(){
+      const lazyClass = 'lazy';
+      const imgs = ()=>Array.from(document.querySelectorAll('img.'+lazyClass));
+      if ('IntersectionObserver' in window){
+        const io = new IntersectionObserver((entries, obs) =>{
+          entries.forEach(e=>{
+            if (e.isIntersecting){
+              const img = e.target;
+              const src = img.getAttribute('data-src');
+              if (src){ img.src = src; img.removeAttribute('data-src'); }
+              img.classList.remove(lazyClass);
+              obs.unobserve(img);
+            }
+          });
+        },{rootMargin:'200px'});
+        imgs().forEach(i=> io.observe(i));
+        // re-observe when grid updated
+        const grid = document.getElementById('gamesGrid');
+        const mo = new MutationObserver(()=> imgs().forEach(i=>{ if (!i.__observed){ io.observe(i); i.__observed = true; } }));
+        mo.observe(grid, {childList:true, subtree:true});
+      } else {
+        // fallback: load all
+        imgs().forEach(i=>{ const s=i.getAttribute('data-src'); if (s) i.src = s; i.classList.remove(lazyClass); i.removeAttribute('data-src'); });
+      }
+    })();
+
+    // detail modal removed — no-op placeholders kept for backward compatibility
+    function openDetail(){ /* removed */ }
+    function closeDetail(){ /* removed */ }
+  </script>
+</body>
+</html>
