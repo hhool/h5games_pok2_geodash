@@ -55,6 +55,10 @@
     "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.7","ratingCount":"15000"}
   }
   </script>
+
+  <script>
+    (function(){ try{ const segs = location.pathname.split('/').filter(Boolean); window._globalRepoBase = segs.length>0?('/'+segs[0]):''; }catch(e){ window._globalRepoBase = ''; } })();
+  </script>
 </head>
 <body>
   <div class="wrap">
