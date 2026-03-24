@@ -11,8 +11,10 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -32,23 +34,11 @@ jobs:
           npm run build --if-present || true
           node scripts/generate-pages.js
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to GitHub Pages (push to gh-pages)
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
-        with:
-          # the artifact from the build job will be deployed by this action
-          # the Pages artifact is uploaded in the `build` job via actions/upload-pages-artifact@v1
-          # the action uses the GITHUB_TOKEN automatically
-          # no extra inputs required here
-          
+
