@@ -20,6 +20,12 @@
     .meta{margin-top:14px;color:var(--muted);line-height:1.6}
     h1{margin:0 0 8px 0;font-size:1.25rem}
     @media (max-width:640px){.wrap{padding:12px}h1{font-size:1.05rem}.controls button{padding:8px}}
+    /* button icon labels: hidden by default, visible on small screens for clarity */
+    .controls button .btn-label{display:none;color:var(--muted);font-size:.95rem}
+    @media (max-width:640px){
+      .controls button .btn-label{display:inline-block}
+    }
+    .visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px}
     .other-games{margin-top:18px}
     .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:10px}
     .game-card-mini{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
@@ -64,8 +70,25 @@
       </div>
 
       <div class="controls" role="toolbar" aria-label="Game controls">
-        <button id="btnFull">Fullscreen</button>
-        <button id="btnReset">Reset</button>
+        <button id="btnFull" aria-label="Enter fullscreen" title="Fullscreen" style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 9V3h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 15v6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 21H3v-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="visually-hidden">Fullscreen</span>
+          <span class="btn-label">Fullscreen</span>
+        </button>
+
+        <button id="btnReset" aria-label="Reset game" title="Reset" style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.6-6.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="visually-hidden">Reset</span>
+          <span class="btn-label">Reset</span>
+        </button>
       </div>
 
       <section class="other-games" aria-label="Geometry Games">
@@ -368,6 +391,46 @@
         const id = card.getAttribute('data-id');
         if (id) loadGame(id);
       });
+    })();
+
+    // Fullscreen and Reset button handlers
+    (function attachControlHandlers(){
+      const btnFull = document.getElementById('btnFull');
+      const btnReset = document.getElementById('btnReset');
+      if (btnFull){
+        btnFull.addEventListener('click', async (e)=>{
+          try{
+            // prefer making the iframe fullscreen; fall back to its parent container
+            if (document.fullscreenElement){
+              await document.exitFullscreen();
+              return;
+            }
+            if (iframe.requestFullscreen) await iframe.requestFullscreen();
+            else if (iframe.parentElement && iframe.parentElement.requestFullscreen) await iframe.parentElement.requestFullscreen();
+            else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+          }catch(err){ console.warn('Fullscreen request failed', err); }
+        });
+      }
+      if (btnReset){
+        btnReset.addEventListener('click', (e)=>{
+          try{
+            // if we know current game and its embedUrl, reload that URL to reset state
+            const list = window._gamesList || [];
+            const id = window._currentGameId;
+            const g = list.find(x=>x.id===id);
+            if (g && g.embedUrl){
+              // force reload by toggling src
+              const cur = iframe.src;
+              iframe.src = '';
+              // small delay to ensure iframe unloads then reassign
+              setTimeout(()=>{ iframe.src = g.embedUrl; }, 50);
+            } else {
+              // try reloading iframe contentWindow as fallback
+              try{ iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.reload(); }catch(e){ iframe.src = iframe.src; }
+            }
+          }catch(err){ console.warn('Reset failed', err); }
+        });
+      }
     })();
 
     // respond to back/forward navigation and load matching game without pushing history
