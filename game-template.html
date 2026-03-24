@@ -231,7 +231,19 @@
             'data/' + (g.img && g.img[0] ? g.img[0] : ''),
             g.img && g.img[0] ? g.img[0] : ''
           ];
-          const realSrc = srcCandidates.find(s=>s && s.length>0) || '';
+          // resolve candidate to an absolute path under the repo base when necessary
+          const repoBase = (window._globalRepoBase && typeof window._globalRepoBase === 'string') ? window._globalRepoBase.replace(/\/+$/,'') : '';
+          function resolveCandidate(s){
+            if (!s) return '';
+            if (s.indexOf('http://')===0 || s.indexOf('https://')===0) return s;
+            // already absolute-rooted path
+            if (s.indexOf('/')===0){
+              return repoBase ? (repoBase + s) : s;
+            }
+            // relative path -> prefix with repoBase
+            return repoBase ? (repoBase + '/' + s) : s;
+          }
+          const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
           // set up lazy loading: use data-src and a tiny placeholder
           img.setAttribute('data-src', realSrc);
           img.alt = g.title;
