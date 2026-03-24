@@ -389,7 +389,10 @@
         e.preventDefault();
         e.stopPropagation();
         const id = card.getAttribute('data-id');
-        if (id) loadGame(id);
+        if (id) {
+          // perform full navigation to the game's path so the browser reloads the page
+          try{ window.location.assign('/' + id + '/'); }catch(e){ window.location.href = '/' + id + '/'; }
+        }
       });
     })();
 
