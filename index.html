@@ -153,7 +153,37 @@ Whether you’re opening the page on a phone between classes or using a desktop 
     (async function renderOtherGames(){
       const grid = document.getElementById('gamesGrid');
       try{
-        const res = await fetch('https://geometrydash.poki2.online/data/games.json');
+        async function fetchGamesJson(){
+          const candidates = [];
+          // try relative to current document
+          candidates.push('data/games.json');
+          // try up to two parent directories (handles /g1/ and similar paths)
+          candidates.push('../data/games.json');
+          candidates.push('../../data/games.json');
+          // try canonical link if present (site root)
+          try{
+            const canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical && canonical.href){
+              try{ const u = new URL(canonical.href); candidates.push(u.origin + u.pathname.replace(/\/+$/,'') + '/data/games.json'); }catch(e){}
+            }
+          }catch(e){}
+          // try repository-style first path (useful on GH Pages with a repo subpath)
+          try{
+            const segs = location.pathname.split('/').filter(Boolean);
+            if (segs.length > 0) candidates.push('/' + segs[0] + '/data/games.json');
+          }catch(e){}
+
+          for (const url of candidates){
+            try{
+              const r = await fetch(url);
+              if (r && r.ok) return r;
+            }catch(e){ /* ignore and try next */ }
+          }
+          // final attempt (may throw)
+          return fetch('data/games.json');
+        }
+
+        const res = await fetchGamesJson();
         const list = await res.json();
         grid.innerHTML = '';
         // expose games list for loadGame
