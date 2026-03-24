@@ -44,10 +44,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Deploy to GitHub Pages (peaceiris)
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
         with:
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # the artifact from the build job will be deployed by this action
+          # the Pages artifact is uploaded in the `build` job via actions/upload-pages-artifact@v1
+          # the action uses the GITHUB_TOKEN automatically
+          # no extra inputs required here
+          
