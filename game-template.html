@@ -70,12 +70,12 @@
 
       <section class="other-games" aria-label="Geometry Games">
         <h2>Geometry Games</h2>
-        <div id="gamesGrid" class="games-grid">Loading...</div>
+        <div id="gamesGrid" class="games-grid"><!--FEATURED_GAMES--></div>
       </section>
 
       <div class="meta">
         <strong>About</strong>
-        <p style="margin:.5rem 0;color:var(--muted)">Geometry Dash is a rhythm-based platformer. Play directly in your browser—no download required. Tap or press the Spacebar to jump in time with the music, navigate hazards, and collect secret coins. Below this window you'll find gameplay tips, Vault Codes, and FAQs to help you progress and tackle user-made challenge levels.</p>
+        <!--ROOT_DESC-->
 
         <h2 style="margin-top:8px">Quick Start Tips</h2>
         <ul style="color:var(--muted);margin:6px 0 0 20px">
@@ -155,6 +155,9 @@
           if (idFromLocation()) {
             history.replaceState(null,'','/' + initialGame.id + '/');
           }
+          // ensure the initial page description and meta reflect the selected game
+          try{ if (typeof updateRootDesc === 'function') updateRootDesc(initialGame); }catch(e){ console.error('init updateRootDesc failed', e); }
+          try{ if (typeof updateMeta === 'function') updateMeta(initialGame); }catch(e){ console.error('init updateMeta failed', e); }
         }
 
         list.forEach(g=>{
@@ -201,10 +204,7 @@
           if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
         });
 
-        // card click now loads the game inline
-        grid.querySelectorAll('.game-card-mini').forEach((card)=>{
-          card.addEventListener('click', (e)=>{ const id = card.getAttribute('data-id'); loadGame(id); });
-        });
+        // per-card listeners removed — delegation below handles clicks reliably
 
       }catch(e){
         grid.textContent = 'Failed to load games.';
@@ -212,18 +212,162 @@
       }
     })();
 
-    function loadGame(id, push=true){
-      const list = window._gamesList || [];
-      const g = list.find(x=>x.id===id);
-      if (!g) return;
-      iframe.src = g.embedUrl;
-      document.querySelector('h1').textContent = g.title;
-      document.title = g.title + ' — Play Online';
-      if (push) history.pushState(null, '', '/' + id + '/');
-      document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
-      const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
-      if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
-    }
+    // Debounced loader: collapse rapid calls and only load the last requested id
+    (function(){
+      let _loadTimeout = null;
+      let _pendingId = null;
+      let _pendingPush = true;
+      window._currentGameId = window._currentGameId || null;
+
+      function performLoad(id, push){
+        const list = window._gamesList || [];
+        const g = list.find(x=>x.id===id);
+        if (!g) return;
+        console.log('performLoad()', id, g && g.embedUrl);
+        iframe.src = g.embedUrl;
+        document.querySelector('h1').textContent = g.title;
+        document.title = g.title + ' — Play Online';
+        if (push) history.pushState(null, '', '/' + id + '/');
+        document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
+        const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
+        if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
+        window._currentGameId = id;
+          // update page description area to reflect the newly loaded game
+          try{ if (typeof updateRootDesc === 'function') updateRootDesc(g); }catch(e){console.error('updateRootDesc failed', e);} 
+          // update meta tags and JSON-LD so head reflects the selected game
+          try{ if (typeof updateMeta === 'function') updateMeta(g); }catch(e){console.error('updateMeta failed', e);} 
+      }
+
+      // update the root description area (site + per-game) so desc/vault/levels change on client navigation
+      function updateRootDesc(g){
+        const siteEl = document.getElementById('site-desc');
+        const rootEl = document.getElementById('root-desc');
+        if (!rootEl) return;
+        const siteHtml = siteEl ? siteEl.innerHTML : '';
+        let perGameHtml = '';
+        console.log('updateRootDesc called for', g && g.id);
+        if (g.guide) perGameHtml += `<p style="color:var(--muted);margin:6px 0">${g.guide}</p>`;
+        if (g.vaultCodes && Array.isArray(g.vaultCodes) && g.vaultCodes.length){
+          perGameHtml += `<h2 style="margin-top:8px">Vault Codes</h2><p style="color:var(--muted);margin:6px 0">${g.vaultCodes.join(', ')}</p>`;
+        }
+        if (g.levels && Array.isArray(g.levels) && g.levels.length){
+          perGameHtml += `<h2 style="margin-top:8px">Levels</h2><ol style="color:var(--muted);margin:6px 0 0 18px">`;
+          g.levels.forEach(l=>{
+            const title = l.name || '';
+            const guide = l.guide || '';
+            perGameHtml += `<li><strong>${title}</strong>${guide ? ': ' + guide : ''}</li>`;
+          });
+          perGameHtml += `</ol>`;
+        }
+        console.log('updateRootDesc: siteHtml length', siteHtml.length, 'perGameHtml length', perGameHtml.length);
+        rootEl.innerHTML = siteHtml + perGameHtml;
+        try{ rootEl.setAttribute('data-current-game', g && g.id ? g.id : ''); console.log('root-desc data-current-game set to', rootEl.getAttribute('data-current-game')); }catch(e){console.error('failed to set data-current-game', e);} 
+      }
+
+      // update meta tags (description, keywords, canonical) and JSON-LD in head
+      function updateMeta(g){
+        try{
+          const head = document.getElementsByTagName('head')[0];
+          const descMeta = head.querySelector('meta[name="description"]');
+          const kwMeta = head.querySelector('meta[name="keywords"]');
+          const canonical = head.querySelector('link[rel="canonical"]');
+          const siteOrigin = window.location.origin.replace(/\/+$/,'');
+          const canonicalHref = siteOrigin + '/' + (g.id || '') + '/';
+          if (descMeta){ descMeta.setAttribute('content', g.desc || (g.title+' — Play Online')); }
+          if (kwMeta){ kwMeta.setAttribute('content', (g.keywords && g.keywords.length) ? g.keywords.join(', ') : ''); }
+          if (canonical){ canonical.setAttribute('href', canonicalHref); }
+          else { const link = document.createElement('link'); link.rel = 'canonical'; link.href = canonicalHref; head.appendChild(link); }
+
+          // JSON-LD: update or insert
+          const existingLd = head.querySelector('script[type="application/ld+json"]');
+          const imageUrl = (g.img && g.img[0]) ? (siteOrigin + '/' + String(g.img[0]).replace(/^\/+/, '')) : (siteOrigin + '/assets/cover.jpg');
+          const ld = {
+            '@context': 'https://schema.org',
+            '@type': ['VideoGame','SoftwareApplication'],
+            name: g.title,
+            url: canonicalHref,
+            description: g.desc || '',
+            image: imageUrl,
+            applicationCategory: 'Game',
+            operatingSystem: 'Web',
+            author: g.publisher || { '@type':'Organization', name: (g.publisher && g.publisher.name) || '' }
+          };
+          if (g.rating) ld.aggregateRating = g.rating;
+              if (existingLd){ existingLd.textContent = JSON.stringify(ld); }
+              else { const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); head.appendChild(s); }
+
+              // Remove duplicate or existing OG/Twitter/keywords tags to avoid stale entries
+              const removeSelectors = [
+                'meta[property^="og:"]',
+                'meta[name^="twitter:"]',
+                'meta[name="keywords"]'
+              ];
+              removeSelectors.forEach(sel => {
+                const nodes = Array.from(head.querySelectorAll(sel));
+                nodes.forEach(n => n.parentNode && n.parentNode.removeChild(n));
+              });
+
+              // Helper to create meta tags
+              function createMeta(attrName, attrValue, props){
+                const m = document.createElement('meta');
+                m.setAttribute(attrName, attrValue);
+                if (props && typeof props === 'object'){
+                  Object.keys(props).forEach(k=> m.setAttribute(k, props[k]));
+                }
+                head.appendChild(m);
+                return m;
+              }
+
+              createMeta('name','keywords',{content: (g.keywords && g.keywords.length) ? g.keywords.join(', ') : ''});
+              createMeta('property','og:title',{content: g.title});
+              createMeta('property','og:description',{content: g.desc || ''});
+              createMeta('property','og:image',{content: imageUrl});
+              createMeta('property','og:url',{content: canonicalHref});
+              createMeta('name','twitter:card',{content: 'summary_large_image'});
+              createMeta('name','twitter:title',{content: g.title});
+              createMeta('name','twitter:description',{content: g.desc || ''});
+              createMeta('name','twitter:image',{content: imageUrl});
+
+          console.log('updateMeta applied:', { title: document.title, canonical: canonicalHref, desc: (g.desc||'') });
+        }catch(e){ console.error('updateMeta failed', e); }
+      }
+
+      window.loadGame = function(id, push=true){
+        _pendingId = id;
+        _pendingPush = push;
+        if (_loadTimeout) clearTimeout(_loadTimeout);
+        _loadTimeout = setTimeout(()=>{
+          performLoad(_pendingId, _pendingPush);
+          _loadTimeout = null;
+          _pendingId = null;
+        }, 120);
+      };
+    })();
+
+    // Delegated click handler on the grid — more robust when nodes are replaced
+    (function delegatedGridClicks(){
+      const grid = document.getElementById('gamesGrid');
+      if (!grid) return;
+      grid.addEventListener('click', (e)=>{
+        // prevent default navigation if the clicked element or its ancestor is an anchor
+        const anchor = e.target.closest && e.target.closest('a');
+        if (anchor && anchor.getAttribute('href')){
+          // only intercept internal links that look like /gX/
+          const href = anchor.getAttribute('href');
+          if (href.startsWith('/') || href.startsWith(window.location.origin)){
+            e.preventDefault();
+          }
+        }
+        const card = e.target.closest && e.target.closest('.game-card-mini');
+        if (!card) return;
+        // only respond to left-click
+        if (e.button && e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const id = card.getAttribute('data-id');
+        if (id) loadGame(id);
+      });
+    })();
 
     // respond to back/forward navigation and load matching game without pushing history
     window.addEventListener('popstate', ()=>{

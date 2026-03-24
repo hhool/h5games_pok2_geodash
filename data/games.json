@@ -7,6 +7,16 @@
       "img/m394x236/g1-geometry-dash-lite-game-m394x236.jpg"
     ],
     "tags": ["arcade", "rhythm", "ozgames"],
+    "keywords": ["geometry dash lite","geometry dash lite unblocked","play geometry dash lite online","geometry dash lite free","geometry dash guide"],
+    "vaultCodes": ["Lenny","Robotop","Blockbite"],
+    "guide": "Geometry Dash Lite is a rhythm-based precision platformer best played with calm, short taps. Focus on learning the beat: most obstacle patterns sync to simple musical accents. Start each level slowly in practice mode and place checkpoints at the ends of difficult sections. When you see a rapid series of jumps, stay steady — pre-press slightly before difficult sequences to smooth your inputs. Small timing adjustments beat frantic mashing. If running on mobile, disable background apps and use headphones for clearer audio cues. Gradually increase speed runs only after chaining clean sections together.",
+    "levels": [
+      {"name":"Stereo Madness - Beginner Rhythm","guide":"Stereo Madness is a classic beginner level that teaches core timing and jump rhythm. Spend time in practice mode listening to the track and aligning your taps with the main beat; most obstacles sync to the music. Break the level into short segments and add checkpoints at logical breaks so you can repeatedly practice tricky transitions. For double-jump sequences, use two crisp short taps rather than a long press — this gives you better height control and reduces drift. Use headphones to pick up subtle audio cues, and keep your finger relaxed; tension often causes mistimed inputs. Gradually increase your speed only after you can consistently clear each segment."},
+      {"name":"Back on Track - Tempo Shift","guide":"Back on Track introduces tempo variation and longer sequences. Focus on identifying repeating visual markers that cue tempo changes and prepare your taps accordingly. In sections where the music accelerates, slightly advance your input timing to compensate for increased velocity. Practice the longer jump chains slowly until you can execute them reliably without breaking rhythm. When a new pattern appears, isolate it with checkpoints and repeat until it becomes second nature. Staying calm and breathing evenly helps you maintain steadier hands during multiphase sections."},
+      {"name":"Polargeist - Portals & Gravity","guide":"Polargeist adds portals that alter gravity or speed — the key is reading the portal’s effect before resuming your previous rhythm. Enter portals calmly, give a fraction of a beat to register the change, then reestablish timing. When gravity flips, micro-taps are preferable to long holds to control altitude. Use practice mode to rehearse portal transitions and to build the reflexes needed for unpredictable sequences. Keeping your visual focus slightly ahead of the avatar helps you anticipate obstacles after the portal’s effect kicks in."},
+      {"name":"Dry Out - Speed Sections","guide":"Dry Out contains rapid speed stretches that demand consistent timing and momentum control. On accelerated sections, tap marginally earlier to account for faster horizontal movement. If a stretch feels overwhelming, slow it down in practice mode and train until the pattern becomes predictable. Focus on the smallest safe movements — short, steady taps often outperform frantic mashing. Maintaining a stable frame rate on your device reduces input jitter, so close background apps or lower graphical settings on mobile devices when necessary."},
+      {"name":"Base After Base - Long Combos","guide":"Base After Base challenges you with long, sustained sequences that test endurance and consistency. Break the run into smaller, repeatable chunks and master each chunk before attempting back-to-back combos. Learn to recognize recurring rhythm anchors — visual or musical cues that signal when to prepare for a sequence. Prioritize passing segments cleanly over attempting risky shortcuts. Over time, chaining reliable segments together will feel more natural than trying to brute-force full runs."}
+    ],
     "embedUrl": "https://ozgames.io/geometry-dash.embed",
     "desc": "The most stable web version of Geometry Dash Lite from OzGames. Features classic rhythm-based platforming with optimized performance for browsers.",
     "rating": { "ratingValue": 4.8, "ratingCount": 15600 },
@@ -20,6 +30,16 @@
       "img/m394x236/g2-geometry-dash-meltdown-m394x236.jpg"
     ],
     "tags": ["action", "neon", "hardcore"],
+    "keywords": ["geometry dash meltdown","geometry dash meltdown unblocked","play geometry dash meltdown online","geometry dash meltdown free","geometry dash guide"],
+    "vaultCodes": ["Meltdown2024","LavaRun"],
+    "guide": "Geometry Dash Meltdown raises the tempo and adds lava-themed hazards — anticipate larger gaps and faster timing windows. Learn to read visual rhythm markers: neon tiles often indicate upcoming speed shifts. In sections with moving obstacles, ride the safest midline and avoid over-correcting; tiny taps are more reliable than long presses. When you encounter a new pattern, drop into practice mode and repeat the segment until muscle memory forms. Keep your eyes slightly ahead of the character to spot portals and sudden gravity flips; breathing evenly helps reduce jitter during long runs.",
+    "levels": [
+      {"name":"Meltdown Intro - Warm Up","guide":"The introductory sections of Meltdown are faster than typical starter levels but follow predictable patterns. Use these early stretches to warm up your timing: take a moment to groove with the music and focus on short, precise taps. Replaying the opening until your inputs feel consistent will reduce anxiety when you reach the trickier middle sections. Keep movement smooth and avoid over-correcting after small mistakes — rebuilding a clean run from the start is often faster than chasing a perfect attempt."},
+      {"name":"Lava Pit - Gap Timing","guide":"Lava Pit features wide gaps and moving hazards that punish late reactions. When you see platform movement, aim for the middle of the safe zone and make tiny adjustments rather than large corrections. For multi-jump gaps, pre-press slightly before the obstacle to lock in the rhythm, then fine tune the second tap to control landing height. Practicing the gap sequences in isolation helps convert risky sections into reliable muscle-memory routines."},
+      {"name":"Inferno Path - Read the Markers","guide":"Inferno Path packs dense, neon obstacles with occasional tempo shifts. Learn to read repeating visual floor patterns and color cues — they often signal an upcoming speed change or new hazard. Once you can anticipate these markers, your inputs will become more proactive, reducing last-moment panic taps. Break the path into micro-sections and master each one before chaining them together at full speed."},
+      {"name":"Magma Rush - Speed Control","guide":"Magma Rush is about managing sudden velocity changes. When speed increases, slightly advance your tapping window and keep taps consistent rather than instinctively mashing. If your device struggles with frame drops, lower rendering settings to keep timing consistent; a stable frame rate is more valuable than prettier graphics in high-speed segments."},
+      {"name":"Final Eruption - Stay Composed","guide":"The finale blends earlier mechanics into a fast, unforgiving run. Focus on maintaining composure: breathe evenly, keep your finger relaxed, and attack the final sequences with measured taps. If a full run keeps failing at the end, isolate the terminal section and drill it until your success rate improves."}
+    ],
     "embedUrl": "https://geometrylitepc.io/geo-dash-meltdown.embed",
     "desc": "A visually intense expansion from OzGames. Tackle lava-filled levels and new monster obstacles in this high-octane geometric challenge.",
     "rating": { "ratingValue": 4.7, "ratingCount": 4200 },
@@ -33,6 +53,16 @@
       "img/m394x236/g3-geometry-dash-subzero1-m394x236.jpg"
     ],
     "tags": ["skills", "adventure", "unblocked"],
+    "keywords": ["geometry dash subzero","geometry dash subzero unblocked","play geometry dash subzero online","geometry dash subzero free","geometry dash guide"],
+    "vaultCodes": ["SubzeroKey","IceCoin"],
+    "guide": "Geometry Dash Subzero emphasizes momentum control and timing through icy visuals and tight corridors. Use short, controlled taps to maintain elevation and avoid drifting into traps. Portals often change speed or gravity — pause mentally for a beat when jumping into a portal until you read the new rhythm. Practice tricky mid-air sequences by isolating them with checkpoints; breaking the run into small goals makes long levels manageable. On mobile, lower graphical effects to keep a steady frame rate; consistent FPS improves input timing and reduces frustrating skips.",
+    "levels": [
+      {"name":"Frozen Start - Gentle Inputs","guide":"The opening of Subzero rewards gentle, controlled inputs rather than aggressive tapping. Focus on brief, precise taps to avoid sliding into hazards; long presses can cause unwanted drift. Use practice mode to lock down the early sequences until they feel automatic, which sets the tone for tougher mid-level challenges."},
+      {"name":"Icefall - Narrow Corridors","guide":"Icefall folds tight corridors with quick obstacles. Prioritize center alignment and time your taps to pass through narrow gaps. If a passage is unforgiving, slow the segment down in practice mode and train the precise timing required for consistent progression."},
+      {"name":"Polar Drift - Portal Adaptation","guide":"Polar Drift creates momentum and gravity shifts with repeated portals. Rather than continuing your previous rhythm blindly, pause for a beat when entering a portal to read the new physics. Then reestablish a cadence appropriate to the changed speed or gravity. Repetition in practice mode helps make these portal reactions reflexive."},
+      {"name":"Frozen Peaks - High Density","guide":"High-density obstacle fields demand micro-control. Use tiny taps to thread between hazards and keep your eyes a short distance ahead to anticipate complex sequences. Segment the dense area into manageable parts and practice each until you can clear them reliably."},
+      {"name":"Subzero Finale - Maintain Focus","guide":"The finale combines speed, portals, and narrow corridors. Keep breathing steady and maintain a relaxed finger to avoid tension-induced misses. If the full run keeps failing at the same point, isolate that passage and practice it until it becomes automatic before attempting complete runs again."}
+    ],
     "embedUrl": "https://geometrylitepc.io/geo-dash-subzero.embed",
     "desc": "Explore brand new worlds and fast-paced levels. OzGames brings the full 'World' experience to your browser with zero download required.",
     "rating": { "ratingValue": 4.6, "ratingCount": 3100 },
@@ -46,6 +76,16 @@
       "img/m394x236/g4-geometry-dash-world-m394x236.jpg"
     ],
     "tags": ["arcade", "classic"],
+    "keywords": ["geometry dash world","geometry dash world unblocked","play geometry dash world online","geometry dash world free","geometry dash guide"],
+    "vaultCodes": ["WorldPass","ClassicVault"],
+    "guide": "Geometry Dash World recreates the classic dash feel with balanced pacing and level design. Focus on learning rhythm landmarks — repeating visual cues that indicate when to time jumps. When approaching sequences with alternating high and low obstacles, practice keeping your taps consistent rather than accelerating. Use practice checkpoints liberally to master spikes and portals one section at a time. If you find a segment unfairly difficult, temporarily slow the run down to a comfortable speed and retrain the muscle memory for that pattern before attempting full-speed runs.",
+    "levels": [
+      {"name":"Classic Start - Learn the Landmarks","guide":"The Classic Start levels teach core rhythm landmarks — visual or audio cues that consistently indicate when to jump. Anchor your taps to these landmarks to build a foundation for more complex sections. Practice slowly until the basic patterns become reflexive, then gradually increase tempo."},
+      {"name":"Neon Run - Tempo Awareness","guide":"Neon Run features faster segments that require tempo awareness. Train by isolating the faster stretches in practice mode and repeating them until you can maintain rhythm without hesitation. Spotting repeating patterns ahead of time helps you pre-adjust input timing for smooth transitions."},
+      {"name":"Gravity Shift - Adapt Quickly","guide":"Gravity shifts force you to re-adapt your input window. When you see a flip or a portal, pause for a fraction of a beat to register the new physics, then resume with the adjusted cadence. Immediate overcorrections usually cause cascading mistakes."},
+      {"name":"Portal Dash - Anticipate Effects","guide":"Portals can alter speed and direction; learn common portal behaviors and anticipate their effects. Practice entering portals and immediately adjusting your tap rhythm to match the new pace — this prevents early failures after transitions."},
+      {"name":"Final World - Integrate Skills","guide":"The final sequences combine tempo, portals, and narrow timing windows. Instead of risking aggressive plays, aim for stable, clean passes of each segment. Combining well-rehearsed micro-skills is the most reliable route to a full clear."}
+    ],
     "embedUrl": "https://geometrylitepc.io/geo-dash-world.embed",
     "desc": "A streamlined version of the classic dash mechanic. Jump over spikes and time your moves perfectly to survive the neon arena.",
     "rating": { "ratingValue": 4.3, "ratingCount": 920 },
@@ -59,6 +99,16 @@
       "img/m394x236/g5-geometry-dash-hooda-math1-m394x236.jpg"
     ],
     "tags": ["skills", "sequel"],
+    "keywords": ["geometry dash hooda math","geometry dash hooda math unblocked","play geometry dash hooda math online","geometry dash hooda math free","geometry dash hooda math guide","geometry dash vault codes"],
+    "vaultCodes": ["HoodaMath2024","MathCoin"],
+    "guide": "Geometry Dash Hooda Math blends dash mechanics with cleverly timed obstacles that reward precision. Expect sections that require sequencing small jumps into larger leaps; rehearse the timing by slowing the rhythm in practice and then gradually restoring speed. Look for visual rhythm anchors — repeating shapes or colors — that hint at when to jump. In sequences with dense spikes, favor steady micro-taps instead of long holds. If audio cues feel faint on a device, try headphones to get clearer timing signals; they make a big difference when synchronizing jumps.",
+    "levels": [
+      {"name":"Math School - Pattern Practice","guide":"Hooda Math blends pattern recognition with timing. Treat each section like a small puzzle: identify the repeating obstacle motif and practice the input sequence until you can reproduce it reliably. Precision beats speed in early runs, so focus on clean execution before attempting faster clears."},
+      {"name":"Number Run - Maintain Consistency","guide":"Number Run packs several medium-length jump sequences that require consistent inputs. Prioritize steady micro-taps and practice the connector moves between sequences so you can chain them without hesitation. Use checkpoints to rehearse connectors separately."},
+      {"name":"Equation Rush - Linking Moves","guide":"Equation Rush demands linking short jumps into longer combos. Work on the transitions between combos in isolation, then piece them together incrementally. Breaking the pattern into small, repeatable segments speeds learning and reduces full-run failures."},
+      {"name":"Fraction Falls - Controlled Descents","guide":"Sections with falling mechanics require measured taps to control descent and landing. Avoid long presses that drive you too far; instead, use short controlled inputs to manage your trajectory and position for subsequent obstacles."},
+      {"name":"Hooda Boss - Complex Rhythm","guide":"The boss sequences combine tempo changes and dense hazards. Stay calm, read visual anchors, and take advantage of practice checkpoints. If a run keeps failing, isolate the boss pattern and grind it until you can clear it consistently under pressure."}
+    ],
     "embedUrl": "https://geometrylitepc.io/geo-dash-hooda-math.embed",
     "desc": "The sequel to the hit runner. More levels, harder obstacles, and improved physics. Test your limits with this OzGames exclusive port.",
     "rating": { "ratingValue": 4.5, "ratingCount": 1100 },
@@ -72,6 +122,16 @@
       "img/m394x236/g6-geometry-dash-scratch-m394x236.jpg"
     ],
     "tags": ["neon", "speed"],
+    "keywords": ["geometry dash scratch","geometry dash scratch unblocked","play geometry dash scratch online","geometry dash scratch free","geometry dash guide"],
+    "vaultCodes": ["ScratchRun","StarUnlock"],
+    "guide": "Geometry Dash Scratch delivers bright visuals and fast sequences; focus on reaction consistency rather than speed at first. Many sections in Scratch-style ports have collectible stars — prioritize safe collection routes over risky jumps that break your run. Use practice mode to isolate star paths and determine the minimal safe inputs required. When speed ramps up, keep your rhythm by tapping slightly ahead of each beat, then correct on subsequent obstacles. For mobile players, enable fullscreen and stabilize touch sensitivity in your browser settings for the best control fidelity.",
+    "levels": [
+      {"name":"Scratch Intro - Reaction Practice","guide":"Scratch-style ports emphasize quick reaction speed and bright visual cues. Start by practicing short reaction drills to improve your ability to perform rapid, precise taps. Focus on minimal, controlled inputs in early segments and gradually build up to longer combos as your reflexes improve. Avoid tension in your hand — relaxed inputs reduce jitter and increase accuracy during long runs."},
+      {"name":"Star Chase - Safe Collection","guide":"Many Scratch builds include collectible stars that reward precision. Prioritize safe collection routes that keep your run intact rather than risky shortcuts that break your rhythm. Practice star segments separately to learn the minimal safe inputs required to acquire them without jeopardizing the rest of the run."},
+      {"name":"Speed Circuit - Anticipate Velocity","guide":"Speed circuits ramp velocity, so slightly advance your tap window when you enter these sections. Train on speed ramps in isolation until you can consistently land jumps at the higher pace. Stable frame rates help a lot here — close background processes or lower visual effects if necessary."},
+      {"name":"Neon Loop - Visual Anchors","guide":"Looping obstacle sequences rely on visual anchors embedded in the scenery. Use these anchors to time your taps and create a rhythm that aligns with the obstacle patterns. Break loops into manageable chunks and master each one before linking them for a full clear."},
+      {"name":"Scratch Finale - Build Composure","guide":"The finale combines rapid sequences and star runs; composure matters. Keep breathing evenly and maintain a relaxed finger to avoid tension-related misses. If you repeatedly fail at the end, isolate the terminal segment and practice it until it becomes automatic before attempting full runs."}
+    ],
     "embedUrl": "https://geometrylitepc.io/geo-dash-scratch.embed",
     "desc": "High-speed neon action. Collect stars and unlock new characters in this vibrant take on the geometry platforming genre.",
     "rating": { "ratingValue": 4.4, "ratingCount": 1470 },
@@ -85,6 +145,16 @@
       "img/m394x236/g7-geometry-dash-breeze-m394x236.jpg"
     ],
     "tags": ["unblocked", "skills"],
+    "keywords": ["geometry dash breeze","geometry dash breeze unblocked","play geometry dash breeze online","geometry dash breeze free","geometry dash unblocked"],
+    "vaultCodes": ["BreezeOpen","UnblockNow"],
+    "guide": "Geometry Dash Breeze focuses on accessible runs and unblocked playability — great for practice and casual runs. The design leans toward forgiving timing windows but still rewards precise inputs. Pay attention to sections where gravity flips or portals invert controls; brief pauses before these transitions help you adapt. Use the reset and fullscreen controls to create repeated practice loops for specific segments. If the game is played in restricted networks, this unblocked build aims to reduce external resource calls — still, consider self-hosting the embed for maximal availability in schools or workplaces.",
+    "levels": [
+      {"name":"Breeze Start - Accessibility Warmup","guide":"Breeze features forgiving windows and is ideal for practice. Use the opening segments to establish a consistent tap rhythm and to test fullscreen and control responsiveness in restricted environments. A stable setup reduces failed attempts caused by device lag or network hiccups."},
+      {"name":"Open Fields - Comfortable Practice","guide":"Open, wide areas provide room for small mistakes, making them excellent for drilling consistent timing. Practice linking simple jump sequences and focus on maintaining a smooth cadence rather than attempting risky maneuvers that could break your run."},
+      {"name":"Gentle Flow - Chain Accuracy","guide":"Gentle Flow emphasizes chaining moderately paced jumps. Work on maintaining the same tap spacing across a sequence so you can move through the section without rhythm breaks. Stability is more valuable than aggressive play here."},
+      {"name":"Breeze Rush - Quick Sections","guide":"Short, fast bursts require slightly earlier inputs than normal. Prepare by rehearsing the quick sections in isolation, and avoid panicked rapid tapping — controlled micro-taps will land more reliably than frantic presses."},
+      {"name":"Unblocked Finale - Calm Finish","guide":"The finale combines previously practiced mechanics into a satisfying finish. Keep calm and patient: aim to finish clean runs first, then worry about optimal scores or extra collectibles. Consistent, composed inputs beat risky attempts when fatigue sets in."}
+    ],
     "embedUrl": "https://ozgames.io/geometry-dash-breeze.embed",
     "desc": "Play the full Geometry Dash experience without restrictions. Perfect for schools and workplaces, this unblocked version delivers all the fun without the barriers.",
     "rating": { "ratingValue": 4.2, "ratingCount": 800 },
