@@ -189,7 +189,9 @@
         // expose games list for loadGame
         window._gamesList = list;
 
-        // derive initial selection from pathname (/g1/) or hash or fallback to first item
+        // derive repo base and initial selection from pathname (/g1/) or hash or fallback to first item
+        const _globalSegs = location.pathname.split('/').filter(Boolean);
+        const _globalRepoBase = _globalSegs.length > 0 ? ('/' + _globalSegs[0]) : '';
         function idFromLocation(){
           // try pathname first: e.g. /g1/ or /g1
           const p = location.pathname.split('/').filter(Boolean);
@@ -212,7 +214,7 @@
           // (idFromLocation returned a non-null value). If user opened the root `/`,
           // keep the address as `/` to avoid automatic navigation appearance.
           if (idFromLocation()) {
-            history.replaceState(null,'','/' + initialGame.id + '/');
+            history.replaceState(null,'', _globalRepoBase + '/' + initialGame.id + '/');
           }
           // ensure the initial page description and meta reflect the selected game
           try{ if (typeof updateRootDesc === 'function') updateRootDesc(initialGame); }catch(e){ console.error('init updateRootDesc failed', e); }
@@ -286,7 +288,7 @@
         iframe.src = g.embedUrl;
         document.querySelector('h1').textContent = g.title;
         document.title = g.title + ' — Play Online';
-        if (push) history.pushState(null, '', '/' + id + '/');
+        if (push) history.pushState(null, '', _globalRepoBase + '/' + id + '/');
         document.querySelectorAll('.game-card-mini').forEach(card=>{ card.style.outline = ''; });
         const selected = Array.from(document.querySelectorAll('.game-card-mini')).find(c=> c.getAttribute('data-id')===id);
         if (selected) selected.style.outline = '2px solid rgba(255,203,5,0.12)';
@@ -437,7 +439,7 @@
         const pathParts = location.pathname.split('/').filter(Boolean);
         const isHome = pathParts.length === 0;
         if (isHome){
-          try{ window.location.assign('/' + id + '/'); }catch(err){ window.location.href = '/' + id + '/'; }
+          try{ window.location.assign(_globalRepoBase + '/' + id + '/'); }catch(err){ window.location.href = _globalRepoBase + '/' + id + '/'; }
           return;
         }
         // otherwise perform SPA navigation

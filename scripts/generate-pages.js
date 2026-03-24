@@ -66,8 +66,10 @@ function detectSiteUrlFromGit(){
   return '';
 }
 const _gitSiteUrl = detectSiteUrlFromGit();
+// prefer explicit ENV_SITE_ROOT if provided (CI / repo variable)
+const envSiteRoot = (process && process.env && process.env.ENV_SITE_ROOT) ? String(process.env.ENV_SITE_ROOT).replace(/\/\/+$/,'') : '';
 // precompute common injections so per-game SPA copies also contain featured/root content
-const siteUrl = (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : (_gitSiteUrl || '');
+const siteUrl = envSiteRoot || (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : (_gitSiteUrl || '');
 const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
 let featuredHtml = '';
 if (site && Array.isArray(site.featured)) {
@@ -100,8 +102,8 @@ games.forEach(g=>{
     // Inject per-game SEO: title, description, canonical, and JSON-LD into the copied template
     try{
       let page = fs.readFileSync(outPath,'utf8');
-      // (no-op) template contains robust runtime lookup for data/games.json
-      const siteUrl = (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/+$/,'') : '';
+      // determine pageSiteUrl (prefer ENV_SITE_ROOT, then seo.site.siteUrl, then git remote)
+      const pageSiteUrl = envSiteRoot || ((seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : (_gitSiteUrl || ''));
       const titleTpl = seo && seo.perGameTemplate && seo.perGameTemplate.title ? seo.perGameTemplate.title : '%s — Play Online';
       const descTpl = seo && seo.perGameTemplate && seo.perGameTemplate.description ? seo.perGameTemplate.description : 'Play %s in your browser. No download required.';
       const canonicalTpl = seo && seo.perGameTemplate && seo.perGameTemplate.canonicalTemplate ? seo.perGameTemplate.canonicalTemplate : '%s/%s/';
@@ -110,7 +112,7 @@ games.forEach(g=>{
       // prefer QA-generated rewrite suggestion when available
       const suggestion = rewriteSuggestions && rewriteSuggestions[g.id] ? String(rewriteSuggestions[g.id]) : null;
       const metaDesc = suggestion ? suggestion : descTpl.replace('%s', g.title);
-      const canonicalUrl = (siteUrl && canonicalTpl.indexOf('%s')>=0) ? canonicalTpl.replace('%s', siteUrl).replace('%s', g.id) : (siteUrl ? siteUrl + '/' + g.id + '/' : '/' + g.id + '/');
+      const canonicalUrl = (pageSiteUrl && canonicalTpl.indexOf('%s')>=0) ? canonicalTpl.replace('%s', pageSiteUrl).replace('%s', g.id) : (pageSiteUrl ? pageSiteUrl + '/' + g.id + '/' : '/' + g.id + '/');
 
       // replace <title>
       if (/<title>[\s\S]*?<\/title>/i.test(page)){
@@ -130,7 +132,7 @@ games.forEach(g=>{
         imgPath = imgPath.replace(/^games\//, '');
         imgPath = 'assets/games/' + imgPath;
       }
-      const siteImage = imgPath ? joinUrl(siteUrl, imgPath) : (seo && seo.site && seo.site.defaultImage ? joinUrl(siteUrl, seo.site.defaultImage) : '');
+      const siteImage = imgPath ? joinUrl(pageSiteUrl, imgPath) : (seo && seo.site && seo.site.defaultImage ? joinUrl(pageSiteUrl, seo.site.defaultImage) : '');
       const ogTags = `\n  <meta name="keywords" content="${safeKeywords}">\n  <meta property="og:title" content="${metaTitle}">\n  <meta property="og:description" content="${safeMetaDesc}">\n  <meta property="og:image" content="${siteImage}">\n  <meta property="og:url" content="${canonicalUrl}">\n  <meta name="twitter:card" content="summary_large_image">\n  <meta name="twitter:title" content="${metaTitle}">\n  <meta name="twitter:description" content="${safeMetaDesc}">\n  <meta name="twitter:image" content="${siteImage}">`;
       if (/\<meta[^>]*name=['\"]description['\"][^>]*>/i.test(page)){
         page = page.replace(/\<meta[^>]*name=['\"]description['\"][^>]*>/i, `<meta name="description" content="${safeMetaDesc}">${ogTags}`);
