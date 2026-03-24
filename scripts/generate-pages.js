@@ -84,6 +84,14 @@ games.forEach(g=>{
     // Inject per-game SEO: title, description, canonical, and JSON-LD into the copied template
     try{
       let page = fs.readFileSync(outPath,'utf8');
+      // ensure client-side fetch for data/games.json resolves correctly when pages
+      // are served from a repo subpath (GitHub Pages). Replace absolute '/data/games.json'
+      // with an absolute URL using siteUrl when available, otherwise a relative path.
+      try{
+        const dataFetchPattern = /fetch\(\s*["']\/data\/games\.json["']\s*\)/g;
+        const dataFetchReplacement = `fetch('${siteUrl ? siteUrl + '/' : ''}data/games.json')`;
+        page = page.replace(dataFetchPattern, dataFetchReplacement);
+      }catch(e){/* ignore replacement errors */}
       const siteUrl = (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/+$/,'') : '';
       const titleTpl = seo && seo.perGameTemplate && seo.perGameTemplate.title ? seo.perGameTemplate.title : '%s — Play Online';
       const descTpl = seo && seo.perGameTemplate && seo.perGameTemplate.description ? seo.perGameTemplate.description : 'Play %s in your browser. No download required.';
@@ -206,6 +214,12 @@ games.forEach(g=>{
 // Build homepage (index.html) with site injection when templateHtml available
 if (templateHtml) {
   let indexHtml = templateHtml;
+  // normalize client fetch path in homepage template as well
+  try{
+    const dataFetchPattern = /fetch\(\s*["']\/data\/games\.json["']\s*\)/g;
+    const dataFetchReplacement = `fetch('${siteUrl ? siteUrl + '/' : ''}data/games.json')`;
+    indexHtml = indexHtml.replace(dataFetchPattern, dataFetchReplacement);
+  }catch(e){/* ignore */}
 
   // inject root description
   const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
