@@ -50,8 +50,24 @@ if (fs.existsSync(SITE_DATA_PATH)) {
   try { site = JSON.parse(fs.readFileSync(SITE_DATA_PATH,'utf8')); } catch(e){ console.warn('failed to parse site.json', e); }
 }
 
+// attempt to detect a sensible siteUrl fallback from git remote (useful for GH Pages)
+const child_process = require('child_process');
+function detectSiteUrlFromGit(){
+  try{
+    const url = String(child_process.execSync('git config --get remote.origin.url', { cwd: ROOT })).trim();
+    // match owner/repo from common git URL formats
+    const m = url.match(/[:\/]([^\/]+)\/([^\/]+?)(?:\.git)?$/);
+    if (m && m[1] && m[2]){
+      const owner = m[1];
+      const repo = m[2].replace(/\.git$/,'');
+      return `https://${owner}.github.io/${repo}`;
+    }
+  }catch(e){ /* ignore */ }
+  return '';
+}
+const _gitSiteUrl = detectSiteUrlFromGit();
 // precompute common injections so per-game SPA copies also contain featured/root content
-const siteUrl = (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : '';
+const siteUrl = (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : (_gitSiteUrl || '');
 const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
 let featuredHtml = '';
 if (site && Array.isArray(site.featured)) {
