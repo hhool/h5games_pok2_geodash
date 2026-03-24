@@ -155,6 +155,10 @@ Whether you’re opening the page on a phone between classes or using a desktop 
       try{
         async function fetchGamesJson(){
           const candidates = [];
+          // derive a repo base path when hosted under a repo subpath (eg. /REPO/)
+          const segs = location.pathname.split('/').filter(Boolean);
+          const repoBase = segs.length > 0 ? ('/' + segs[0]) : '';
+
           // try relative to current document
           candidates.push('data/games.json');
           // try up to two parent directories (handles /g1/ and similar paths)
@@ -164,13 +168,15 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           try{
             const canonical = document.querySelector('link[rel="canonical"]');
             if (canonical && canonical.href){
-              try{ const u = new URL(canonical.href); candidates.push(u.origin + u.pathname.replace(/\/+$/,'') + '/data/games.json'); }catch(e){}
+              try{
+                const u = new URL(canonical.href);
+                candidates.push(u.origin + u.pathname.replace(/\/+$/,'') + '/data/games.json');
+              }catch(e){}
             }
           }catch(e){}
           // try repository-style first path (useful on GH Pages with a repo subpath)
           try{
-            const segs = location.pathname.split('/').filter(Boolean);
-            if (segs.length > 0) candidates.push('/' + segs[0] + '/data/games.json');
+            if (repoBase) candidates.push(repoBase + '/data/games.json');
           }catch(e){}
 
           for (const url of candidates){
@@ -225,8 +231,8 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           card.setAttribute('data-id', g.id);
           const img = document.createElement('img');
           const srcCandidates = [
-            '/assets/games/' + (g.img && g.img[0] ? g.img[0] : ''),
-            '/data/' + (g.img && g.img[0] ? g.img[0] : ''),
+            'assets/games/' + (g.img && g.img[0] ? g.img[0] : ''),
+            'data/' + (g.img && g.img[0] ? g.img[0] : ''),
             g.img && g.img[0] ? g.img[0] : ''
           ];
           const realSrc = srcCandidates.find(s=>s && s.length>0) || '';
@@ -328,7 +334,10 @@ Whether you’re opening the page on a phone between classes or using a desktop 
         try{
           const head = document.getElementsByTagName('head')[0];
           const siteOrigin = window.location.origin.replace(/\/+$/,'');
-          const canonicalHref = siteOrigin + '/' + (g.id || '') + '/';
+          // derive repo base so canonical and image URLs work on repo subpath sites
+          const _segs = location.pathname.split('/').filter(Boolean);
+          const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : '';
+          const canonicalHref = siteOrigin + _repoBase + '/' + (g.id || '') + '/';
 
           // Remove stale tags first to avoid duplicates in DevTools
           const staleSelectors = [
@@ -362,7 +371,8 @@ Whether you’re opening the page on a phone between classes or using a desktop 
             __imgPath = __imgPath.replace(/^games\//, '');
             __imgPath = 'assets/games/' + __imgPath;
           }
-          const imageUrl = __imgPath ? (siteOrigin + '/' + __imgPath) : (siteOrigin + '/assets/cover.jpg');
+          // build image URL using repo base so it resolves correctly on GH Pages
+          const imageUrl = __imgPath ? (siteOrigin + _repoBase + '/' + __imgPath) : (siteOrigin + _repoBase + '/assets/cover.jpg');
           function c(name, attr, value){ const m = document.createElement('meta'); m.setAttribute(attr, name); m.setAttribute('content', value); head.appendChild(m); }
           c('og:title','property', g.title);
           c('og:description','property', g.desc || '');
