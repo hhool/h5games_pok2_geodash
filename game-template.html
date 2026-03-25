@@ -163,6 +163,11 @@
             }
           }catch(e){/* ignore */}
 
+          // prefer build-time full site root when available (injected by generator)
+          try{
+            const siteRootCandidate = (window._globalSiteRoot && typeof window._globalSiteRoot === 'string') ? window._globalSiteRoot.replace(/\/\/+$/,'') + '/data/games.json' : '';
+            if (siteRootCandidate) candidates.push(siteRootCandidate);
+          }catch(e){}
           // try relative to current document
           candidates.push('data/games.json');
           // try up to two parent directories (handles /g1/ and similar paths)
@@ -186,7 +191,13 @@
           for (const url of candidates){
             try{
               const r = await fetch(url);
-              if (r && r.ok) return r;
+              if (!r || !r.ok) continue;
+              const ct = (r.headers && r.headers.get) ? (r.headers.get('content-type')||'') : '';
+              if (ct.toLowerCase().indexOf('json') !== -1) return r;
+              // some servers may omit content-type; do a quick sanity check to avoid HTML
+              const txt = await r.clone().text();
+              if (txt && typeof txt === 'string' && txt.trim().startsWith('<')) continue;
+              return r;
             }catch(e){ /* ignore and try next */ }
           }
           // final attempt (may throw)
