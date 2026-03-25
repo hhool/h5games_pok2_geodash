@@ -13,4 +13,4 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-Sitemap: https://hhool.github.io/h5games_pok2_geodash/sitemap.xml
+Sitemap: https://geometrydash.poki2.online/sitemap.xml
