@@ -1,5 +1,0 @@
-(# Ignore generated image variants and manifest produced by the image pipeline)
-img/
-img/**
-img/*.json
-

@@ -1,9 +1,0 @@
-{
-  "title": "GeometryLite — Play Geometry Dash Online",
-  "description": "GeometryLite is a mobile-first hub for fast, browser-native Geometry Dash builds and similar rhythm platformers. Our site focuses on delivering low-latency, touch-friendly web versions that run smoothly on phones and desktops without requiring downloads or installation. Each featured game is embedded directly on the page so you can jump into gameplay instantly; we provide sensible controls (fullscreen, reset) and sandboxed embeds to keep sessions secure.\n\nBeyond pure play, we publish concise, actionable guides and tips to help players progress: quick control reminders, level-specific tactics, and troubleshooting notes for common browser issues. Content is curated to be unique and informative — not duplicated snippets — so each page adds search value for players seeking unblocked, online play, vault codes, and short walkthroughs.\n\nFor developers and integrators, the site exposes structured metadata (JSON-LD) and a simple games data file so content can be updated or regenerated via scripts. This approach lets us keep the primary SEO content statically rendered at build time while allowing frequently-updated lists to load dynamically on the client.\n\nWhether you’re opening the page on a phone between classes or using a desktop for longer sessions, GeometryLite aims to make the classic Geometry Dash experience fast, accessible, and easy to find in search results.",
-  "featured": ["g1","g2","g3"],
-  "hero": {
-    "heading": "Play Geometry Dash Now",
-    "sub": "Fast, mobile-optimized web builds"
-  }
-}
