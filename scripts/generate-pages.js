@@ -82,7 +82,7 @@ const cliSiteRoot = cliOption('--site-root') || cliOption('--siteRoot');
 const rawEnvSite = (cliSiteRoot && String(cliSiteRoot).length) ? String(cliSiteRoot) : ((process && process.env && process.env.ENV_SITE_ROOT) ? String(process.env.ENV_SITE_ROOT) : '');
 const envSiteRoot = rawEnvSite ? rawEnvSite.replace(/\/+$/,'') : '';
 // precompute common injections so per-game SPA copies also contain featured/root content
-const siteUrl = envSiteRoot || (seo && seo.site && seo.site.siteUrl) ? String(seo.site.siteUrl).replace(/\/+$/,'') : (_gitSiteUrl || '');
+const siteUrl = (envSiteRoot && envSiteRoot.length) ? envSiteRoot : ((seo && seo.site && seo.site.siteUrl) ? String(seo.site.siteUrl).replace(/\/\/+$/,'') : (_gitSiteUrl || ''));
 const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
 let featuredHtml = '';
 if (site && Array.isArray(site.featured)) {
