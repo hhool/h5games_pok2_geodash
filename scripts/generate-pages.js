@@ -327,8 +327,33 @@ if (templateHtml) {
 
   // inject root description: emit hydration-friendly containers so client
   // can populate per-game content without clobbering the site-level HTML.
+  // To avoid layout shifts we pre-render the first game's per-game HTML on
+  // the homepage so the `.meta` area does not change height after JS runs.
   const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
-  indexHtml = indexHtml.replace('<!--ROOT_DESC-->', `<div id="root-desc" data-current-game=""><div class="root-site-html">${rootDescHtml}</div><div class="root-game-html"></div></div>`);
+  // build per-game HTML for the first game (if present) so homepage has
+  // stable content in the `.root-game-html` container immediately.
+  let indexPerGameHtml = '';
+  try{
+    if (Array.isArray(games) && games.length > 0) {
+      const first = games[0];
+      const suggestionFirst = rewriteSuggestions && rewriteSuggestions[first.id] ? String(rewriteSuggestions[first.id]) : null;
+      if (suggestionFirst) indexPerGameHtml += `<p style="color:var(--muted);margin:6px 0">${suggestionFirst}</p>`;
+      else if (first.guide) indexPerGameHtml += `<p style="color:var(--muted);margin:6px 0">${first.guide}</p>`;
+      if (first.vaultCodes && Array.isArray(first.vaultCodes) && first.vaultCodes.length){
+        indexPerGameHtml += `<h2 style="margin-top:8px">Vault Codes</h2><p style="color:var(--muted);margin:6px 0">${first.vaultCodes.join(', ')}</p>`;
+      }
+      if (first.levels && Array.isArray(first.levels) && first.levels.length){
+        indexPerGameHtml += `<h2 style="margin-top:8px">Levels</h2><ol style="color:var(--muted);margin:6px 0 0 18px">`;
+        first.levels.forEach(l=>{
+          const title = l.name || '';
+          const guide = l.guide || '';
+          indexPerGameHtml += `<li><strong>${title}</strong>${guide ? ': ' + guide : ''}</li>`;
+        });
+        indexPerGameHtml += `</ol>`;
+      }
+    }
+  }catch(e){ /* ignore errors building index per-game html */ }
+  indexHtml = indexHtml.replace('<!--ROOT_DESC-->', `<div id="root-desc" data-current-game="${(games && games[0] && games[0].id) ? games[0].id : ''}"><div class="root-site-html">${rootDescHtml}</div><div class="root-game-html">${indexPerGameHtml}</div></div>`);
 
   // inject full games grid: render server-side cards for all games so homepage
   // does not rely on client-side patching to show the complete list.
