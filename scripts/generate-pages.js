@@ -97,7 +97,8 @@ if (site && Array.isArray(site.featured)) {
     }
     const imgSrc = fImg ? joinUrl(siteUrl, fImg) : '';
     featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
-    featuredHtml += `<img src="${imgSrc}" alt="${g.title}">`;
+    // add width/height and decoding hints to reduce CLS and improve Lighthouse
+    featuredHtml += `<img src="${imgSrc}" alt="${g.title}" width="182" height="112" decoding="async" importance="low">`;
     featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
     featuredHtml += `</div>`;
   });
@@ -212,6 +213,7 @@ games.forEach(g=>{
       const repoBaseScript = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        // try to derive base from configured page site URL injected at build time\n        try{\n          ${pageSiteUrl ? `var __BUILD_TIME_SITE = ${JSON.stringify(pageSiteUrl)};` : `var __BUILD_TIME_SITE = '';`}\n          if(__BUILD_TIME_SITE){\n            try{\n              // only use the build-time site root if the current location matches it;\n              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.\n              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\\/\\/+$/,'') + '/';\n              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){\n                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\\/\\/+$/,'');\n              } else {\n                base = '';\n              }\n            }catch(e){ base = ''; }\n          }\n        }catch(e){}\n        if(!base){\n          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }\n        }\n        // normalise\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
       // build preload tags for images: preload the page image and any featured images
       let preloadTags = '';
+      let preconnectTag = '';
       try{
         const preloadSet = new Set();
         if (siteImage) preloadSet.add(siteImage);
@@ -225,13 +227,14 @@ games.forEach(g=>{
           });
         }
         preloadTags = Array.from(preloadSet).map(u=>`  <link rel="preload" as="image" href="${u}">`).join('\n') + '\n';
+        try{ if (pageSiteUrl){ const o = (new URL(pageSiteUrl)).origin; preconnectTag = `  <link rel="preconnect" href="${o}">\n`; } }catch(e){}
       }catch(e){ preloadTags = ''; }
 
       const siteRootScript = `\n  <script>window._globalSiteRoot = ${JSON.stringify(pageSiteUrl || '')};</script>\n`;
       if (/<\/head>/i.test(page)){
-        page = page.replace(/<\/head>/i, repoBaseScript + preloadTags + siteRootScript + '</head>');
+        page = page.replace(/<\/head>/i, repoBaseScript + preconnectTag + preloadTags + siteRootScript + '</head>');
       } else {
-        page = repoBaseScript + preloadTags + siteRootScript + page;
+        page = repoBaseScript + preconnectTag + preloadTags + siteRootScript + page;
       }
 
       fs.writeFileSync(outPath, page, 'utf8');
@@ -267,7 +270,7 @@ if (templateHtml) {
       }
       const imgSrc = imgPath || '';
       featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
-      featuredHtml += `<img src="${imgSrc}" alt="${g.title}">`;
+      featuredHtml += `<img src="${imgSrc}" alt="${g.title}" width="182" height="112" decoding="async" importance="low">`;
       featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
       featuredHtml += `</div>`;
     });

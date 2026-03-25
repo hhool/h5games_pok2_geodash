@@ -30,6 +30,8 @@
     .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:10px}
     .game-card-mini{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
     .game-card-mini img{width:100%;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    /* reduce CLS: reserve the thumbnail aspect ratio so layout doesn't shift */
+    .game-card-mini img{aspect-ratio:182/112}
     .game-card-mini .gmeta{font-size:.92rem;color:var(--muted);width:100%}
     .game-card-mini .gmeta .meta-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
     .game-card-mini .gmeta .meta-row .title{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -342,6 +344,8 @@
           const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
           // load images immediately (no client-side lazy loading)
           img.alt = g.title;
+          // help Lighthouse: async decode and hint low importance for thumbnails
+          try{ img.decoding = 'async'; img.setAttribute('importance','low'); }catch(e){}
           img.src = realSrc;
           // img.alt already set above
           const meta = document.createElement('div');
