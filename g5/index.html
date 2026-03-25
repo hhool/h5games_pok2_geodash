@@ -362,10 +362,22 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           function resolveCandidate(s){
             if (!s) return '';
             if (s.indexOf('http://')===0 || s.indexOf('https://')===0) return s;
-            // compute a relative prefix based on current path depth so that
-            // assets resolve relative to the site root even when page is in /g1/
-            const depth = location.pathname.split('/').filter(Boolean).length;
-            const relPrefix = depth > 0 ? Array(depth).fill('..').join('/') + '/' : '';
+            // compute a relative prefix based on the configured site repo base
+            // so that when the site is hosted at a repo subpath (e.g. /REPO/),
+            // the homepage resolves assets as `assets/...` and per-game pages
+            // resolve as `../assets/...`.
+            let baseSegs = [];
+            try{
+              if (window._globalRepoBase && typeof window._globalRepoBase === 'string' && window._globalRepoBase.length){
+                baseSegs = window._globalRepoBase.split('/').filter(Boolean);
+              } else if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.length){
+                try{ baseSegs = (new URL(window._globalSiteRoot)).pathname.split('/').filter(Boolean); }catch(e){ baseSegs = []; }
+              }
+            }catch(e){ baseSegs = []; }
+            const curSegs = location.pathname.split('/').filter(Boolean);
+            // number of path segments deeper than the repo base
+            const relativeDepth = Math.max(0, curSegs.length - baseSegs.length);
+            const relPrefix = relativeDepth > 0 ? Array(relativeDepth).fill('..').join('/') + '/' : '';
             // already absolute-rooted path (starts with '/') -> convert to relative
             if (s.indexOf('/')===0){
               return relPrefix + s.replace(/^\/+/, '');
