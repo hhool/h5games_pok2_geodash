@@ -395,4 +395,24 @@ self.addEventListener('fetch', event => {
   console.log('Wrote service worker to dist/sw.js');
 }catch(e){ console.warn('failed to write sw.js to dist', e); }
 
+// Ensure robots.txt is available at site root in the generated `dist/` output.
+try{
+  const ROBOTS_SRC = path.join(ROOT, 'robots.txt');
+  const ROBOTS_DEST = path.join(DIST, 'robots.txt');
+  if (fs.existsSync(ROBOTS_SRC)){
+    fs.copyFileSync(ROBOTS_SRC, ROBOTS_DEST);
+    console.log('Copied robots.txt to dist/robots.txt');
+  } else if (seo && seo.robots) {
+    // use seo.robots as fallback; make relative sitemap absolute when siteUrl known
+    let robotsText = String(seo.robots || 'User-agent: *\nDisallow:');
+    try{
+      if (siteUrl && /Sitemap:\s*\//i.test(robotsText)){
+        robotsText = robotsText.replace(/Sitemap:\s*\/(\S*)/i, `Sitemap: ${siteUrl.replace(/\/+$/,'')}/$1`);
+      }
+    }catch(e){}
+    fs.writeFileSync(ROBOTS_DEST, robotsText, 'utf8');
+    console.log('Wrote robots.txt to dist/robots.txt from seo.json');
+  }
+}catch(e){ console.warn('failed to write robots.txt to dist', e); }
+
 console.log('All pages generated.');
