@@ -1,0 +1,618 @@
+{
+  "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g4-geometry-dash-world-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g6-geometry-dash-scratch-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m182x112/g7-geometry-dash-breeze-m182x112-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g1-geometry-dash-lite-game-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g2-geometry-dash-meltdown-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g3-geometry-dash-subzero1-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g4-geometry-dash-world-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g4-geometry-dash-world-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g5-geometry-dash-hooda-math1-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g6-geometry-dash-scratch-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  },
+  "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236.jpg": {
+    "variants": [
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w320.avif",
+        "width": 320,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w320.webp",
+        "width": 320,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w480.avif",
+        "width": 480,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w480.webp",
+        "width": 480,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w768.avif",
+        "width": 768,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w768.webp",
+        "width": 768,
+        "format": "webp"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w1024.avif",
+        "width": 1024,
+        "format": "avif"
+      },
+      {
+        "path": "assets/games/img/m394x236/g7-geometry-dash-breeze-m394x236-w1024.webp",
+        "width": 1024,
+        "format": "webp"
+      }
+    ]
+  }
+}
