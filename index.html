@@ -467,11 +467,23 @@ Whether you’re opening the page on a phone between classes or using a desktop 
       function updateMeta(g){
         try{
           const head = document.getElementsByTagName('head')[0];
-          const siteOrigin = window.location.origin.replace(/\/+$/,'');
-          // derive repo base so canonical and image URLs work on repo subpath sites
-          const _segs = location.pathname.split('/').filter(Boolean);
-          const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : '';
-          const canonicalHref = siteOrigin + _repoBase + '/' + (g.id || '') + '/';
+          // Prefer the build-time injected authoritative site root when available.
+          // This ensures canonical/OG/image URLs point at the ENV_SITE_ROOT (e.g.
+          // https://hhool.github.io/h5games_pok2_geodash/) rather than the current
+          // preview origin. Fall back to current origin + repo base when absent.
+          let canonicalHref = '';
+          try{
+            if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.length){
+              const s = window._globalSiteRoot.replace(/\/+$/,'');
+              canonicalHref = s + '/' + (g.id || '') + '/';
+            } else {
+              const siteOrigin = window.location.origin.replace(/\/+$/,'');
+              // derive repo base so canonical and image URLs work on repo subpath sites
+              const _segs = location.pathname.split('/').filter(Boolean);
+              const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : '';
+              canonicalHref = siteOrigin + _repoBase + '/' + (g.id || '') + '/';
+            }
+          }catch(e){ const siteOrigin = window.location.origin.replace(/\/+$/,''); const _segs = location.pathname.split('/').filter(Boolean); const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : ''; canonicalHref = siteOrigin + _repoBase + '/' + (g.id || '') + '/'; }
 
           // Remove stale tags first to avoid duplicates in DevTools
           const staleSelectors = [
@@ -505,8 +517,21 @@ Whether you’re opening the page on a phone between classes or using a desktop 
             __imgPath = __imgPath.replace(/^games\//, '');
             __imgPath = 'assets/games/' + __imgPath;
           }
-          // build image URL using repo base so it resolves correctly on GH Pages
-          const imageUrl = __imgPath ? (siteOrigin + _repoBase + '/' + __imgPath) : (siteOrigin + _repoBase + '/assets/cover.jpg');
+          // build image URL: prefer the injected ENV_SITE_ROOT when present to
+          // ensure images are absolute under GitHub Pages. Fall back to current
+          // origin + repo base.
+          let imageUrl = '';
+          try{
+            if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.length){
+              const root = window._globalSiteRoot.replace(/\/+$/,'');
+              imageUrl = __imgPath ? (root + '/' + __imgPath) : (root + '/assets/cover.jpg');
+            } else {
+              const siteOrigin = window.location.origin.replace(/\/+$/,'');
+              const _segs = location.pathname.split('/').filter(Boolean);
+              const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : '';
+              imageUrl = __imgPath ? (siteOrigin + _repoBase + '/' + __imgPath) : (siteOrigin + _repoBase + '/assets/cover.jpg');
+            }
+          }catch(e){ const siteOrigin = window.location.origin.replace(/\/+$/,''); const _segs = location.pathname.split('/').filter(Boolean); const _repoBase = _segs.length > 0 ? ('/' + _segs[0]) : ''; imageUrl = __imgPath ? (siteOrigin + _repoBase + '/' + __imgPath) : (siteOrigin + _repoBase + '/assets/cover.jpg'); }
           function c(name, attr, value){ const m = document.createElement('meta'); m.setAttribute(attr, name); m.setAttribute('content', value); head.appendChild(m); }
           c('og:title','property', g.title);
           c('og:description','property', g.desc || '');
