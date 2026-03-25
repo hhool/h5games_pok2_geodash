@@ -322,18 +322,21 @@
           function resolveCandidate(s){
             if (!s) return '';
             if (s.indexOf('http://')===0 || s.indexOf('https://')===0) return s;
-            // already absolute-rooted path
+            // compute a relative prefix based on current path depth so that
+            // assets resolve relative to the site root even when page is in /g1/
+            const depth = location.pathname.split('/').filter(Boolean).length;
+            const relPrefix = depth > 0 ? Array(depth).fill('..').join('/') + '/' : '';
+            // already absolute-rooted path (starts with '/') -> convert to relative
             if (s.indexOf('/')===0){
-              // already root-relative; leave as-is
-              return s;
+              return relPrefix + s.replace(/^\/+/, '');
             }
-            // Treat asset and data paths as root-relative so they resolve from site root
-            // (avoids /<id>/assets/... when viewing a per-game page like /g2/)
+            // Treat asset and data paths as relative to site root (use relPrefix)
             if (s.indexOf('assets/')===0 || s.indexOf('data/')===0 || s.indexOf('img/')===0){
-              return '/' + s;
+              return relPrefix + s;
             }
-            // otherwise, prefix with repoBase when present; fallback to root-relative
-            return repoBase ? (repoBase + '/' + s) : ('/' + s);
+            // otherwise, return relative path (prefer relPrefix) so resources are
+            // requested from the same site root regardless of current per-game path
+            return relPrefix + s;
           }
           const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
           // load images immediately (no client-side lazy loading)
