@@ -8,12 +8,12 @@
   <meta name="keywords" content="geometry dash world, geometry dash world unblocked, play geometry dash world online, geometry dash world free, geometry dash guide">
   <meta property="og:title" content="Geometry Dash World — Play Online">
   <meta property="og:description" content="Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.">
-  <meta property="og:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
-  <meta property="og:url" content="https://geometrydash.poki2.online/g4/">
+  <meta property="og:image" content="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
+  <meta property="og:url" content="https://hhool.github.io/h5games_pok2_geodash/g4/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Geometry Dash World — Play Online">
   <meta name="twitter:description" content="Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.">
-  <meta name="twitter:image" content="https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
+  <meta name="twitter:image" content="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
   <meta name="keywords" content="geometry dash, geometry dash unblocked, play geometry dash online, vault codes, geometry guide" />
   <style>
     :root{--bg:#0f1720;--card:#0b1220;--muted:#9aa4b2;--accent:#ffcb05}
@@ -27,6 +27,8 @@
     .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .controls button{background:#0b1220;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
     .meta{margin-top:14px;color:var(--muted);line-height:1.6}
+    /* Reserve vertical space for meta / per-game description to avoid CLS when content is swapped */
+    .meta{min-height:140px}
     h1{margin:0 0 8px 0;font-size:1.25rem}
     @media (max-width:640px){.wrap{padding:12px}h1{font-size:1.05rem}.controls button{padding:8px}}
     /* button icon labels: hidden by default, visible on small screens for clarity */
@@ -41,6 +43,8 @@
     .game-card-mini img{width:100%;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
     /* reduce CLS: reserve the thumbnail aspect ratio so layout doesn't shift */
     .game-card-mini img{aspect-ratio:182/112}
+    /* Reserve space for per-game injected server markup to reduce shifts when client updates it */
+    .root-game-html{min-height:96px;}
     .game-card-mini .gmeta{font-size:.92rem;color:var(--muted);width:100%}
     .game-card-mini .gmeta .meta-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
     .game-card-mini .gmeta .meta-row .title{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -52,7 +56,7 @@
     .detail-img{width:100%;height:220px;object-fit:cover}
     .detail-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash World","url":"https://geometrydash.poki2.online/g4/","description":"Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.","image":"https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.3,"ratingCount":920}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash World","url":"https://hhool.github.io/h5games_pok2_geodash/g4/","description":"Geometry Dash World brings a classic, balanced experience that teaches rhythm landmarks and steady pacing. Levels are designed to reward players who learn repeating visual or audio cues — anchors that tell you exactly when to time a jump. Begin by practicing the fundamental passages slowly so the patterns become reflexive, then increase tempo as you build confidence. Portals and gravity flips demand quick adaptation: when you see a flip, pause mentally for a beat to register the new physics before resuming full rhythm. For sequences that alternate high and low obstacles, keep your taps consistent rather than accelerating; consistency reduces cascading mistakes. Use checkpoints liberally to master spikes and portal combos one section at a time. If a part feels unfair, slow it down in practice and retrain the precise timing. The goal here is clean, reproducible runs — integrate micro-skills into longer chains, and prioritize stability over risky shortcuts for reliable full clears.","image":"https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.3,"ratingCount":920}}</script>
 
   <script>
     (function(){
@@ -60,7 +64,7 @@
         var base = '';
         // try to derive base from configured page site URL injected at build time
         try{
-          var __BUILD_TIME_SITE = "https://geometrydash.poki2.online";
+          var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash";
           if(__BUILD_TIME_SITE){
             try{
               // only use the build-time site root if the current location matches it;
@@ -83,13 +87,13 @@
       }catch(e){ window._globalRepoBase = ''; }
     })();
   </script>
-  <link rel="preconnect" href="https://geometrydash.poki2.online">
-  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
-  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
-  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
-  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
+  <link rel="preconnect" href="https://hhool.github.io">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g4-geometry-dash-world-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
 
-  <script>window._globalSiteRoot = "https://geometrydash.poki2.online";</script>
+  <script>window._globalSiteRoot = "https://hhool.github.io/h5games_pok2_geodash";</script>
 
   <script>
   (function(){
@@ -155,7 +159,7 @@
 
       <section class="other-games" aria-label="Geometry Games">
         <h2>Geometry Games</h2>
-        <div id="gamesGrid" class="games-grid"><div class="game-card-mini" data-id="g1"><picture><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg" alt="Geometry Dash Lite" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Lite</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g2"><picture><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg" alt="Geometry Dash Meltdown" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Meltdown</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g3"><picture><img src="https://geometrydash.poki2.online/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg" alt="Geometry Dash Subzero" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Subzero</div><div class="publisher">OzGames</div></div></div></div></div>
+        <div id="gamesGrid" class="games-grid"><div class="game-card-mini" data-id="g1"><picture><img src="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg" alt="Geometry Dash Lite" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Lite</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g2"><picture><img src="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg" alt="Geometry Dash Meltdown" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Meltdown</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g3"><picture><img src="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg" alt="Geometry Dash Subzero" width="182" height="112" decoding="async" importance="low"></picture><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Subzero</div><div class="publisher">OzGames</div></div></div></div></div>
       </section>
 
       <div class="meta">
