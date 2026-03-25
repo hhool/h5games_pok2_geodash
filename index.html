@@ -184,8 +184,20 @@ Whether you’re opening the page on a phone between classes or using a desktop 
       // prefer returning an absolute URL rooted at that value.
       try{
         if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.replace(/\/+$/,'')){
-          const root = window._globalSiteRoot.replace(/\/+$/,'');
-          return root + '/' + id;
+          try{
+            const siteUrl = new URL(window._globalSiteRoot);
+            const buildOrigin = siteUrl.origin;
+            const buildPath = (siteUrl.pathname || '').replace(/\/+$/,'');
+            // If the build-time origin matches current origin, return absolute URL.
+            if (buildOrigin === location.origin) return buildOrigin.replace(/\/+$/,'') + (buildPath ? buildPath : '') + '/' + id;
+            // If origins differ (preview vs production), return a root-relative path
+            // under the site root's pathname (avoids cross-origin pushState errors).
+            return (buildPath ? (buildPath + '/' + id) : ('/' + id));
+          }catch(err){
+            // fallback to simple string handling
+            const root = window._globalSiteRoot.replace(/\/+$/,'');
+            return root + '/' + id;
+          }
         }
       }catch(e){ /* ignore and fall back */ }
       // otherwise, fall back to repo-base or site-root-relative path
