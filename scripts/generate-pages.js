@@ -210,10 +210,11 @@ games.forEach(g=>{
       // prefer explicit pageSiteUrl (ENV_SITE_ROOT or seo.site.siteUrl) to compute repo base;
       // fall back to simple first-path-segment heuristic when not available
       const repoBaseScript = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        // try to derive base from configured page site URL injected at build time\n        try{\n          ${pageSiteUrl ? `var __BUILD_TIME_SITE = ${JSON.stringify(pageSiteUrl)};` : `var __BUILD_TIME_SITE = '';`}\n          if(__BUILD_TIME_SITE){\n            try{\n              // only use the build-time site root if the current location matches it;\n              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.\n              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\\/\\/+$/,'') + '/';\n              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){\n                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\\/\\/+$/,'');\n              } else {\n                base = '';\n              }\n            }catch(e){ base = ''; }\n          }\n        }catch(e){}\n        if(!base){\n          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }\n        }\n        // normalise\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
+      const siteRootScript = `\n  <script>window._globalSiteRoot = ${JSON.stringify(pageSiteUrl || '')};</script>\n`;
       if (/<\/head>/i.test(page)){
-        page = page.replace(/<\/head>/i, repoBaseScript + '</head>');
+        page = page.replace(/<\/head>/i, repoBaseScript + siteRootScript + '</head>');
       } else {
-        page = repoBaseScript + page;
+        page = repoBaseScript + siteRootScript + page;
       }
 
       fs.writeFileSync(outPath, page, 'utf8');
@@ -253,9 +254,11 @@ if (templateHtml) {
   // inject global repo base into homepage as well so SPA code can reference it
     const repoBaseScriptHome = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        try{\n          ${siteUrl ? `var __BUILD_TIME_SITE = ${JSON.stringify(siteUrl)};` : `var __BUILD_TIME_SITE = '';`}\n          if(__BUILD_TIME_SITE){\n            try{\n              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\\/\\/+$/,'') + '/';\n              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){\n                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\\/\\/+$/,'');\n              } else {\n                base = '';\n              }\n            }catch(e){ base = ''; }\n          }\n        }catch(e){}\n        if(!base){ try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; } }\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
   if (/<\/head>/i.test(indexHtml)){
-    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + '</head>');
+    const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
+    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + siteRootScriptHome + '</head>');
   } else {
-    indexHtml = repoBaseScriptHome + indexHtml;
+    const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
+    indexHtml = repoBaseScriptHome + siteRootScriptHome + indexHtml;
   }
 
   fs.writeFileSync(path.join(DIST, 'index.html'), indexHtml, 'utf8');
