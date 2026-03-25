@@ -66,10 +66,23 @@ function detectSiteUrlFromGit(){
   return '';
 }
 const _gitSiteUrl = detectSiteUrlFromGit();
-// prefer explicit ENV_SITE_ROOT if provided (CI / repo variable)
-const envSiteRoot = (process && process.env && process.env.ENV_SITE_ROOT) ? String(process.env.ENV_SITE_ROOT).replace(/\/\/+$/,'') : '';
+// allow overriding via CLI: --site-root or --siteRoot
+function cliOption(name){
+  const idx = process.argv.findIndex(a=>a===name);
+  if (idx>=0 && process.argv.length>idx+1) return process.argv[idx+1];
+  // support --site-root=VALUE
+  const match = process.argv.map(a=>{ const m = a.match(/^--site-root=(.*)$/); return m?m[1]:null; }).find(Boolean);
+  if (match) return match;
+  const match2 = process.argv.map(a=>{ const m = a.match(/^--siteRoot=(.*)$/); return m?m[1]:null; }).find(Boolean);
+  if (match2) return match2;
+  return null;
+}
+const cliSiteRoot = cliOption('--site-root') || cliOption('--siteRoot');
+// prefer explicit CLI, then ENV_SITE_ROOT if provided (CI / repo variable)
+const rawEnvSite = (cliSiteRoot && String(cliSiteRoot).length) ? String(cliSiteRoot) : ((process && process.env && process.env.ENV_SITE_ROOT) ? String(process.env.ENV_SITE_ROOT) : '');
+const envSiteRoot = rawEnvSite ? rawEnvSite.replace(/\/+$/,'') : '';
 // precompute common injections so per-game SPA copies also contain featured/root content
-const siteUrl = envSiteRoot || (seo && seo.site && seo.site.siteUrl) ? seo.site.siteUrl.replace(/\/\/+$/,'') : (_gitSiteUrl || '');
+const siteUrl = envSiteRoot || (seo && seo.site && seo.site.siteUrl) ? String(seo.site.siteUrl).replace(/\/+$/,'') : (_gitSiteUrl || '');
 const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
 let featuredHtml = '';
 if (site && Array.isArray(site.featured)) {

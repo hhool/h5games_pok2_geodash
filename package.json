@@ -6,7 +6,11 @@
   "scripts": {
     "build": "mkdir -p dist && npx html-minifier-terser --collapse-whitespace --remove-comments --minify-js true --minify-css true game-template.html -o dist/index.html && cp -R data dist/data || true && cp -R assets dist/assets || true && node scripts/generate-pages.js && node scripts/gen-sitemap.js",
     "serve": "npx http-server dist -p 8000",
-    "preview": "python3 -m http.server --directory dist 8000"
+    "preview": "python3 -m http.server --directory dist 8000",
+    "build:gh": "ENV_SITE_ROOT=\"https://hhool.github.io/h5games_pok2_geodash\" npm run build",
+    "build:cloudflare": "ENV_SITE_ROOT=\"https://geometrydash.poki2.online\" npm run build",
+    "build:google": "ENV_SITE_ROOT=\"https://your-google-custom-domain.example\" npm run build",
+    "build:local": "ENV_SITE_ROOT=\"http://localhost:8000\" npm run build"
   },
   "devDependencies": {
     "html-minifier-terser": "^7.0.0",
