@@ -43,7 +43,7 @@
           var candidates = [];
            try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot); while(s && s.endsWith('/')) s = s.slice(0,-1); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}
-          try{ candidates.push('sw.js'); }catch(e){}
+
           for(var i=0;i<candidates.length;i++){
             var p = candidates[i];
             try{
@@ -124,6 +124,25 @@
   <div class="wrap">
     <header class="site-head">
       <a class="brand" href="./">GeometryLite</a>
+      <script>
+        (function(){
+          try{
+            var b = document && document.querySelector && document.querySelector('a.brand');
+            if (!b) return;
+            if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string'){
+              var s = String(window._globalSiteRoot);
+              while(s && s.endsWith('/')) s = s.slice(0,-1);
+              b.setAttribute('href', s + '/');
+              return;
+            }
+            if (window._globalRepoBase && typeof window._globalRepoBase === 'string' && window._globalRepoBase.length){
+              var r = String(window._globalRepoBase);
+              if (!r.endsWith('/')) r = r + '/';
+              b.setAttribute('href', r);
+            }
+          }catch(e){}
+        })();
+      </script>
       <div style="color:var(--muted);font-size:.95rem">Play Geometry Dash — Unblocked & Mobile Friendly</div>
     </header>
 
