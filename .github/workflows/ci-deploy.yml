@@ -3,7 +3,12 @@ name: Build & Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      site_root:
+        description: 'Public site root (https://...) to embed into generated pages'
+        required: false
+        default: 'https://hhool.github.io/h5games_pok2_geodash/'
 
 permissions:
   contents: read
@@ -16,8 +21,7 @@ jobs:
     permissions:
       contents: write
 
-    env:
-      ENV_SITE_ROOT: "https://hhool.github.io/h5games_pok2_geodash/"
+    # ENV_SITE_ROOT will be set at runtime from workflow input or fallback to the repo pages URL
 
     steps:
       - name: Checkout
@@ -32,10 +36,28 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit --progress=false
 
+      - name: Set ENV_SITE_ROOT
+        run: |
+          if [ -n "${{ github.event.inputs.site_root }}" ]; then
+            echo "ENV_SITE_ROOT=${{ github.event.inputs.site_root }}" >> $GITHUB_ENV
+          else
+            echo "ENV_SITE_ROOT=https://hhool.github.io/h5games_pok2_geodash/" >> $GITHUB_ENV
+          fi
+
       - name: Build site
         run: |
           npm run build --if-present || true
-          node scripts/generate-pages.js
+          node scripts/generate-pages.js --site-root "$ENV_SITE_ROOT"
+
+      - name: Write CNAME for custom domain
+        run: |
+          if [ -n "$ENV_SITE_ROOT" ] && ! echo "$ENV_SITE_ROOT" | grep -qi 'github.io'; then
+            # strip protocol and trailing slash, write domain only
+            echo "$ENV_SITE_ROOT" | sed -E 's#https?://##; s#/$##' > dist/CNAME
+            echo "Wrote dist/CNAME"
+          else
+            echo "Skipping CNAME write; ENV_SITE_ROOT appears to be a github.io site or empty"
+          fi
 
       - name: Deploy to GitHub Pages (push to gh-pages)
         uses: peaceiris/actions-gh-pages@v4
