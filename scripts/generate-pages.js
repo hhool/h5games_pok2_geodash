@@ -210,11 +210,28 @@ games.forEach(g=>{
       // prefer explicit pageSiteUrl (ENV_SITE_ROOT or seo.site.siteUrl) to compute repo base;
       // fall back to simple first-path-segment heuristic when not available
       const repoBaseScript = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        // try to derive base from configured page site URL injected at build time\n        try{\n          ${pageSiteUrl ? `var __BUILD_TIME_SITE = ${JSON.stringify(pageSiteUrl)};` : `var __BUILD_TIME_SITE = '';`}\n          if(__BUILD_TIME_SITE){\n            try{\n              // only use the build-time site root if the current location matches it;\n              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.\n              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\\/\\/+$/,'') + '/';\n              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){\n                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\\/\\/+$/,'');\n              } else {\n                base = '';\n              }\n            }catch(e){ base = ''; }\n          }\n        }catch(e){}\n        if(!base){\n          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }\n        }\n        // normalise\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
+      // build preload tags for images: preload the page image and any featured images
+      let preloadTags = '';
+      try{
+        const preloadSet = new Set();
+        if (siteImage) preloadSet.add(siteImage);
+        if (Array.isArray(site && site.featured)){
+          site.featured.forEach(fid => {
+            const fg = games.find(x=>x.id===fid);
+            if (!fg) return;
+            let fImg = (fg.img && fg.img[0]) ? String(fg.img[0]).replace(/^\/+/, '') : '';
+            if (fImg && !fImg.startsWith('assets/')){ fImg = fImg.replace(/^games\//,''); fImg = 'assets/games/' + fImg; }
+            if (fImg){ preloadSet.add(joinUrl(pageSiteUrl, fImg)); }
+          });
+        }
+        preloadTags = Array.from(preloadSet).map(u=>`  <link rel="preload" as="image" href="${u}">`).join('\n') + '\n';
+      }catch(e){ preloadTags = ''; }
+
       const siteRootScript = `\n  <script>window._globalSiteRoot = ${JSON.stringify(pageSiteUrl || '')};</script>\n`;
       if (/<\/head>/i.test(page)){
-        page = page.replace(/<\/head>/i, repoBaseScript + siteRootScript + '</head>');
+        page = page.replace(/<\/head>/i, repoBaseScript + preloadTags + siteRootScript + '</head>');
       } else {
-        page = repoBaseScript + siteRootScript + page;
+        page = repoBaseScript + preloadTags + siteRootScript + page;
       }
 
       fs.writeFileSync(outPath, page, 'utf8');
@@ -260,11 +277,27 @@ if (templateHtml) {
   // inject global repo base into homepage as well so SPA code can reference it
     const repoBaseScriptHome = `\n  <script>\n    (function(){\n      try{\n        var base = '';\n        try{\n          ${siteUrl ? `var __BUILD_TIME_SITE = ${JSON.stringify(siteUrl)};` : `var __BUILD_TIME_SITE = '';`}\n          if(__BUILD_TIME_SITE){\n            try{\n              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\\/\\/+$/,'') + '/';\n              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){\n                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\\/\\/+$/,'');\n              } else {\n                base = '';\n              }\n            }catch(e){ base = ''; }\n          }\n        }catch(e){}\n        if(!base){ try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; } }\n        if(base === '/') base = '';\n        window._globalRepoBase = base || '';\n      }catch(e){ window._globalRepoBase = ''; }\n    })();\n  </script>\n`;
   if (/<\/head>/i.test(indexHtml)){
+    // preload featured images on homepage to warm the browser cache and
+    // avoid redundant downloads when navigating to per-game pages.
+    let preloadHome = '';
+    try{
+      const setHome = new Set();
+      if (site && Array.isArray(site.featured)){
+        site.featured.forEach(id => {
+          const g = games.find(x=>x.id===id);
+          if (!g) return;
+          let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+          if (imgPath && !imgPath.startsWith('assets/')){ imgPath = imgPath.replace(/^games\//,''); imgPath = 'assets/games/' + imgPath; }
+          if (imgPath) setHome.add(joinUrl(siteUrl, imgPath));
+        });
+      }
+      preloadHome = Array.from(setHome).map(u=>`  <link rel="preload" as="image" href="${u}">`).join('\n') + '\n';
+    }catch(e){ preloadHome = ''; }
     const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
-    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + siteRootScriptHome + '</head>');
+    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + preloadHome + siteRootScriptHome + '</head>');
   } else {
     const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
-    indexHtml = repoBaseScriptHome + siteRootScriptHome + indexHtml;
+    indexHtml = repoBaseScriptHome + preloadHome + siteRootScriptHome + indexHtml;
   }
 
   fs.writeFileSync(path.join(DIST, 'index.html'), indexHtml, 'utf8');
