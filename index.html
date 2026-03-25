@@ -30,6 +30,8 @@
     .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:10px}
     .game-card-mini{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center}
     .game-card-mini img{width:100%;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    /* reduce CLS: reserve the thumbnail aspect ratio so layout doesn't shift */
+    .game-card-mini img{aspect-ratio:182/112}
     .game-card-mini .gmeta{font-size:.92rem;color:var(--muted);width:100%}
     .game-card-mini .gmeta .meta-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
     .game-card-mini .gmeta .meta-row .title{font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -61,7 +63,7 @@
       try{
         var base = '';
         try{
-          var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash";
+          var __BUILD_TIME_SITE = "https://geometrydash.poki2.online";
           if(__BUILD_TIME_SITE){
             try{
               var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/\/+$/,'') + '/';
@@ -79,11 +81,11 @@
       }catch(e){ window._globalRepoBase = ''; }
     })();
   </script>
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
+  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
+  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
+  <link rel="preload" as="image" href="https://geometrydash.poki2.online/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
 
-  <script>window._globalSiteRoot = "https://hhool.github.io/h5games_pok2_geodash";</script>
+  <script>window._globalSiteRoot = "https://geometrydash.poki2.online";</script>
 </head>
 <body>
   <div class="wrap">
@@ -122,7 +124,7 @@
 
       <section class="other-games" aria-label="Geometry Games">
         <h2>Geometry Games</h2>
-        <div id="gamesGrid" class="games-grid"><div class="game-card-mini" data-id="g1"><img src="assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg" alt="Geometry Dash Lite"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Lite</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g2"><img src="assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg" alt="Geometry Dash Meltdown"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Meltdown</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g3"><img src="assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg" alt="Geometry Dash Subzero"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Subzero</div><div class="publisher">OzGames</div></div></div></div></div>
+        <div id="gamesGrid" class="games-grid"><div class="game-card-mini" data-id="g1"><img src="assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg" alt="Geometry Dash Lite" width="182" height="112" decoding="async" importance="low"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Lite</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g2"><img src="assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg" alt="Geometry Dash Meltdown" width="182" height="112" decoding="async" importance="low"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Meltdown</div><div class="publisher">OzGames</div></div></div></div><div class="game-card-mini" data-id="g3"><img src="assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg" alt="Geometry Dash Subzero" width="182" height="112" decoding="async" importance="low"><div class="gmeta"><div class="meta-row"><div class="title">Geometry Dash Subzero</div><div class="publisher">OzGames</div></div></div></div></div>
       </section>
 
       <div class="meta">
@@ -377,6 +379,8 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
           // load images immediately (no client-side lazy loading)
           img.alt = g.title;
+          // help Lighthouse: async decode and hint low importance for thumbnails
+          try{ img.decoding = 'async'; img.setAttribute('importance','low'); }catch(e){}
           img.src = realSrc;
           // img.alt already set above
           const meta = document.createElement('div');
