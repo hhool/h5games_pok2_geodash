@@ -151,9 +151,10 @@ games.forEach(g => {
     imgPath = imgPath.replace(/^games\//, '');
     imgPath = 'assets/games/' + imgPath;
   }
+  const pubText = (g && g.rating && (g.rating.ratingValue !== undefined && g.rating.ratingValue !== null)) ? String(g.rating.ratingValue) : ((typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:''));
   gamesGridHtml += `<div class="game-card-mini" data-id="${g.id}">`;
   gamesGridHtml += renderResponsivePicture(imgPath, g.title, 182, 112, siteUrl);
-  gamesGridHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
+  gamesGridHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${pubText}</div></div></div>`;
   gamesGridHtml += `</div>`;
 });
 
@@ -361,9 +362,10 @@ if (templateHtml) {
     // normalize image path to dist assets location
     let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
     if (imgPath && !imgPath.startsWith('assets/')){ imgPath = imgPath.replace(/^games\//, ''); imgPath = 'assets/games/' + imgPath; }
+    const pubTextF = (g && g.rating && (g.rating.ratingValue !== undefined && g.rating.ratingValue !== null)) ? String(g.rating.ratingValue) : ((typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:''));
     featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
     featuredHtml += renderResponsivePicture(imgPath, g.title, 182, 112, siteUrl);
-    featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
+    featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${pubTextF}</div></div></div>`;
     featuredHtml += `</div>`;
   });
   indexHtml = indexHtml.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
