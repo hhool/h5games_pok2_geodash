@@ -42,7 +42,8 @@
       if('serviceWorker' in navigator){
         (async function(){
           var candidates = [];
-           try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot); while(s && s.endsWith('/')) s = s.slice(0,-1); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
+           try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot); while(s && s.endsWith('/')) s = s.slice(0,-1); // register SW from configured site-root path (avoid origin /sw.js)
+                if(s) candidates.push(s + '/sw.js'); else candidates.push('/sw.js'); }catch(e){} } }catch(e){}
          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}
 
           for(var i=0;i<candidates.length;i++){
