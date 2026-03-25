@@ -141,24 +141,21 @@ const envSiteRoot = rawEnvSite ? rawEnvSite.replace(/\/+$/,'') : '';
 // precompute common injections so per-game SPA copies also contain featured/root content
 const siteUrl = (envSiteRoot && envSiteRoot.length) ? envSiteRoot : ((seo && seo.site && seo.site.siteUrl) ? String(seo.site.siteUrl).replace(/\/\/+$/,'') : (_gitSiteUrl || ''));
 const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
-let featuredHtml = '';
-if (site && Array.isArray(site.featured)) {
-  site.featured.forEach(id => {
-    const g = games.find(x=>x.id===id);
-    if (!g) return;
-    // normalize image path to dist assets location
-    let fImg = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
-    if (fImg && !fImg.startsWith('assets/')){
-      fImg = fImg.replace(/^games\//, '');
-      fImg = 'assets/games/' + fImg;
-    }
-    featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
-    // emit responsive picture markup (uses generated manifest when available)
-    featuredHtml += renderResponsivePicture(fImg, g.title, 182, 112, siteUrl);
-    featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
-    featuredHtml += `</div>`;
-  });
-}
+// Build a full games-grid HTML used on per-game pages so each game page
+// shows the same server-rendered thumbnails as the homepage (g1..g7 etc.).
+let gamesGridHtml = '';
+games.forEach(g => {
+  // normalize image path to dist assets location
+  let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+  if (imgPath && !imgPath.startsWith('assets/')){
+    imgPath = imgPath.replace(/^games\//, '');
+    imgPath = 'assets/games/' + imgPath;
+  }
+  gamesGridHtml += `<div class="game-card-mini" data-id="${g.id}">`;
+  gamesGridHtml += renderResponsivePicture(imgPath, g.title, 182, 112, siteUrl);
+  gamesGridHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
+  gamesGridHtml += `</div>`;
+});
 
 // render per-game SPA copies and also generate index.html from templateHtml with injected content
 games.forEach(g=>{
@@ -264,7 +261,9 @@ games.forEach(g=>{
       // portion without replacing the site-level HTML (avoids CLS).
       const siteDescHtml = rootDescHtml;
       page = page.replace('<!--ROOT_DESC-->', `<div id="site-desc" style="display:none">${siteDescHtml}</div><div id="root-desc" data-current-game="${g.id}"><div class="root-site-html">${siteDescHtml}</div><div class="root-game-html">${perGameHtml}</div></div>`);
-      page = page.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
+      // use the full server-rendered games grid (same as homepage) so per-game
+      // pages show all thumbnails and use the same responsive picture markup.
+      page = page.replace('<!--FEATURED_GAMES-->', gamesGridHtml || '');
 
       // ensure a global repo-base var is defined for runtime navigation (used by SPA)
       // prefer explicit pageSiteUrl (ENV_SITE_ROOT or seo.site.siteUrl) to compute repo base;
