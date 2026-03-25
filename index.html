@@ -354,20 +354,21 @@ Whether you’re opening the page on a phone between classes or using a desktop 
           function resolveCandidate(s){
             if (!s) return '';
             if (s.indexOf('http://')===0 || s.indexOf('https://')===0) return s;
-            // compute a relative prefix based on current path depth so that
-            // assets resolve relative to the site root even when page is in /g1/
+            // Prefer absolute asset URLs when a build-time site root is available.
+            try{
+              if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.replace(/\/+$/,'')){
+                const root = window._globalSiteRoot.replace(/\/+$/,'');
+                // ensure we don't duplicate slashes
+                if (s.indexOf('/')===0) return root + s;
+                return root + '/' + s;
+              }
+            }catch(e){ /* fallthrough to relative resolution */ }
+
+            // fallback: compute a relative prefix based on current path depth so
+            // homepage uses `assets/...` and per-game pages use `../assets/...`.
             const depth = location.pathname.split('/').filter(Boolean).length;
             const relPrefix = depth > 0 ? Array(depth).fill('..').join('/') + '/' : '';
-            // already absolute-rooted path (starts with '/') -> convert to relative
-            if (s.indexOf('/')===0){
-              return relPrefix + s.replace(/^\/+/, '');
-            }
-            // Treat asset and data paths as relative to site root (use relPrefix)
-            if (s.indexOf('assets/')===0 || s.indexOf('data/')===0 || s.indexOf('img/')===0){
-              return relPrefix + s;
-            }
-            // otherwise, return relative path (prefer relPrefix) so resources are
-            // requested from the same site root regardless of current per-game path
+            if (s.indexOf('/')===0) return relPrefix + s.replace(/^\/+/, '');
             return relPrefix + s;
           }
           const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
