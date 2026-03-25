@@ -242,7 +242,13 @@ if (templateHtml) {
     site.featured.forEach(id => {
       const g = games.find(x=>x.id===id);
       if (!g) return;
-      const imgSrc = (g.img && g.img[0]) ? g.img[0] : '';
+      // normalize image path to dist assets location like in per-page rendering
+      let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+      if (imgPath && !imgPath.startsWith('assets/')){
+        imgPath = imgPath.replace(/^games\//, '');
+        imgPath = 'assets/games/' + imgPath;
+      }
+      const imgSrc = imgPath || '';
       featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
       featuredHtml += `<img src="${imgSrc}" alt="${g.title}">`;
       featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
