@@ -255,9 +255,14 @@
 
         const res = await fetchGamesJson();
         const list = await res.json();
-        grid.innerHTML = '';
         // expose games list for loadGame
         window._gamesList = list;
+        // If the generator already emitted server-side cards into `#gamesGrid`,
+        // avoid clearing and re-rendering them on the client. Re-rendering the
+        // entire grid causes a layout shift (CLS) because the content below
+        // moves while cards are replaced. Only render client-side when the
+        // grid is empty.
+        const alreadyRendered = grid.querySelector('.game-card-mini');
 
         // derive repo base and initial selection from pathname (/g1/) or hash or fallback to first item
         const _globalSegs = location.pathname.split('/').filter(Boolean);
@@ -309,7 +314,7 @@
           try{ if (typeof updateMeta === 'function') updateMeta(initialGame); }catch(e){ console.error('init updateMeta failed', e); }
         }
 
-        list.forEach(g=>{
+        function createCardNode(g){
           const card = document.createElement('div');
           card.className = 'game-card-mini';
           card.setAttribute('data-id', g.id);
@@ -319,35 +324,26 @@
             'data/' + (g.img && g.img[0] ? g.img[0] : ''),
             g.img && g.img[0] ? g.img[0] : ''
           ];
-          // resolve candidate to an absolute path under the repo base when necessary
           const repoBase = (window._globalRepoBase && typeof window._globalRepoBase === 'string') ? window._globalRepoBase.replace(/\/+$/,'') : '';
           function resolveCandidate(s){
             if (!s) return '';
             if (s.indexOf('http://')===0 || s.indexOf('https://')===0) return s;
-            // Prefer absolute asset URLs when a build-time site root is available.
             try{
               if (window._globalSiteRoot && typeof window._globalSiteRoot === 'string' && window._globalSiteRoot.replace(/\/+$/,'')){
                 const root = window._globalSiteRoot.replace(/\/+$/,'');
-                // ensure we don't duplicate slashes
                 if (s.indexOf('/')===0) return root + s;
                 return root + '/' + s;
               }
-            }catch(e){ /* fallthrough to relative resolution */ }
-
-            // fallback: compute a relative prefix based on current path depth so
-            // homepage uses `assets/...` and per-game pages use `../assets/...`.
+            }catch(e){}
             const depth = location.pathname.split('/').filter(Boolean).length;
             const relPrefix = depth > 0 ? Array(depth).fill('..').join('/') + '/' : '';
             if (s.indexOf('/')===0) return relPrefix + s.replace(/^\/+/, '');
             return relPrefix + s;
           }
           const realSrc = (srcCandidates.map(resolveCandidate).find(s=>s && s.length>0)) || '';
-          // load images immediately (no client-side lazy loading)
           img.alt = g.title;
-          // help Lighthouse: async decode and hint low importance for thumbnails
           try{ img.decoding = 'async'; img.setAttribute('importance','low'); }catch(e){}
           img.src = realSrc;
-          // img.alt already set above
           const meta = document.createElement('div');
           meta.className = 'gmeta';
           const metaRow = document.createElement('div');
@@ -357,12 +353,10 @@
           titleEl.textContent = g.title;
           const pubEl = document.createElement('div');
           pubEl.className = 'publisher';
-          // publisher may be an object with a name property
           const pubName = (typeof g.publisher === 'string') ? g.publisher : (g.publisher && (g.publisher.name || g.publisher)) || '';
           pubEl.textContent = pubName;
           metaRow.appendChild(titleEl);
           metaRow.appendChild(pubEl);
-          // Only keep a compact subtitle slot for accessibility (hidden visually)
           const sr = document.createElement('div');
           sr.style.display = 'none';
           sr.textContent = g.tags && g.tags.length ? g.tags.join(' • ') : '';
@@ -370,10 +364,34 @@
           meta.appendChild(sr);
           card.appendChild(img);
           card.appendChild(meta);
-          grid.appendChild(card);
+          return card;
+        }
 
-          if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
-        });
+        if (!alreadyRendered){
+          list.forEach(g=>{
+            const card = createCardNode(g);
+            grid.appendChild(card);
+            if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
+          });
+        } else {
+          // Ensure the server-rendered selection outline matches the initial game
+          if (initialGame){
+            Array.from(grid.querySelectorAll('.game-card-mini')).forEach(card=>{
+              try{ if (card.getAttribute('data-id')===initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)'; else card.style.outline = ''; }catch(e){}
+            });
+          }
+          // Append any missing game cards that were not server-rendered.
+          try{
+            const present = new Set(Array.from(grid.querySelectorAll('.game-card-mini')).map(n=>n.getAttribute('data-id')));
+            list.forEach(g=>{
+              if (!present.has(g.id)){
+                const card = createCardNode(g);
+                grid.appendChild(card);
+                if (g.id === initialGame.id) card.style.outline = '2px solid rgba(255,203,5,0.12)';
+              }
+            });
+          }catch(e){ console.error('append missing cards failed', e); }
+        }
 
         // per-card listeners removed — delegation below handles clicks reliably
 
@@ -416,7 +434,6 @@
         if (!rootEl) return;
         const siteHtml = siteEl ? siteEl.innerHTML : '';
         let perGameHtml = '';
-        console.log('updateRootDesc called for', g && g.id);
         if (g.guide) perGameHtml += `<p style="color:var(--muted);margin:6px 0">${g.guide}</p>`;
         if (g.vaultCodes && Array.isArray(g.vaultCodes) && g.vaultCodes.length){
           perGameHtml += `<h2 style="margin-top:8px">Vault Codes</h2><p style="color:var(--muted);margin:6px 0">${g.vaultCodes.join(', ')}</p>`;
@@ -430,9 +447,22 @@
           });
           perGameHtml += `</ol>`;
         }
-        console.log('updateRootDesc: siteHtml length', siteHtml.length, 'perGameHtml length', perGameHtml.length);
-        rootEl.innerHTML = siteHtml + perGameHtml;
-        try{ rootEl.setAttribute('data-current-game', g && g.id ? g.id : ''); console.log('root-desc data-current-game set to', rootEl.getAttribute('data-current-game')); }catch(e){console.error('failed to set data-current-game', e);} 
+        // Hydration-safe update: only replace the per-game container so we don't
+        // clobber the server-rendered site HTML and cause layout shifts.
+        try{
+          const siteContainer = rootEl.querySelector('.root-site-html') || siteEl;
+          const gameContainer = rootEl.querySelector('.root-game-html');
+          if (siteContainer && siteContainer !== siteEl && siteContainer.innerHTML !== siteHtml){
+            siteContainer.innerHTML = siteHtml;
+          }
+          if (gameContainer){
+            gameContainer.innerHTML = perGameHtml;
+          } else {
+            // fallback: create the expected structure
+            rootEl.innerHTML = `<div class="root-site-html">${siteHtml}</div><div class="root-game-html">${perGameHtml}</div>`;
+          }
+          rootEl.setAttribute('data-current-game', g && g.id ? g.id : '');
+        }catch(e){ console.error('updateRootDesc hydrate failed', e); }
       }
 
       // update meta tags (description, keywords, canonical), OG/Twitter and JSON-LD in head

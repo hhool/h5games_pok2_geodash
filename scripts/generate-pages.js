@@ -50,6 +50,63 @@ if (fs.existsSync(SITE_DATA_PATH)) {
   try { site = JSON.parse(fs.readFileSync(SITE_DATA_PATH,'utf8')); } catch(e){ console.warn('failed to parse site.json', e); }
 }
 
+// load generated image manifest (image-pipeline writes this)
+const IMG_MANIFEST_PATH = path.join(ROOT, 'assets', 'games', 'img', 'manifest.json');
+let imgManifest = {};
+if (fs.existsSync(IMG_MANIFEST_PATH)){
+  try{ imgManifest = JSON.parse(fs.readFileSync(IMG_MANIFEST_PATH,'utf8')); }catch(e){ console.warn('failed to parse image manifest', e); }
+}
+
+// helper: render responsive picture markup using manifest when available
+function renderResponsivePicture(imgPath, alt, w, h, siteRoot){
+  if (!imgPath) return '';
+  const normalized = imgPath.replace(/^\/+/, '');
+  const manifestEntry = imgManifest[normalized];
+  const sizesAttr = `(max-width:600px) 100vw, ${w}px`;
+  if (manifestEntry && Array.isArray(manifestEntry.variants) && manifestEntry.variants.length){
+    // group by format
+    const byFormat = {};
+    manifestEntry.variants.forEach(v=>{ byFormat[v.format] = byFormat[v.format] || []; byFormat[v.format].push(v); });
+    let out = '<picture>';
+    ['avif','webp'].forEach(fmt=>{
+      if (byFormat[fmt]){
+        const srcset = byFormat[fmt].map(v=> `${joinUrl(siteRoot, v.path)} ${v.width}w`).join(', ');
+        const type = fmt==='avif' ? 'image/avif' : 'image/webp';
+        out += `<source type="${type}" srcset="${srcset}" sizes="${sizesAttr}">`;
+      }
+    });
+    // pick largest available original-like variant for img src fallback
+    const fallback = manifestEntry.variants.slice().sort((a,b)=>b.width-a.width)[0];
+    const primary = fallback ? joinUrl(siteRoot, fallback.path) : joinUrl(siteRoot, normalized);
+    const imgSrcset = manifestEntry.variants.map(v=> `${joinUrl(siteRoot, v.path)} ${v.width}w`).join(', ');
+    out += `<img src="${primary}" srcset="${imgSrcset}" sizes="${sizesAttr}" alt="${alt}" width="${w}" height="${h}" decoding="async" importance="low">`;
+    out += '</picture>';
+    return out;
+  }
+  // no manifest: attempt to prefer existing avif/webp same-name files
+  const parsed = path.parse(normalized);
+  const cand = [];
+  try{
+    const av = path.join(parsed.dir, parsed.name + '.avif');
+    const wp = path.join(parsed.dir, parsed.name + '.webp');
+    if (fs.existsSync(path.join(ROOT, av))) cand.push(av);
+    if (fs.existsSync(path.join(ROOT, wp))) cand.push(wp);
+    if (fs.existsSync(path.join(ROOT, normalized))) cand.push(normalized);
+  }catch(e){}
+  if (cand.length){
+    let out = '<picture>';
+    cand.forEach(cf => {
+      const ext = (cf.split('.').pop() || '').toLowerCase();
+      if (ext === 'avif') out += `<source type="image/avif" srcset="${joinUrl(siteRoot, cf)}">`;
+      else if (ext === 'webp') out += `<source type="image/webp" srcset="${joinUrl(siteRoot, cf)}">`;
+    });
+    out += `<img src="${joinUrl(siteRoot, cand[cand.length-1])}" alt="${alt}" width="${w}" height="${h}" decoding="async" importance="low">`;
+    out += '</picture>';
+    return out;
+  }
+  return `<img src="${joinUrl(siteRoot, normalized)}" alt="${alt}" width="${w}" height="${h}" decoding="async" importance="low">`;
+}
+
 // attempt to detect a sensible siteUrl fallback from git remote (useful for GH Pages)
 const child_process = require('child_process');
 function detectSiteUrlFromGit(){
@@ -95,10 +152,9 @@ if (site && Array.isArray(site.featured)) {
       fImg = fImg.replace(/^games\//, '');
       fImg = 'assets/games/' + fImg;
     }
-    const imgSrc = fImg ? joinUrl(siteUrl, fImg) : '';
     featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
-    // add width/height and decoding hints to reduce CLS and improve Lighthouse
-    featuredHtml += `<img src="${imgSrc}" alt="${g.title}" width="182" height="112" decoding="async" importance="low">`;
+    // emit responsive picture markup (uses generated manifest when available)
+    featuredHtml += renderResponsivePicture(fImg, g.title, 182, 112, siteUrl);
     featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
     featuredHtml += `</div>`;
   });
@@ -202,9 +258,12 @@ games.forEach(g=>{
         perGameHtml += `</ol>`;
       }
 
-      // expose the site-only description in #site-desc (hidden) and render combined site+per-game in #root-desc
+      // expose the site-only description in #site-desc (hidden) and render
+      // a structured root description that is hydration-friendly. We emit
+      // separate containers so the client can update only the per-game
+      // portion without replacing the site-level HTML (avoids CLS).
       const siteDescHtml = rootDescHtml;
-      page = page.replace('<!--ROOT_DESC-->', `<div id="site-desc" style="display:none">${siteDescHtml}</div><div id="root-desc">${siteDescHtml + perGameHtml}</div>`);
+      page = page.replace('<!--ROOT_DESC-->', `<div id="site-desc" style="display:none">${siteDescHtml}</div><div id="root-desc" data-current-game="${g.id}"><div class="root-site-html">${siteDescHtml}</div><div class="root-game-html">${perGameHtml}</div></div>`);
       page = page.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
 
       // ensure a global repo-base var is defined for runtime navigation (used by SPA)
@@ -223,7 +282,17 @@ games.forEach(g=>{
             if (!fg) return;
             let fImg = (fg.img && fg.img[0]) ? String(fg.img[0]).replace(/^\/+/, '') : '';
             if (fImg && !fImg.startsWith('assets/')){ fImg = fImg.replace(/^games\//,''); fImg = 'assets/games/' + fImg; }
-            if (fImg){ preloadSet.add(joinUrl(pageSiteUrl, fImg)); }
+            if (fImg){
+              // prefer to preload available optimized formats (avif/webp) if present
+              try{
+                const parsed = path.parse(fImg);
+                const avif = path.join(parsed.dir, parsed.name + '.avif');
+                const webp = path.join(parsed.dir, parsed.name + '.webp');
+                if (fs.existsSync(path.join(ROOT, avif))) preloadSet.add(joinUrl(pageSiteUrl, avif));
+                if (fs.existsSync(path.join(ROOT, webp))) preloadSet.add(joinUrl(pageSiteUrl, webp));
+              }catch(e){}
+              preloadSet.add(joinUrl(pageSiteUrl, fImg));
+            }
           });
         }
         preloadTags = Array.from(preloadSet).map(u=>`  <link rel="preload" as="image" href="${u}">`).join('\n') + '\n';
@@ -231,10 +300,14 @@ games.forEach(g=>{
       }catch(e){ preloadTags = ''; }
 
       const siteRootScript = `\n  <script>window._globalSiteRoot = ${JSON.stringify(pageSiteUrl || '')};</script>\n`;
+      // service worker registration snippet: try safe candidates in order
+      // 1) build-time site root (only if same-origin at runtime), 2) absolute root '/sw.js',
+      // 3) repo base '/<repo>/sw.js', 4) relative 'sw.js'
+      const swRegister = `\n  <script>\n  (function(){\n    try{\n      if('serviceWorker' in navigator){\n        (async function(){\n          var candidates = [];\n          try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot).replace(/\/+$/,''); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}\n          try{ candidates.push('/sw.js'); }catch(e){}\n          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}\n          try{ candidates.push('sw.js'); }catch(e){}\n          for(var i=0;i<candidates.length;i++){\n            var p = candidates[i];\n            try{\n              // attempt registration; stop at first success\n              await navigator.serviceWorker.register(p);\n              console.log('service worker registered', p);\n              break;\n            }catch(err){\n              console.warn('sw register failed for', p, err);\n            }\n          }\n        })();\n      }\n    }catch(e){}\n  })();\n  </script>\n`;
       if (/<\/head>/i.test(page)){
-        page = page.replace(/<\/head>/i, repoBaseScript + preconnectTag + preloadTags + siteRootScript + '</head>');
+        page = page.replace(/<\/head>/i, repoBaseScript + preconnectTag + preloadTags + siteRootScript + swRegister + '</head>');
       } else {
-        page = repoBaseScript + preconnectTag + preloadTags + siteRootScript + page;
+        page = repoBaseScript + preconnectTag + preloadTags + siteRootScript + swRegister + page;
       }
 
       fs.writeFileSync(outPath, page, 'utf8');
@@ -252,29 +325,23 @@ if (templateHtml) {
   let indexHtml = templateHtml;
   // homepage template uses runtime lookup for data/games.json — no replacement needed
 
-  // inject root description
+  // inject root description: emit hydration-friendly containers so client
+  // can populate per-game content without clobbering the site-level HTML.
   const rootDescHtml = site && site.description ? `<p style="margin:.5rem 0;color:var(--muted)">${site.description}</p>` : `<p style="margin:.5rem 0;color:var(--muted)">Play Geometry Dash — mobile friendly web builds. No download required.</p>`;
-  indexHtml = indexHtml.replace('<!--ROOT_DESC-->', rootDescHtml);
+  indexHtml = indexHtml.replace('<!--ROOT_DESC-->', `<div id="root-desc" data-current-game=""><div class="root-site-html">${rootDescHtml}</div><div class="root-game-html"></div></div>`);
 
-  // inject featured games into games grid
+  // inject full games grid: render server-side cards for all games so homepage
+  // does not rely on client-side patching to show the complete list.
   let featuredHtml = '';
-  if (site && Array.isArray(site.featured)) {
-    site.featured.forEach(id => {
-      const g = games.find(x=>x.id===id);
-      if (!g) return;
-      // normalize image path to dist assets location like in per-page rendering
-      let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
-      if (imgPath && !imgPath.startsWith('assets/')){
-        imgPath = imgPath.replace(/^games\//, '');
-        imgPath = 'assets/games/' + imgPath;
-      }
-      const imgSrc = imgPath || '';
-      featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
-      featuredHtml += `<img src="${imgSrc}" alt="${g.title}" width="182" height="112" decoding="async" importance="low">`;
-      featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
-      featuredHtml += `</div>`;
-    });
-  }
+  games.forEach(g => {
+    // normalize image path to dist assets location
+    let imgPath = (g.img && g.img[0]) ? String(g.img[0]).replace(/^\/+/, '') : '';
+    if (imgPath && !imgPath.startsWith('assets/')){ imgPath = imgPath.replace(/^games\//, ''); imgPath = 'assets/games/' + imgPath; }
+    featuredHtml += `<div class="game-card-mini" data-id="${g.id}">`;
+    featuredHtml += renderResponsivePicture(imgPath, g.title, 182, 112, siteUrl);
+    featuredHtml += `<div class="gmeta"><div class="meta-row"><div class="title">${g.title}</div><div class="publisher">${(typeof g.publisher==='string')?g.publisher:(g.publisher&&g.publisher.name?g.publisher.name:'')}</div></div></div>`;
+    featuredHtml += `</div>`;
+  });
   indexHtml = indexHtml.replace('<!--FEATURED_GAMES-->', featuredHtml || '');
 
   // inject global repo base into homepage as well so SPA code can reference it
@@ -297,7 +364,8 @@ if (templateHtml) {
       preloadHome = Array.from(setHome).map(u=>`  <link rel="preload" as="image" href="${u}">`).join('\n') + '\n';
     }catch(e){ preloadHome = ''; }
     const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
-    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + preloadHome + siteRootScriptHome + '</head>');
+    const swRegisterHome = `\n  <script>\n  (function(){\n    try{\n      if('serviceWorker' in navigator){\n        (async function(){\n          var candidates = [];\n          try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot).replace(/\/+$/,''); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}\n          try{ candidates.push('/sw.js'); }catch(e){}\n          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}\n          try{ candidates.push('sw.js'); }catch(e){}\n          for(var i=0;i<candidates.length;i++){\n            var p = candidates[i];\n            try{\n              await navigator.serviceWorker.register(p);\n              console.log('service worker registered', p);\n              break;\n            }catch(err){\n              console.warn('sw register failed for', p, err);\n            }\n          }\n        })();\n      }\n    }catch(e){}\n  })();\n  </script>\n`;
+    indexHtml = indexHtml.replace(/<\/head>/i, repoBaseScriptHome + preloadHome + siteRootScriptHome + swRegisterHome + '</head>');
   } else {
     const siteRootScriptHome = `\n  <script>window._globalSiteRoot = ${JSON.stringify(siteUrl || '')};</script>\n`;
     indexHtml = repoBaseScriptHome + preloadHome + siteRootScriptHome + indexHtml;
@@ -306,5 +374,25 @@ if (templateHtml) {
   fs.writeFileSync(path.join(DIST, 'index.html'), indexHtml, 'utf8');
   console.log('Generated index.html');
 }
+
+// Write a small service worker to `dist/sw.js` that caches images under assets/games/img
+try{
+  const swContent = `// Service Worker: simple cache-first strategy for images
+const CACHE_NAME = 'h5games-images-v1';
+self.addEventListener('install', event => { self.skipWaiting(); });
+self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))))); self.clients.claim(); });
+self.addEventListener('fetch', event => {
+  try{
+    const req = event.request;
+    const url = new URL(req.url);
+    if (req.destination === 'image' || url.pathname.indexOf('/assets/games/img/') !== -1) {
+      event.respondWith(caches.open(CACHE_NAME).then(cache => cache.match(req).then(resp => resp || fetch(req).then(networkResp => { try{ cache.put(req, networkResp.clone()); }catch(e){} return networkResp; }))));
+    }
+  }catch(e){}
+});
+`;
+  fs.writeFileSync(path.join(DIST, 'sw.js'), swContent, 'utf8');
+  console.log('Wrote service worker to dist/sw.js');
+}catch(e){ console.warn('failed to write sw.js to dist', e); }
 
 console.log('All pages generated.');
