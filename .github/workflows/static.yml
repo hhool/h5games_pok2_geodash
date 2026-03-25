@@ -24,10 +24,19 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit --progress=false
 
+      - name: Set ENV_SITE_ROOT
+        run: |
+          # default to repo pages URL if not provided
+          if [ -n "${{ github.event.inputs.site_root }}" ]; then
+            echo "ENV_SITE_ROOT=${{ github.event.inputs.site_root }}" >> $GITHUB_ENV
+          else
+            echo "ENV_SITE_ROOT=https://hhool.github.io/h5games_pok2_geodash/" >> $GITHUB_ENV
+          fi
+
       - name: Build site
         run: |
           npm run build --if-present || true
-          node scripts/generate-pages.js
+          node scripts/generate-pages.js --site-root "$ENV_SITE_ROOT"
 
       - name: Deploy to GitHub Pages (push to gh-pages)
         uses: peaceiris/actions-gh-pages@v4
