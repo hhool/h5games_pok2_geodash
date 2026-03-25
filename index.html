@@ -70,9 +70,9 @@
           var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash";
           if(__BUILD_TIME_SITE){
             try{
-              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/\/+$/,'') + '/';
+              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/+$/,'') + '/';
               if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){
-                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/\/+$/,'');
+                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/+$/,'');
               } else {
                 base = '';
               }
@@ -97,7 +97,7 @@
       if('serviceWorker' in navigator){
         (async function(){
           var candidates = [];
-          try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot).replace(//+$/,''); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
+          try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot); while(s && s.endsWith('/')) s = s.slice(0,-1); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
           try{ candidates.push('/sw.js'); }catch(e){}
           try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}
           try{ candidates.push('sw.js'); }catch(e){}

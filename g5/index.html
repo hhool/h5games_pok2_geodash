@@ -1,3 +1,67 @@
+
+  <script>
+    (function(){
+      try{
+        var base = '';
+        // try to derive base from configured page site URL injected at build time
+        try{
+          var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash";
+          if(__BUILD_TIME_SITE){
+            try{
+              // only use the build-time site root if the current location matches it;
+              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.
+              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/+$/,'') + '/';
+              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){
+                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/+$/,'');
+              } else {
+                base = '';
+              }
+            }catch(e){ base = ''; }
+          }
+        }catch(e){}
+        if(!base){
+          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }
+        }
+        // normalise
+        if(base === '/') base = '';
+        window._globalRepoBase = base || '';
+      }catch(e){ window._globalRepoBase = ''; }
+    })();
+  </script>
+  <link rel="preconnect" href="https://hhool.github.io">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
+  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
+
+  <script>window._globalSiteRoot = "https://hhool.github.io/h5games_pok2_geodash";</script>
+
+  <script>
+  (function(){
+    try{
+      if('serviceWorker' in navigator){
+        (async function(){
+          var candidates = [];
+           try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot); while(s && s.endsWith('/')) s = s.slice(0,-1); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
+          try{ candidates.push('/sw.js'); }catch(e){}
+          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}
+          try{ candidates.push('sw.js'); }catch(e){}
+          for(var i=0;i<candidates.length;i++){
+            var p = candidates[i];
+            try{
+              // attempt registration; stop at first success
+              await navigator.serviceWorker.register(p);
+              console.log('service worker registered', p);
+              break;
+            }catch(err){
+              console.warn('sw register failed for', p, err);
+            }
+          }
+        })();
+      }
+    }catch(e){}
+  })();
+  </script>
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,70 +121,6 @@
     .detail-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:#fff;font-size:20px;cursor:pointer}
   </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":["VideoGame","SoftwareApplication"],"name":"Geometry Dash Hooda Math","url":"https://hhool.github.io/h5games_pok2_geodash/g5/","description":"Geometry Dash Hooda Math fuses pattern recognition with precise sequencing; think of each section as a short puzzle to be solved with timed inputs. The level design often places small connector jumps between longer leap combos, so rehearse those links separately before trying full chains. Visual anchors — repeating shapes or colors — hint at upcoming moves and are your best friends during dense spike runs. When faced with sequences of tight obstacles, prefer steady micro-taps over long holds to control your trajectory and landings. If collectible paths (like stars) tempt you into risky plays, pick safe collection routes that preserve your run. Use practice checkpoints to groove specific patterns, and gradually increase speed once your execution is consistent. For casual devices or networks with hiccups, use fullscreen and stabilize touch sensitivity to avoid missed inputs. This build rewards thoughtful practice and pattern recognition more than frantic reflexes.","image":"https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112.jpg","applicationCategory":"Game","operatingSystem":"Web","author":{"@type":"Organization","name":"OzGames"},"aggregateRating":{"ratingValue":4.5,"ratingCount":1100}}</script>
-
-  <script>
-    (function(){
-      try{
-        var base = '';
-        // try to derive base from configured page site URL injected at build time
-        try{
-          var __BUILD_TIME_SITE = "https://hhool.github.io/h5games_pok2_geodash";
-          if(__BUILD_TIME_SITE){
-            try{
-              // only use the build-time site root if the current location matches it;
-              // otherwise fall back to runtime-first-segment or origin root to avoid incorrect redirects when previewing locally.
-              var buildHref = (new URL(__BUILD_TIME_SITE)).href.replace(/\/\/+$/,'') + '/';
-              if (location.href.indexOf(buildHref) === 0 || (location.origin + location.pathname).indexOf(buildHref) === 0){
-                base = (new URL(__BUILD_TIME_SITE)).pathname.replace(/\/\/+$/,'');
-              } else {
-                base = '';
-              }
-            }catch(e){ base = ''; }
-          }
-        }catch(e){}
-        if(!base){
-          try{ const segs = location.pathname.split('/').filter(Boolean); base = segs.length>0?('/'+segs[0]):''; }catch(e){ base = ''; }
-        }
-        // normalise
-        if(base === '/') base = '';
-        window._globalRepoBase = base || '';
-      }catch(e){ window._globalRepoBase = ''; }
-    })();
-  </script>
-  <link rel="preconnect" href="https://hhool.github.io">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g5-geometry-dash-hooda-math1-m182x112.jpg">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g1-geometry-dash-lite-game-m182x112.jpg">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g2-geometry-dash-meltdown-m182x112.jpg">
-  <link rel="preload" as="image" href="https://hhool.github.io/h5games_pok2_geodash/assets/games/img/m182x112/g3-geometry-dash-subzero1-m182x112.jpg">
-
-  <script>window._globalSiteRoot = "https://hhool.github.io/h5games_pok2_geodash";</script>
-
-  <script>
-  (function(){
-    try{
-      if('serviceWorker' in navigator){
-        (async function(){
-          var candidates = [];
-          try{ if(window._globalSiteRoot){ try{ var s = String(window._globalSiteRoot).replace(//+$/,''); candidates.push(new URL('/sw.js', s).href); }catch(e){} } }catch(e){}
-          try{ candidates.push('/sw.js'); }catch(e){}
-          try{ if(window._globalRepoBase) candidates.push((window._globalRepoBase||'') + '/sw.js'); }catch(e){}
-          try{ candidates.push('sw.js'); }catch(e){}
-          for(var i=0;i<candidates.length;i++){
-            var p = candidates[i];
-            try{
-              // attempt registration; stop at first success
-              await navigator.serviceWorker.register(p);
-              console.log('service worker registered', p);
-              break;
-            }catch(err){
-              console.warn('sw register failed for', p, err);
-            }
-          }
-        })();
-      }
-    }catch(e){}
-  })();
-  </script>
 </head>
 <body>
   <div class="wrap">
