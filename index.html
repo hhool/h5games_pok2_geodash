@@ -220,17 +220,22 @@ Whether you’re opening the page on a phone between classes or using a desktop 
             if (repoBase) candidates.push(repoBase + '/data/games.json');
           }catch(e){}
 
+          console.debug('games.json: candidate URLs ->', candidates);
           for (const url of candidates){
             try{
+              console.debug('games.json: trying', url);
               const r = await fetch(url);
-              if (!r || !r.ok) continue;
+              if (!r){ console.debug('games.json: no response for', url); continue; }
+              console.debug('games.json: response', url, 'status', r.status, 'content-type', r.headers && r.headers.get ? r.headers.get('content-type') : '');
+              if (!r.ok){ console.debug('games.json: non-ok response for', url); continue; }
               const ct = (r.headers && r.headers.get) ? (r.headers.get('content-type')||'') : '';
-              if (ct.toLowerCase().indexOf('json') !== -1) return r;
+              if (ct.toLowerCase().indexOf('json') !== -1){ console.debug('games.json: selected (json content-type)', url); return r; }
               // some servers may omit content-type; do a quick sanity check to avoid HTML
               const txt = await r.clone().text();
-              if (txt && typeof txt === 'string' && txt.trim().startsWith('<')) continue;
+              if (txt && typeof txt === 'string' && txt.trim().startsWith('<')){ console.debug('games.json: skipped HTML response for', url); continue; }
+              console.debug('games.json: selected (heuristic pass)', url);
               return r;
-            }catch(e){ /* ignore and try next */ }
+            }catch(e){ console.debug('games.json: fetch error for', url, e); /* ignore and try next */ }
           }
           // final attempt (may throw)
           return fetch('data/games.json');
